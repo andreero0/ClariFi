@@ -1,0 +1,333 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL") // This will come from your Supabase project
+}
+
+// 1. User Profile and Authentication
+model users_profile {
+  id                       String    @id @default(uuid()) @db.Uuid
+  auth_user_id             String?   @unique @db.Uuid // Links to Supabase Auth user.id
+  email                    String    @unique
+  display_name             String?
+  avatar_url               String?
+  onboarding_completed     Boolean   @default(false)
+  preferred_language       String    @default("en")
+  last_login_at            DateTime? @db.Timestamptz
+  created_at               DateTime  @default(now()) @db.Timestamptz
+  updated_at               DateTime  @updatedAt @db.Timestamptz
+
+  // Relationships
+  statement_imports        statement_imports[]
+  transactions             transactions[]
+  budgets                  budgets[]
+  financial_goals          financial_goals[]
+  user_education_progress  user_education_progress[]
+  notification_preferences notification_preferences[]
+  audit_logs               audit_log[] // User who performed the action
+  custom_merchants         merchants[] @relation("UserCustomMerchants") // Merchants added by this user
+  transaction_feedback     transaction_feedback[]
+  feedback_analytics       feedback_analytics[]
+
+  @@map("users_profile")
+}
+
+// 2. Categories
+model categories {
+  id          String   @id @default(uuid()) @db.Uuid
+  name        String   @unique
+  icon_name   String?
+  color_hex   String?  @db.VarChar(7)
+  is_system   Boolean  @default(true) // True if system-defined, false if user-custom (future)
+  description String?
+
+  // Relationships
+  transactions             transactions[]
+  merchants                merchants[]               @relation("MerchantDefaultCategory") // Merchants that default to this category
+  budgets                  budgets[]
+  feedback_original        transaction_feedback[]    @relation("FeedbackOriginalCategory")
+  feedback_corrected       transaction_feedback[]    @relation("FeedbackCorrectedCategory")
+  feedback_patterns        feedback_patterns[]       @relation("PatternCategory")
+  analytics_most_corrected feedback_analytics[]      @relation("AnalyticsMostCorrected")
+
+  @@map("categories")
+}
+
+// 3. Merchants
+model merchants {
+  id                  String    @id @default(uuid()) @db.Uuid
+  normalized_name     String    @unique // For reliable matching (e.g., "tim hortons")
+  display_name        String    // For UI (e.g., "Tim Hortons #1234")
+  category_guess_id   String?   @db.Uuid // FK to categories, for default categorization
+  logo_url            String?
+  is_system           Boolean   @default(true) // True if system-defined/globally curated
+  user_id             String?   @db.Uuid // FK to users_profile if this is a user-added custom merchant
+
+  // Relationships
+  category            categories?    @relation("MerchantDefaultCategory", fields: [category_guess_id], references: [id])
+  transactions        transactions[]
+  added_by_user       users_profile? @relation("UserCustomMerchants", fields: [user_id], references: [id])
+
+  @@index([user_id])
+  @@index([category_guess_id])
+  @@map("merchants")
+}
+
+// 4. Statement Imports
+model statement_imports {
+  id                  String    @id @default(uuid()) @db.Uuid
+  user_id             String    @db.Uuid
+  bank_name           String
+  statement_date      DateTime  @db.Date // Date of the statement itself
+  status              String    // e.g., 'pending', 'processing', 'completed', 'failed'
+  file_name           String?   // Original file name
+  file_size           Int?      // Original file size in bytes
+  source_type         String    // e.g., 'ocr_upload', 'csv_import', 'bank_sync' (future)
+  transaction_count   Int?      // Number of transactions found/imported
+  error_message       String?
+  created_at          DateTime  @default(now()) @db.Timestamptz
+  processed_at        DateTime? @db.Timestamptz
+
+  // Relationships
+  user                users_profile @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  transactions        transactions[]
+
+  @@index([user_id, statement_date(sort: Desc)])
+  @@index([user_id, status])
+  @@map("statement_imports")
+}
+
+// 5. Transactions
+model transactions {
+  id                        String    @id @default(uuid()) @db.Uuid
+  user_id                   String    @db.Uuid
+  statement_import_id       String?   @db.Uuid // Nullable if manually added or from future bank sync
+  date                      DateTime  @db.Date
+  description               String
+  amount                    Decimal   @db.Decimal(12, 2)
+  type                      String    // e.g., 'debit', 'credit', 'payment'
+  currency_code             String    @db.VarChar(3)
+  category_id               String?   @db.Uuid // FK to categories
+  merchant_id               String?   @db.Uuid // FK to merchants
+  notes                     String?
+  is_recurring              Boolean   @default(false)
+  recurring_transaction_id  String?   @db.Uuid // Self-referential for linking recurring instances (future)
+  user_verified_category    Boolean   @default(false)
+  user_verified_merchant    Boolean   @default(false)
+  created_at                DateTime  @default(now()) @db.Timestamptz
+  updated_at                DateTime  @updatedAt @db.Timestamptz
+
+  // Relationships
+  user                      users_profile     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  statement_import          statement_imports?@relation(fields: [statement_import_id], references: [id], onDelete: SetNull)
+  category                  categories?       @relation(fields: [category_id], references: [id], onDelete:Restrict) // Prevent category deletion if transactions use it
+  merchant                  merchants?        @relation(fields: [merchant_id], references: [id], onDelete:SetNull)
+  feedback                  transaction_feedback[]
+
+  @@index([user_id, date])
+  @@index([user_id, category_id])
+  @@index([user_id, merchant_id])
+  @@index([statement_import_id])
+  @@map("transactions")
+}
+
+// 6. Budgets
+model budgets {
+  id                          String    @id @default(uuid()) @db.Uuid
+  user_id                     String    @db.Uuid
+  category_id                 String    @db.Uuid
+  amount                      Decimal   @db.Decimal(12, 2)
+  budget_month                DateTime  @db.Date // First day of the month (e.g., '2024-07-01')
+  alert_threshold_percentage  Decimal?  @db.Decimal(5, 2) // e.g., 80.00 for 80%
+  is_recurring                Boolean   @default(true)
+  created_at                  DateTime  @default(now()) @db.Timestamptz
+  updated_at                  DateTime  @updatedAt @db.Timestamptz
+
+  // Relationships
+  user                        users_profile @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  category                    categories    @relation(fields: [category_id], references: [id], onDelete: Restrict)
+
+  @@unique([user_id, category_id, budget_month])
+  @@index([user_id, budget_month])
+  @@map("budgets")
+}
+
+// 7. Financial Goals
+model financial_goals {
+  id              String    @id @default(uuid()) @db.Uuid
+  user_id         String    @db.Uuid
+  name            String
+  target_amount   Decimal   @db.Decimal(12, 2)
+  current_amount  Decimal   @db.Decimal(12, 2) @default(0)
+  target_date     DateTime? @db.Date
+  status          String    // e.g., 'active', 'achieved', 'paused', 'cancelled'
+  description     String?
+  icon_name       String?
+  created_at      DateTime  @default(now()) @db.Timestamptz
+  updated_at      DateTime  @updatedAt @db.Timestamptz
+
+  // Relationships
+  user            users_profile @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([user_id])
+  @@index([user_id, status])
+  @@map("financial_goals")
+}
+
+// 8. Educational Content
+model educational_modules {
+  id                          String    @id @default(uuid()) @db.Uuid
+  title                       String    @unique
+  description                 String?
+  content_path                String?   // Path to markdown/JSON file if bundled, or URL
+  estimated_duration_minutes  Int?
+  difficulty_level            String?   // e.g., 'beginner', 'intermediate', 'advanced'
+
+  // Relationships
+  user_progress               user_education_progress[]
+
+  @@map("educational_modules")
+}
+
+model user_education_progress {
+  id                      String    @id @default(uuid()) @db.Uuid
+  user_id                 String    @db.Uuid
+  module_id               String    @db.Uuid
+  status                  String    // e.g., 'not_started', 'in_progress', 'completed'
+  completion_percentage   Int?      @db.SmallInt // 0-100
+  started_at              DateTime? @db.Timestamptz
+  completed_at            DateTime? @db.Timestamptz
+  quiz_results            Json?     // Store answers/scores if applicable
+
+  // Relationships
+  user                    users_profile         @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  module                  educational_modules   @relation(fields: [module_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id, module_id])
+  @@index([user_id])
+  @@index([user_id, status])
+  @@map("user_education_progress")
+}
+
+// 9. Notification Preferences
+model notification_preferences {
+  id                  String    @id @db.Uuid
+  user_id             String    @db.Uuid
+  notification_type   String    @db.VarChar(50) // e.g., 'statement_processed', 'utilization_warning'
+  channel             String    @db.VarChar(20) // e.g., 'email', 'push', 'sms'
+  is_enabled          Boolean   @default(true)
+  created_at          DateTime  @default(now()) @db.Timestamptz
+  updated_at          DateTime  @updatedAt @db.Timestamptz
+
+  // Relationships
+  user                users_profile @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id, notification_type, channel])
+  @@index([user_id])
+  @@map("notification_preferences")
+}
+
+// 10. Audit Log
+model audit_log {
+  id                BigInt    @id @default(autoincrement())
+  user_id           String?   @db.Uuid // Nullable if system event
+  event_type        String    @db.VarChar(100)
+  event_timestamp   DateTime  @default(now()) @db.Timestamptz
+  ip_address        String?   // @db.Inet - Prisma does not directly support INET, use String and validate/cast in application
+  user_agent        String?
+  details           Json?
+  status            String?   @db.VarChar(20) // e.g., 'success', 'failure'
+  error_message     String?
+
+  // Relationships
+  user              users_profile? @relation(fields: [user_id], references: [id], onDelete:SetNull)
+
+  @@index([event_timestamp(sort: Desc)])
+  @@index([user_id])
+  @@index([event_type])
+  @@map("audit_log")
+}
+
+// 11. Transaction Categorization Feedback
+model transaction_feedback {
+  id                      String    @id @default(uuid()) @db.Uuid
+  user_id                 String    @db.Uuid
+  transaction_id          String    @db.Uuid
+  original_category_id    String?   @db.Uuid // Category before correction
+  corrected_category_id   String    @db.Uuid // Category after user correction
+  feedback_type           String    @db.VarChar(50) // 'category_correction', 'merchant_correction', 'validation'
+  confidence_rating       Int?      @db.SmallInt // User's confidence in their correction (1-5)
+  feedback_notes          String?   // Optional user notes about the correction
+  transaction_description String    // Snapshot of transaction description at time of feedback
+  merchant_name           String?   // Normalized merchant name for pattern learning
+  source                  String    @db.VarChar(20) // 'manual', 'suggestion_accepted', 'suggestion_rejected'
+  created_at              DateTime  @default(now()) @db.Timestamptz
+  processed_at            DateTime? @db.Timestamptz
+  is_processed            Boolean   @default(false) // Whether feedback has been incorporated into learning
+
+  // Relationships
+  user                    users_profile @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  transaction             transactions  @relation(fields: [transaction_id], references: [id], onDelete: Cascade)
+  original_category       categories?   @relation("FeedbackOriginalCategory", fields: [original_category_id], references: [id])
+  corrected_category      categories    @relation("FeedbackCorrectedCategory", fields: [corrected_category_id], references: [id])
+
+  @@index([user_id, created_at(sort: Desc)])
+  @@index([transaction_id])
+  @@index([feedback_type])
+  @@index([is_processed])
+  @@index([merchant_name])
+  @@map("transaction_feedback")
+}
+
+// 12. Feedback Learning Patterns
+model feedback_patterns {
+  id                    String    @id @default(uuid()) @db.Uuid
+  pattern_type          String    @db.VarChar(50) // 'merchant_category', 'description_keyword', 'amount_range'
+  pattern_key           String    // The pattern identifier (merchant name, keyword, etc.)
+  category_id           String    @db.Uuid // The category this pattern suggests
+  confidence_score      Decimal   @db.Decimal(5, 2) // 0.00 to 100.00
+  occurrence_count      Int       @default(1) // Number of times this pattern was seen
+  success_count         Int       @default(1) // Number of times this pattern was correct
+  last_seen_at          DateTime  @default(now()) @db.Timestamptz
+  created_at            DateTime  @default(now()) @db.Timestamptz
+  updated_at            DateTime  @updatedAt @db.Timestamptz
+
+  // Relationships
+  category              categories @relation("PatternCategory", fields: [category_id], references: [id])
+
+  @@unique([pattern_type, pattern_key, category_id])
+  @@index([pattern_type, pattern_key])
+  @@index([confidence_score(sort: Desc)])
+  @@index([last_seen_at(sort: Desc)])
+  @@map("feedback_patterns")
+}
+
+// 13. Feedback Analytics
+model feedback_analytics {
+  id                          String    @id @default(uuid()) @db.Uuid
+  user_id                     String?   @db.Uuid // Nullable for system-wide analytics
+  analysis_period             DateTime  @db.Date // The month/week being analyzed
+  period_type                 String    @db.VarChar(20) // 'weekly', 'monthly', 'quarterly'
+  total_corrections           Int       @default(0)
+  accuracy_improvement        Decimal?  @db.Decimal(5, 2) // Percentage improvement
+  most_corrected_category     String?   @db.Uuid // Category that was corrected most often
+  avg_user_confidence         Decimal?  @db.Decimal(5, 2) // Average confidence rating
+  corrections_by_source       Json?     // Breakdown by source (manual, suggestion_accepted, etc.)
+  top_patterns_learned        Json?     // Top 10 patterns learned this period
+  created_at                  DateTime  @default(now()) @db.Timestamptz
+
+  // Relationships
+  user                        users_profile? @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  most_corrected_cat          categories?    @relation("AnalyticsMostCorrected", fields: [most_corrected_category], references: [id])
+
+  @@unique([user_id, analysis_period, period_type])
+  @@index([analysis_period(sort: Desc)])
+  @@index([period_type])
+  @@map("feedback_analytics")
+} 

@@ -1,0 +1,322 @@
+// Error Boundary Component
+
+import React, { Component, ErrorInfo, ReactNode } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { useAnalytics } from '../../services/analytics/PostHogProvider';
+import { useErrorReporting } from '../../services/analytics/SentryProvider';
+
+interface Props {
+  children: ReactNode;
+  fallback?: (error: Error, resetError: () => void) => ReactNode;
+  onError?: (error: Error, errorInfo: ErrorInfo) => void;
+  level?: 'screen' | 'feature' | 'component';
+  context?: string;
+}
+
+interface State {
+  hasError: boolean;
+  error: Error | null;
+  errorId: string | null;
+}
+
+// Error categories for better organization
+export enum ErrorCategory {
+  AUTHENTICATION = 'authentication',
+  NETWORK = 'network',
+  VALIDATION = 'validation',
+  STORAGE = 'storage',
+  RENDERING = 'rendering',
+  NAVIGATION = 'navigation',
+  PERMISSIONS = 'permissions',
+  EXTERNAL_SERVICE = 'external_service',
+  UNKNOWN = 'unknown',
+}
+
+// Error severity levels
+export enum ErrorSeverity {
+  LOW = 'low',
+  MEDIUM = 'medium',
+  HIGH = 'high',
+  CRITICAL = 'critical',
+}
+
+class ErrorBoundaryClass extends Component<Props, State> {
+  private analytics: ReturnType<typeof useAnalytics> | null = null;
+  private errorReporting: ReturnType<typeof useErrorReporting> | null = null;
+
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      hasError: false,
+      error: null,
+      errorId: null,
+    };
+  }
+
+  static getDerivedStateFromError(error: Error): State {
+    // Check if this is a React.Children.only error that we want to ignore
+    if (error.message.includes('React.Children.only expected to receive a single React element child')) {
+      // Don't show error UI for this specific error
+      return { hasError: false };
+    }
+    
+    return {
+      hasError: true,
+      error,
+      errorId: `error_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+    };
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    const { onError, level = 'component', context } = this.props;
+    
+    // Categorize the error
+    const category = this.categorizeError(error);
+    const severity = this.assessSeverity(error, level);
+    
+    // Report error to Sentry with context
+    if (this.errorReporting?.reportError) {
+      this.errorReporting.reportError(error, {
+        error_boundary: true,
+        error_category: category,
+        error_severity: severity,
+        error_level: level,
+        error_context: context,
+        error_id: this.state.errorId,
+        component_stack: errorInfo.componentStack,
+        react_error_boundary: true,
+      });
+    }
+    
+    // Track error in analytics
+    if (this.analytics?.track) {
+      this.analytics.track('error_boundary_triggered', {
+        error_category: category,
+        error_severity: severity,
+        error_level: level,
+        error_context: context,
+        error_message: error.message,
+        error_name: error.name,
+        has_component_stack: !!errorInfo.componentStack,
+        error_id: this.state.errorId,
+      });
+    }
+
+    // Call custom error handler
+    if (onError) {
+      onError(error, errorInfo);
+    }
+
+    // Log the error but don't show red screen for React.Children.only errors
+    if (!error.message.includes('React.Children.only')) {
+      console.error('Error Boundary caught an error:', error, errorInfo);
+    }
+  }
+
+  private categorizeError(error: Error): ErrorCategory {
+    const message = error.message.toLowerCase();
+    const name = error.name.toLowerCase();
+    
+    if (message.includes('network') || message.includes('fetch')) {
+      return ErrorCategory.NETWORK;
+    }
+    if (message.includes('auth') || message.includes('unauthorized')) {
+      return ErrorCategory.AUTHENTICATION;
+    }
+    if (message.includes('validation') || message.includes('invalid')) {
+      return ErrorCategory.VALIDATION;
+    }
+    if (message.includes('storage') || message.includes('asyncstorage')) {
+      return ErrorCategory.STORAGE;
+    }
+    if (message.includes('navigation') || message.includes('route')) {
+      return ErrorCategory.NAVIGATION;
+    }
+    if (message.includes('permission') || message.includes('denied')) {
+      return ErrorCategory.PERMISSIONS;
+    }
+    if (name.includes('render') || message.includes('component')) {
+      return ErrorCategory.RENDERING;
+    }
+    if (message.includes('api') || message.includes('service')) {
+      return ErrorCategory.EXTERNAL_SERVICE;
+    }
+    
+    return ErrorCategory.UNKNOWN;
+  }
+
+  private assessSeverity(error: Error, level: string): ErrorSeverity {
+    const message = error.message.toLowerCase();
+    
+    if (level === 'screen' || message.includes('critical')) {
+      return ErrorSeverity.CRITICAL;
+    }
+    if (message.includes('auth') || message.includes('security')) {
+      return ErrorSeverity.HIGH;
+    }
+    if (level === 'feature' || message.includes('feature')) {
+      return ErrorSeverity.MEDIUM;
+    }
+    
+    return ErrorSeverity.LOW;
+  }
+
+  private resetError = () => {
+    this.setState({
+      hasError: false,
+      error: null,
+      errorId: null,
+    });
+  };
+
+  private reportFeedback = () => {
+    if (this.analytics?.track) {
+      this.analytics.track('error_feedback_initiated', {
+        error_id: this.state.errorId,
+        error_message: this.state.error?.message,
+      });
+    }
+  };
+
+  render() {
+    if (this.state.hasError) {
+      const { fallback } = this.props;
+      
+      if (fallback) {
+        return fallback(this.state.error!, this.resetError);
+      }
+
+      return (
+        <View style={styles.container}>
+          <ScrollView contentContainerStyle={styles.content}>
+            <Text style={styles.title}>Oops! Something went wrong</Text>
+            <Text style={styles.subtitle}>
+              We've encountered an unexpected error. Our team has been notified.
+            </Text>
+            
+            {__DEV__ && this.state.error && (
+              <View style={styles.debugContainer}>
+                <Text style={styles.debugTitle}>Debug Information:</Text>
+                <Text style={styles.debugText}>
+                  {this.state.error.name}: {this.state.error.message}
+                </Text>
+                {this.state.errorId && (
+                  <Text style={styles.debugText}>
+                    Error ID: {this.state.errorId}
+                  </Text>
+                )}
+              </View>
+            )}
+            
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity style={styles.primaryButton} onPress={this.resetError}>
+                <Text style={styles.primaryButtonText}>Try Again</Text>
+              </TouchableOpacity>
+              
+              <TouchableOpacity style={styles.secondaryButton} onPress={this.reportFeedback}>
+                <Text style={styles.secondaryButtonText}>Report Issue</Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
+        </View>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
+// HOC to inject analytics and error reporting
+export const ErrorBoundary: React.FC<Props> = (props) => {
+  const analytics = useAnalytics();
+  const errorReporting = useErrorReporting();
+  
+  return (
+    <ErrorBoundaryClass {...props} ref={(ref) => {
+      if (ref) {
+        (ref as any).analytics = analytics;
+        (ref as any).errorReporting = errorReporting;
+      }
+    }} />
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#f8f9fa',
+  },
+  content: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#dc3545',
+    marginBottom: 12,
+    textAlign: 'center',
+  },
+  subtitle: {
+    fontSize: 16,
+    color: '#6c757d',
+    textAlign: 'center',
+    marginBottom: 30,
+    lineHeight: 24,
+  },
+  debugContainer: {
+    backgroundColor: '#f8f9fa',
+    padding: 16,
+    borderRadius: 8,
+    marginBottom: 24,
+    width: '100%',
+    borderWidth: 1,
+    borderColor: '#dee2e6',
+  },
+  debugTitle: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#495057',
+    marginBottom: 8,
+  },
+  debugText: {
+    fontSize: 12,
+    color: '#6c757d',
+    fontFamily: 'monospace',
+    marginBottom: 4,
+  },
+  buttonContainer: {
+    width: '100%',
+    gap: 12,
+  },
+  primaryButton: {
+    backgroundColor: '#007bff',
+    paddingVertical: 14,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  primaryButtonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  secondaryButton: {
+    backgroundColor: 'transparent',
+    paddingVertical: 14,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#007bff',
+  },
+  secondaryButtonText: {
+    color: '#007bff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+});
+
+export default ErrorBoundary;

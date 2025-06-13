@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  api: # Service name for the NestJS backend
+    build:
+      context: ./clarifi-api # Path to the Dockerfile for the api service
+      dockerfile: Dockerfile
+    container_name: clarifi_api
+    ports:
+      - "3000:3000" # Map host port 3000 to container port 3000
+    volumes:
+      - ./clarifi-api:/usr/src/app # Mount the local clarifi-api directory to the container for live reloading
+      - /usr/src/app/node_modules # Anonymous volume to prevent local node_modules from overwriting container's node_modules
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=postgresql://postgres:clarifi_password@postgres:5432/clarifi_dev
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_SERVICE_ROLE_KEY=${SUPABASE_SERVICE_ROLE_KEY}
+      - REDIS_URL=redis://redis:6379
+      # Add other environment variables here as needed
+      # Example: JWT_SECRET, API_KEYS etc.
+    depends_on:
+      - postgres # Ensures postgres starts before the api service
+      - redis # Ensures redis starts before the api service
+    networks:
+      - clarifi-network
+
+  postgres: # Service name for PostgreSQL
+    image: postgres:15-alpine # Use the official PostgreSQL image
+    container_name: clarifi_postgres
+    ports:
+      - "5432:5432" # Map host port 5432 to container port 5432
+    environment:
+      - POSTGRES_DB=clarifi_dev
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=clarifi_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # Named volume to persist PostgreSQL data
+    networks:
+      - clarifi-network
+
+  redis: # Service name for Redis (for caching and queues)
+    image: redis:7-alpine # Use the official Redis image
+    container_name: clarifi_redis
+    ports:
+      - "6379:6379" # Map host port 6379 to container port 6379
+    volumes:
+      - redis_data:/data # Named volume to persist Redis data
+    networks:
+      - clarifi-network
+
+networks:
+  clarifi-network:
+    driver: bridge
+
+volumes:
+  postgres_data: # Defines the named volume for PostgreSQL data persistence
+  redis_data: # Defines the named volume for Redis data persistence 

@@ -1,0 +1,333 @@
+<svg viewBox="0 0 1800 1400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1800" height="1400" fill="#f8f9fa"/>
+  
+  <!-- Title -->
+  <text x="900" y="35" text-anchor="middle" font-size="28" font-weight="bold" fill="#1a1a1a">ClariFi - Ultra Cost-Efficient Premium MVP</text>
+  <text x="900" y="60" text-anchor="middle" font-size="16" fill="#666">Target: $100-300/month for 5K users | &lt;$0.15/user API costs | Premium UX</text>
+  
+  <!-- Client Layer (Enhanced) -->
+  <g id="client-layer">
+    <rect x="50" y="90" width="550" height="350" rx="12" fill="#e3f2fd" stroke="#1976d2" stroke-width="2"/>
+    <text x="325" y="115" text-anchor="middle" font-size="18" font-weight="bold" fill="#1976d2">Client-Heavy Architecture (Cost Reduction)</text>
+    
+    <rect x="70" y="140" width="250" height="90" rx="8" fill="#ffffff" stroke="#1976d2"/>
+    <text x="195" y="160" text-anchor="middle" font-size="13" font-weight="600" fill="#333">Client-Side Processing</text>
+    <text x="195" y="178" text-anchor="middle" font-size="11" fill="#666">• Image preprocessing for OCR</text>
+    <text x="195" y="195" text-anchor="middle" font-size="11" fill="#666">• Pattern-based categorization</text>
+    <text x="195" y="212" text-anchor="middle" font-size="11" fill="#666">• 90%+ merchant matching locally</text>
+    
+    <rect x="330" y="140" width="250" height="90" rx="8" fill="#ffffff" stroke="#1976d2"/>
+    <text x="455" y="160" text-anchor="middle" font-size="13" font-weight="600" fill="#333">Offline-First Design</text>
+    <text x="455" y="178" text-anchor="middle" font-size="11" fill="#666">• All data in AsyncStorage</text>
+    <text x="455" y="195" text-anchor="middle" font-size="11" fill="#666">• Client-side calculations</text>
+    <text x="455" y="212" text-anchor="middle" font-size="11" fill="#666">• Local notification scheduling</text>
+    
+    <rect x="70" y="250" width="250" height="90" rx="8" fill="#ffffff" stroke="#1976d2"/>
+    <text x="195" y="270" text-anchor="middle" font-size="13" font-weight="600" fill="#333">Cost-Saving Features</text>
+    <text x="195" y="288" text-anchor="middle" font-size="11" fill="#666">• FAQ search (95% coverage)</text>
+    <text x="195" y="305" text-anchor="middle" font-size="11" fill="#666">• Bundled education content</text>
+    <text x="195" y="322" text-anchor="middle" font-size="11" fill="#666">• Client-side export generation</text>
+    
+    <rect x="330" y="250" width="250" height="90" rx="8" fill="#ffffff" stroke="#1976d2"/>
+    <text x="455" y="270" text-anchor="middle" font-size="13" font-weight="600" fill="#333">Premium UX (Zero Cost)</text>
+    <text x="455" y="288" text-anchor="middle" font-size="11" fill="#666">• Built-in React Native animations</text>
+    <text x="455" y="305" text-anchor="middle" font-size="11" fill="#666">• No external UI libraries</text>
+    <text x="455" y="322" text-anchor="middle" font-size="11" fill="#666">• Smooth 60fps performance</text>
+    
+    <rect x="70" y="360" width="510" height="60" rx="8" fill="#c8e6c9" stroke="#4caf50"/>
+    <text x="325" y="380" text-anchor="middle" font-size="12" font-weight="600" fill="#2e7d32">Client Processes 90%+ Without Backend</text>
+    <text x="325" y="400" text-anchor="middle" font-size="11" fill="#666">Dashboard • Calculations • Notifications • Education • Most Support</text>
+  </g>
+  
+  <!-- Minimal API Gateway -->
+  <g id="api-gateway">
+    <rect x="650" y="90" width="300" height="120" rx="12" fill="#f3e5f5" stroke="#7b1fa2" stroke-width="2"/>
+    <text x="800" y="115" text-anchor="middle" font-size="18" font-weight="bold" fill="#7b1fa2">Minimal API Surface</text>
+    
+    <rect x="670" y="140" width="260" height="50" rx="8" fill="#ffffff" stroke="#7b1fa2"/>
+    <text x="800" y="160" text-anchor="middle" font-size="12" fill="#333">Essential Endpoints Only</text>
+    <text x="800" y="178" text-anchor="middle" font-size="10" fill="#666">Auth • Upload • Process • Export</text>
+  </g>
+  
+  <!-- Backend Monolith (Lean) -->
+  <g id="backend-layer">
+    <rect x="50" y="480" width="900" height="400" rx="12" fill="#e8f5e9" stroke="#388e3c" stroke-width="2"/>
+    <text x="500" y="505" text-anchor="middle" font-size="18" font-weight="bold" fill="#388e3c">Lean NestJS Monolith (Free/Starter Hosting)</text>
+    <text x="500" y="525" text-anchor="middle" font-size="14" fill="#666">Render.com Free Tier | Minimal Services | Aggressive Caching</text>
+    
+    <!-- Core Modules -->
+    <rect x="70" y="550" width="200" height="100" rx="8" fill="#ffffff" stroke="#388e3c"/>
+    <text x="170" y="570" text-anchor="middle" font-size="12" font-weight="600" fill="#333">Auth Module</text>
+    <text x="170" y="588" text-anchor="middle" font-size="10" fill="#666">• Supabase Auth free</text>
+    <text x="170" y="604" text-anchor="middle" font-size="10" fill="#666">• JWT only</text>
+    <text x="170" y="620" text-anchor="middle" font-size="10" fill="#666">• Simple waitlist</text>
+    <text x="170" y="636" text-anchor="middle" font-size="10" fill="#666">• No complex flows</text>
+    
+    <rect x="290" y="550" width="200" height="100" rx="8" fill="#ffccbc" stroke="#d84315"/>
+    <text x="390" y="570" text-anchor="middle" font-size="12" font-weight="600" fill="#d84315">OCR Orchestrator</text>
+    <text x="390" y="588" text-anchor="middle" font-size="10" fill="#666">• Google Vision free tier</text>
+    <text x="390" y="604" text-anchor="middle" font-size="10" fill="#666">• Batch optimization</text>
+    <text x="390" y="620" text-anchor="middle" font-size="10" fill="#666">• Quality pre-check</text>
+    <text x="390" y="636" text-anchor="middle" font-size="10" fill="#666">• Usage tracking</text>
+    
+    <rect x="510" y="550" width="200" height="100" rx="8" fill="#ffccbc" stroke="#d84315"/>
+    <text x="610" y="570" text-anchor="middle" font-size="12" font-weight="600" fill="#d84315">LLM Orchestrator</text>
+    <text x="610" y="588" text-anchor="middle" font-size="10" fill="#666">• Claude Haiku primary</text>
+    <text x="610" y="604" text-anchor="middle" font-size="10" fill="#666">• &lt;100 tokens/request</text>
+    <text x="610" y="620" text-anchor="middle" font-size="10" fill="#666">• 90%+ cache hits</text>
+    <text x="610" y="636" text-anchor="middle" font-size="10" fill="#666">• Strict limits</text>
+    
+    <rect x="730" y="550" width="200" height="100" rx="8" fill="#ffffff" stroke="#388e3c"/>
+    <text x="830" y="570" text-anchor="middle" font-size="12" font-weight="600" fill="#333">Queue Manager</text>
+    <text x="830" y="588" text-anchor="middle" font-size="10" fill="#666">• BullMQ minimal</text>
+    <text x="830" y="604" text-anchor="middle" font-size="10" fill="#666">• Upstash Redis free</text>
+    <text x="830" y="620" text-anchor="middle" font-size="10" fill="#666">• Simple retry</text>
+    <text x="830" y="636" text-anchor="middle" font-size="10" fill="#666">• Batch processing</text>
+    
+    <!-- Second Row -->
+    <rect x="70" y="670" width="200" height="90" rx="8" fill="#ffffff" stroke="#388e3c"/>
+    <text x="170" y="690" text-anchor="middle" font-size="12" font-weight="600" fill="#333">Storage Module</text>
+    <text x="170" y="708" text-anchor="middle" font-size="10" fill="#666">• Temp files only</text>
+    <text x="170" y="724" text-anchor="middle" font-size="10" fill="#666">• Auto-deletion</text>
+    <text x="170" y="740" text-anchor="middle" font-size="10" fill="#666">• No persistence</text>
+    
+    <rect x="290" y="670" width="200" height="90" rx="8" fill="#ffffff" stroke="#388e3c"/>
+    <text x="390" y="690" text-anchor="middle" font-size="12" font-weight="600" fill="#333">Export Service</text>
+    <text x="390" y="708" text-anchor="middle" font-size="10" fill="#666">• On-demand only</text>
+    <text x="390" y="724" text-anchor="middle" font-size="10" fill="#666">• No scheduled jobs</text>
+    <text x="390" y="740" text-anchor="middle" font-size="10" fill="#666">• Client-driven</text>
+    
+    <rect x="510" y="670" width="200" height="90" rx="8" fill="#ffffff" stroke="#388e3c"/>
+    <text x="610" y="690" text-anchor="middle" font-size="12" font-weight="600" fill="#333">Analytics</text>
+    <text x="610" y="708" text-anchor="middle" font-size="10" fill="#666">• PostHog free tier</text>
+    <text x="610" y="724" text-anchor="middle" font-size="10" fill="#666">• Essential events only</text>
+    <text x="610" y="740" text-anchor="middle" font-size="10" fill="#666">• No custom tracking</text>
+    
+    <rect x="730" y="670" width="200" height="90" rx="8" fill="#ffffff" stroke="#388e3c"/>
+    <text x="830" y="690" text-anchor="middle" font-size="12" font-weight="600" fill="#333">Support</text>
+    <text x="830" y="708" text-anchor="middle" font-size="10" fill="#666">• Email-based only</text>
+    <text x="830" y="724" text-anchor="middle" font-size="10" fill="#666">• Auto-responders</text>
+    <text x="830" y="740" text-anchor="middle" font-size="10" fill="#666">• FAQ deflection</text>
+    
+    <!-- Cost Control Layer -->
+    <rect x="70" y="780" width="860" height="80" rx="8" fill="#ffebee" stroke="#f44336"/>
+    <text x="500" y="805" text-anchor="middle" font-size="14" font-weight="600" fill="#f44336">Extreme Cost Control Layer</text>
+    <text x="500" y="825" text-anchor="middle" font-size="11" fill="#666">Hard Limits • Usage Caps • Graceful Degradation • Daily Monitoring</text>
+    <text x="500" y="845" text-anchor="middle" font-size="11" fill="#666">Target: &lt;$0.15/user/month for APIs • Auto-throttle at 80% budget</text>
+  </g>
+  
+  <!-- Data Infrastructure (Minimal) -->
+  <g id="data-layer">
+    <rect x="50" y="920" width="450" height="250" rx="12" fill="#fff3e0" stroke="#f57c00" stroke-width="2"/>
+    <text x="275" y="945" text-anchor="middle" font-size="18" font-weight="bold" fill="#f57c00">Minimal Data Infrastructure</text>
+    
+    <rect x="70" y="970" width="410" height="60" rx="8" fill="#ffffff" stroke="#f57c00"/>
+    <text x="275" y="990" text-anchor="middle" font-size="13" font-weight="600" fill="#333">PostgreSQL (Supabase Free)</text>
+    <text x="275" y="1008" text-anchor="middle" font-size="11" fill="#666">• 500MB limit respected</text>
+    <text x="275" y="1025" text-anchor="middle" font-size="11" fill="#666">• Minimal data retention</text>
+    
+    <rect x="70" y="1045" width="195" height="80" rx="8" fill="#ffffff" stroke="#f57c00"/>
+    <text x="167" y="1065" text-anchor="middle" font-size="12" font-weight="600" fill="#333">Redis (Upstash Free)</text>
+    <text x="167" y="1083" text-anchor="middle" font-size="10" fill="#666">• 10K commands/day</text>
+    <text x="167" y="1100" text-anchor="middle" font-size="10" fill="#666">• Merchant cache</text>
+    <text x="167" y="1117" text-anchor="middle" font-size="10" fill="#666">• Response cache</text>
+    
+    <rect x="285" y="1045" width="195" height="80" rx="8" fill="#ffffff" stroke="#f57c00"/>
+    <text x="382" y="1065" text-anchor="middle" font-size="12" font-weight="600" fill="#333">Storage (Supabase)</text>
+    <text x="382" y="1083" text-anchor="middle" font-size="10" fill="#666">• 1GB free tier</text>
+    <text x="382" y="1100" text-anchor="middle" font-size="10" fill="#666">• Temp files only</text>
+    <text x="382" y="1117" text-anchor="middle" font-size="10" fill="#666">• Auto-delete in 1hr</text>
+  </g>
+  
+  <!-- External Services (Cost-Optimized) -->
+  <g id="external-services">
+    <rect x="1000" y="90" width="450" height="1080" rx="12" fill="#fce4ec" stroke="#c2185b" stroke-width="2"/>
+    <text x="1225" y="115" text-anchor="middle" font-size="18" font-weight="bold" fill="#c2185b">Cost-Optimized External Services</text>
+    
+    <!-- OCR Service -->
+    <rect x="1020" y="140" width="410" height="100" rx="8" fill="#ffccbc" stroke="#d84315"/>
+    <text x="1225" y="160" text-anchor="middle" font-size="13" font-weight="600" fill="#d84315">OCR Service (Minimized)</text>
+    <text x="1225" y="180" text-anchor="middle" font-size="11" fill="#666">• Google Vision API</text>
+    <text x="1225" y="197" text-anchor="middle" font-size="11" fill="#666">• 1000 free units/month first</text>
+    <text x="1225" y="214" text-anchor="middle" font-size="11" fill="#666">• Client preprocessing reduces by 50%</text>
+    <text x="1225" y="231" text-anchor="middle" font-size="11" fill="#666">• Hard stop at budget limit</text>
+    
+    <!-- LLM Services -->
+    <rect x="1020" y="255" width="410" height="120" rx="8" fill="#ffccbc" stroke="#d84315"/>
+    <text x="1225" y="275" text-anchor="middle" font-size="13" font-weight="600" fill="#d84315">LLM Service (Ultra-Efficient)</text>
+    <text x="1225" y="295" text-anchor="middle" font-size="11" font-weight="600" fill="#666">Primary: Claude Haiku</text>
+    <text x="1225" y="312" text-anchor="middle" font-size="10" fill="#666">• $0.25/1M input tokens</text>
+    <text x="1225" y="329" text-anchor="middle" font-size="10" fill="#666">• &lt;100 tokens per request</text>
+    <text x="1225" y="346" text-anchor="middle" font-size="10" fill="#666">• 90%+ handled by cache/rules</text>
+    <text x="1225" y="363" text-anchor="middle" font-size="10" fill="#d84315">• NO GPT-4 for MVP</text>
+    
+    <!-- Free Services -->
+    <rect x="1020" y="390" width="410" height="80" rx="8" fill="#c8e6c9" stroke="#4caf50"/>
+    <text x="1225" y="410" text-anchor="middle" font-size="13" font-weight="600" fill="#4caf50">Free Tier Services</text>
+    <text x="1225" y="430" text-anchor="middle" font-size="11" fill="#666">• Supabase Auth (50K MAU free)</text>
+    <text x="1225" y="447" text-anchor="middle" font-size="11" fill="#666">• PostHog (1M events free)</text>
+    <text x="1225" y="464" text-anchor="middle" font-size="11" fill="#666">• Sentry (5K errors free)</text>
+    
+    <!-- Notifications -->
+    <rect x="1020" y="485" width="410" height="80" rx="8" fill="#ffffff" stroke="#c2185b"/>
+    <text x="1225" y="505" text-anchor="middle" font-size="13" font-weight="600" fill="#333">Push Notifications</text>
+    <text x="1225" y="523" text-anchor="middle" font-size="11" fill="#666">• Expo Push (free)</text>
+    <text x="1225" y="540" text-anchor="middle" font-size="11" fill="#666">• 95% local scheduling</text>
+    <text x="1225" y="557" text-anchor="middle" font-size="11" fill="#666">• Minimal server backup</text>
+    
+    <!-- Support -->
+    <rect x="1020" y="580" width="410" height="80" rx="8" fill="#ffffff" stroke="#c2185b"/>
+    <text x="1225" y="600" text-anchor="middle" font-size="13" font-weight="600" fill="#333">Support Infrastructure</text>
+    <text x="1225" y="618" text-anchor="middle" font-size="11" fill="#666">• Email-based (free)</text>
+    <text x="1225" y="635" text-anchor="middle" font-size="11" fill="#666">• Discord community (free)</text>
+    <text x="1225" y="652" text-anchor="middle" font-size="11" fill="#666">• In-app FAQ (bundled)</text>
+    
+    <!-- Cost Management -->
+    <rect x="1020" y="675" width="410" height="140" rx="8" fill="#fff9c4" stroke="#fbc02d"/>
+    <text x="1225" y="695" text-anchor="middle" font-size="13" font-weight="600" fill="#f57f17">Aggressive Cost Management</text>
+    <text x="1225" y="715" text-anchor="middle" font-size="11" fill="#666">• Daily spend tracking</text>
+    <text x="1225" y="732" text-anchor="middle" font-size="11" fill="#666">• Auto-throttle at 80% budget</text>
+    <text x="1225" y="749" text-anchor="middle" font-size="11" fill="#666">• Per-user cost attribution</text>
+    <text x="1225" y="766" text-anchor="middle" font-size="11" fill="#666">• Graceful service degradation</text>
+    <text x="1225" y="783" text-anchor="middle" font-size="11" fill="#666">• Usage-based feature limits</text>
+    <text x="1225" y="800" text-anchor="middle" font-size="11" fill="#f57f17">Target: &lt;$0.15/user/month</text>
+    
+    <!-- Optimization Strategy -->
+    <rect x="1020" y="830" width="410" height="140" rx="8" fill="#e0f2f1" stroke="#00897b"/>
+    <text x="1225" y="850" text-anchor="middle" font-size="13" font-weight="600" fill="#00695c">Cost Optimization Strategy</text>
+    <text x="1225" y="870" text-anchor="middle" font-size="10" fill="#666">• Client-side preprocessing (50% reduction)</text>
+    <text x="1225" y="887" text-anchor="middle" font-size="10" fill="#666">• Pattern matching before LLM (90% coverage)</text>
+    <text x="1225" y="904" text-anchor="middle" font-size="10" fill="#666">• Aggressive response caching</text>
+    <text x="1225" y="921" text-anchor="middle" font-size="10" fill="#666">• Batch processing when possible</text>
+    <text x="1225" y="938" text-anchor="middle" font-size="10" fill="#666">• Token-minimal prompts</text>
+    <text x="1225" y="955" text-anchor="middle" font-size="10" fill="#666">• Free tier maximization</text>
+    
+    <!-- Future Premium -->
+    <rect x="1020" y="985" width="410" height="80" rx="8" fill="#e8eaf6" stroke="#c2185b" stroke-dasharray="5,5"/>
+    <text x="1225" y="1005" text-anchor="middle" font-size="13" font-weight="600" fill="#666">Future: Premium Services</text>
+    <text x="1225" y="1023" text-anchor="middle" font-size="11" fill="#888">• Stripe (subscriptions)</text>
+    <text x="1225" y="1040" text-anchor="middle" font-size="11" fill="#888">• GPT-4 (premium tier only)</text>
+    <text x="1225" y="1057" text-anchor="middle" font-size="11" fill="#888">• Banking APIs</text>
+    
+    <!-- Cost Breakdown -->
+    <rect x="1020" y="1080" width="410" height="80" rx="8" fill="#ffebee" stroke="#f44336"/>
+    <text x="1225" y="1100" text-anchor="middle" font-size="12" font-weight="600" fill="#d32f2f">Target Monthly Costs (5K users)</text>
+    <text x="1225" y="1120" text-anchor="middle" font-size="11" fill="#666">OCR: ~$50 • LLM: ~$100 • Infra: ~$50</text>
+    <text x="1225" y="1140" text-anchor="middle" font-size="12" font-weight="bold" fill="#d32f2f">Total: $200-300/month</text>
+  </g>
+  
+  <!-- DevOps (Minimal) -->
+  <g id="devops-layer">
+    <rect x="550" y="920" width="400" height="250" rx="12" fill="#e8eaf6" stroke="#3f51b5" stroke-width="2"/>
+    <text x="750" y="945" text-anchor="middle" font-size="18" font-weight="bold" fill="#3f51b5">Lean DevOps</text>
+    
+    <rect x="570" y="970" width="360" height="50" rx="8" fill="#ffffff" stroke="#3f51b5"/>
+    <text x="750" y="990" text-anchor="middle" font-size="12" font-weight="600" fill="#333">Development</text>
+    <text x="750" y="1008" text-anchor="middle" font-size="10" fill="#666">Docker Compose • Local mocks • Minimal deps</text>
+    
+    <rect x="570" y="1030" width="175" height="80" rx="8" fill="#ffffff" stroke="#3f51b5"/>
+    <text x="657" y="1050" text-anchor="middle" font-size="11" font-weight="600" fill="#333">CI/CD</text>
+    <text x="657" y="1068" text-anchor="middle" font-size="9" fill="#666">• GitHub Actions free</text>
+    <text x="657" y="1085" text-anchor="middle" font-size="9" fill="#666">• Direct deployment</text>
+    <text x="657" y="1102" text-anchor="middle" font-size="9" fill="#666">• No complex pipelines</text>
+    
+    <rect x="755" y="1030" width="175" height="80" rx="8" fill="#ffffff" stroke="#3f51b5"/>
+    <text x="842" y="1050" text-anchor="middle" font-size="11" font-weight="600" fill="#333">Monitoring</text>
+    <text x="842" y="1068" text-anchor="middle" font-size="9" fill="#666">• Free tier only</text>
+    <text x="842" y="1085" text-anchor="middle" font-size="9" fill="#666">• Essential metrics</text>
+    <text x="842" y="1102" text-anchor="middle" font-size="9" fill="#666">• Manual reviews</text>
+  </g>
+  
+  <!-- Key Metrics -->
+  <g id="metrics-box">
+    <rect x="1500" y="90" width="280" height="500" rx="12" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/>
+    <text x="1640" y="115" text-anchor="middle" font-size="16" font-weight="bold" fill="#4caf50">Ultra-Lean Metrics</text>
+    
+    <text x="1520" y="145" font-size="13" font-weight="600" fill="#333">Cost Efficiency:</text>
+    <text x="1520" y="165" font-size="11" fill="#666">• &lt;$0.15/user/month APIs</text>
+    <text x="1520" y="185" font-size="11" fill="#666">• $200-300 total @ 5K users</text>
+    <text x="1520" y="205" font-size="11" fill="#666">• 90%+ cache hit rate</text>
+    
+    <text x="1520" y="235" font-size="13" font-weight="600" fill="#333">Performance:</text>
+    <text x="1520" y="255" font-size="11" fill="#666">• 90% client-side</text>
+    <text x="1520" y="275" font-size="11" fill="#666">• &lt;100 tokens/LLM call</text>
+    <text x="1520" y="295" font-size="11" fill="#666">• 95% local notifications</text>
+    
+    <text x="1520" y="325" font-size="13" font-weight="600" fill="#333">User Limits:</text>
+    <text x="1520" y="345" font-size="11" fill="#666">• 3-5 AI queries/month</text>
+    <text x="1520" y="365" font-size="11" fill="#666">• 1-2 statements/month</text>
+    <text x="1520" y="385" font-size="11" fill="#666">• 6-month backlog once</text>
+    
+    <text x="1520" y="415" font-size="13" font-weight="600" fill="#333">Infrastructure:</text>
+    <text x="1520" y="435" font-size="11" fill="#666">• Free tier maximized</text>
+    <text x="1520" y="455" font-size="11" fill="#666">• Minimal backend</text>
+    <text x="1520" y="475" font-size="11" fill="#666">• Client-heavy design</text>
+    <text x="1520" y="495" font-size="11" fill="#666">• Auto-scaling disabled</text>
+    
+    <text x="1520" y="525" font-size="13" font-weight="600" fill="#333">Support Model:</text>
+    <text x="1520" y="545" font-size="11" fill="#666">• 80% self-service</text>
+    <text x="1520" y="565" font-size="11" fill="#666">• Email-only escalation</text>
+  </g>
+  
+  <!-- Cost Control Flow -->
+  <g id="cost-flow">
+    <rect x="1500" y="620" width="280" height="300" rx="12" fill="#fff3e0" stroke="#ff9800" stroke-width="2"/>
+    <text x="1640" y="645" text-anchor="middle" font-size="16" font-weight="bold" fill="#ff9800">Cost Control Flow</text>
+    
+    <text x="1520" y="675" font-size="12" font-weight="600" fill="#333">1. Client Processing:</text>
+    <text x="1530" y="695" font-size="11" fill="#666">• Image optimization</text>
+    <text x="1530" y="712" font-size="11" fill="#666">• Pattern matching</text>
+    <text x="1530" y="729" font-size="11" fill="#666">• FAQ search</text>
+    
+    <text x="1520" y="759" font-size="12" font-weight="600" fill="#333">2. Cache Check:</text>
+    <text x="1530" y="779" font-size="11" fill="#666">• Merchant cache (90%+)</text>
+    <text x="1530" y="796" font-size="11" fill="#666">• Response cache</text>
+    
+    <text x="1520" y="826" font-size="12" font-weight="600" fill="#333">3. API Calls (Last Resort):</text>
+    <text x="1530" y="846" font-size="11" fill="#666">• Minimal tokens</text>
+    <text x="1530" y="863" font-size="11" fill="#666">• Batch when possible</text>
+    <text x="1530" y="880" font-size="11" fill="#666">• Hard limits enforced</text>
+    
+    <text x="1520" y="905" font-size="12" font-weight="bold" fill="#ff6b6b">Zero tolerance for waste</text>
+  </g>
+  
+  <!-- Bottom Summary -->
+  <g id="summary">
+    <rect x="50" y="1220" width="1450" height="140" rx="12" fill="#f1f8e9" stroke="#689f38" stroke-width="2"/>
+    <text x="775" y="1245" text-anchor="middle" font-size="18" font-weight="bold" fill="#689f38">Ultra Cost-Efficient Architecture Summary</text>
+    
+    <text x="150" y="1275" font-size="13" font-weight="600" fill="#333">Design Philosophy:</text>
+    <text x="150" y="1295" font-size="11" fill="#666">• Client does 90% of work</text>
+    <text x="150" y="1315" font-size="11" fill="#666">• Backend only for essentials</text>
+    <text x="150" y="1335" font-size="11" fill="#666">• Aggressive free tier usage</text>
+    
+    <text x="500" y="1275" font-size="13" font-weight="600" fill="#333">Cost Controls:</text>
+    <text x="500" y="1295" font-size="11" fill="#666">• Hard API limits</text>
+    <text x="500" y="1315" font-size="11" fill="#666">• 90%+ cache hits</text>
+    <text x="500" y="1335" font-size="11" fill="#666">• Daily monitoring</text>
+    
+    <text x="850" y="1275" font-size="13" font-weight="600" fill="#333">User Experience:</text>
+    <text x="850" y="1295" font-size="11" fill="#666">• Still feels premium</text>
+    <text x="850" y="1315" font-size="11" fill="#666">• Fast & responsive</text>
+    <text x="850" y="1335" font-size="11" fill="#666">• Smart limitations</text>
+    
+    <text x="1200" y="1275" font-size="14" font-weight="bold" fill="#388e3c">Result:</text>
+    <text x="1200" y="1295" font-size="12" fill="#333">Premium MVP</text>
+    <text x="1200" y="1315" font-size="12" fill="#333">$200-300/mo @ 5K users</text>
+    <text x="1200" y="1335" font-size="12" fill="#666">Scales to profitability</text>
+  </g>
+  
+  <!-- Connection Lines -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#666"/>
+    </marker>
+  </defs>
+  
+  <path d="M 600 270 L 650 270" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <path d="M 800 210 L 800 480" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <path d="M 500 880 L 275 920" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <path d="M 950 680 L 1000 680" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <path d="M 750 880 L 750 920" stroke="#666" stroke-width="2" marker-end="url(#arrowhead)"/>
+</svg>

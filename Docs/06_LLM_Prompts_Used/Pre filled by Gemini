@@ -1,0 +1,586 @@
+Pre filled by Gemini
+
+<prd_document>
+    <title>ClariFi - TaskMaster-Optimized Product Requirements Document (MVP) - v1.0</title>
+    <last_updated>[Current Date]</last_updated>
+    <version>1.0</version>
+
+    <section id="1" title="Introduction & Purpose">
+        <subsection id="1.1" title="Document Purpose">
+            <paragraph>This document serves as the comprehensive Product Requirements Document (PRD) for the Minimum Viable Product (MVP) of ClariFi. It is intended to provide a single source of truth for product strategy, feature requirements, technical architecture, design guidelines, and detailed UI/UX specifications to guide development, particularly for use with AI-powered development tools like TaskMaster AI MCP.</paragraph>
+        </subsection>
+        <subsection id="1.2" title="Product Vision for ClariFi">
+            <paragraph>Empower every newcomer and credit user in Canada to achieve financial clarity, confidence, and control through AI-driven guidance that transforms complex financial data into actionable insights, enabling them to build strong credit, optimize spending, and navigate the Canadian financial system with ease.</paragraph>
+        </subsection>
+        <subsection id="1.3" title="Product Goals for MVP">
+            <list type="bullet">
+                <item>Validate the core value proposition of simplified budgeting and proactive credit optimization via statement uploads.</item>
+                <item>Achieve initial user traction (target 500-1000 beta users, growing to 5000 users within 6 months post-public launch) and positive feedback within the Canadian newcomer segment.</item>
+                <item>Test and prove the cost-efficiency (target <$0.15-$0.25/active user/month for OCR/LLM) and accuracy (>85% for AI categorization) of the API-driven AI model.</item>
+                <item>Establish ClariFi as a trustworthy, secure, and user-friendly financial companion.</item>
+                <item>Gather data on user behavior (via PostHog) to inform future development, feature prioritization, and monetization strategies.</item>
+            </list>
+        </subsection>
+        <subsection id="1.4" title="Target Audience & User Personas">
+            <paragraph>**Primary:** Newcomers to Canada (recent immigrants and international students, 0-5 years in Canada, 20-45 years old)</paragraph>
+            <list type="bullet">
+                <item>*Key Pain Points:* Limited Canadian credit history, unfamiliarity with credit scoring system, difficulty with financial statements in English/French, language barriers affecting financial literacy, urgent need to build credit for housing/vehicles, tight budgets due to entry-level income or newcomer expenses, loss of financial confidence post-arrival.</item>
+            </list>
+            <paragraph>**Secondary:** Young professionals in Canada (25-40 years old) with multiple credit cards</paragraph>
+            <list type="bullet">
+                <item>*Key Pain Points:* Difficulty tracking multi-card spending, optimizing credit utilization, information overload from multiple financial statements, managing payment timing, lack of a unified financial view.</item>
+            </list>
+            <paragraph>*(Further detailed personas will be developed/referenced separately if needed, focusing on specific newcomer journeys and tech savviness levels.)*</paragraph>
+        </subsection>
+    </section>
+
+    <section id="2" title="MVP Philosophy & Guiding Principles">
+        <paragraph>The ClariFi MVP is built on the philosophy of a **"Lean, High-Quality, Competitive, and Cost-Efficient Premium MVP."**</paragraph>
+        <list type="bullet">
+            <item>**Premium User Experience:** The app must feel polished, intuitive, reliable, and modern. User delight, ease of use, and speed are paramount. The design must instill trust and confidence from the first interaction.</item>
+            <item>**Lean & Cost-Efficient Operations:** Architectural and technical decisions must prioritize minimizing recurring operational costs, especially for third-party APIs (OCR, LLM). This involves aggressive free-tier utilization for supporting services, client-heavy processing where sensible without degrading UX, efficient API call strategies (batching, minimal token usage), and robust caching. Target operational costs for the first ~1000-5000 users are aimed to be under $100-$300/month.</item>
+            <item>**Automation-First:** Minimize manual founder/team intervention for routine operations through smart automation in statement processing, user support (via self-serve and AI Q&A), and notifications.</item>
+            <item>**Competitive Core Value:** The MVP must excel at its core promises: simplifying budgeting from statements and providing actionable credit optimization insights that are as good as or better than existing solutions in terms of clarity, actionability, and newcomer focus.</item>
+            <item>**Privacy-First:** User control over data and robust privacy measures are foundational. No direct bank linking is required for the MVP; data is sourced from user-uploaded statements, which are deleted immediately after processing. All data handling must be PIPEDA compliant.</item>
+            <item>**Iterative Development:** Launch with a focused, high-quality feature set. Continuously gather user feedback and analytics to iterate rapidly and improve the product. Implement a waitlist system for controlled initial rollout.</item>
+        </list>
+    </section>
+
+    <section id="3" title="Overall MVP Architecture & Technology Stack">
+        <subsection id="3.1" title="High-Level Architecture Overview">
+            <paragraph>ClariFi employs a client-heavy architecture for its mobile MVP to optimize for cost and provide a responsive user experience. The React Native (Expo) frontend handles significant UI rendering, local data storage (AsyncStorage), client-side calculations for dashboards and optimizations, local notification scheduling, and image preprocessing. The backend is a lean NestJS (Node.js) monolith, hosted on a cost-effective PaaS (e.g., Render.com free/starter tier), serving primarily as an API gateway, an orchestrator for external AI services (OCR/LLM), and for managing user authentication and asynchronous statement processing jobs via a Redis-based queue (BullMQ). Data persistence is handled by Supabase (PostgreSQL), with Supabase Auth for user management and Supabase Storage for temporary file uploads.</paragraph>
+            <paragraph>*(Visual Aid: Refer to `ClariFi_System_Architecture_MVP_v1.0.svg` - this diagram will be provided separately to the AI IDE if it can process it, or its key elements are described herein.)*</paragraph>
+            <paragraph>**Key Architectural Flow for Statement Processing:** User uploads statement (image/PDF) -> Client preprocesses image -> Secure upload to Supabase Storage (temporary) -> Backend API call to trigger processing -> Job added to BullMQ/Redis queue -> Backend worker picks up job -> Calls Google Vision API for OCR -> Sends extracted text to Claude Haiku/GPT-3.5-Turbo for transaction parsing & categorization (leveraging Redis merchant cache) -> Stores structured data in Supabase PostgreSQL -> Deletes original file from Supabase Storage -> Notifies client of completion (via polling or minimal WebSocket).</paragraph>
+        </subsection>
+        <subsection id="3.2" title="Core Technology Stack (MVP)">
+            <list type="bullet">
+                <item>**Frontend:** React Native (Expo) with TypeScript, Expo Router, high-quality built-in or minimal UI components (e.g., React Native SVG for charts, no heavy external UI kits unless essential and themeable).</item>
+                <item>**Backend:** NestJS (Node.js, TypeScript) hosted on Render.com (free/starter tier) or similar cost-effective PaaS.</item>
+                <item>**Database:** PostgreSQL via Supabase (free tier: 500MB DB).</item>
+                <item>**Authentication:** Supabase Auth (free tier: 50K MAU, JWT, biometric support via client).</item>
+                <item>**File Storage (Temporary):** Supabase Storage (free tier: 1GB, files deleted immediately post-processing).</item>
+                <item>**Queue/Cache:** Redis via Upstash (free tier: 10K commands/day) with BullMQ for queue management and merchant/Q&A response caching.</item>
+                <item>**OCR:** Google Vision API (aggressively utilize 1000 free units/month, budget for minimal overage).</item>
+                <item>**LLM:** Anthropic Claude Haiku (primary for cost-efficiency) or OpenAI GPT-3.5-Turbo (secondary/comparison). NO GPT-4 for MVP core categorization/Q&A.</item>
+                <item>**Push Notifications:** Expo Local Notifications (primary for client-side scheduling), Expo Push Notifications (free tier, for minimal server-triggered backup alerts).</item>
+                <item>**Analytics:** PostHog (free tier: 1M events/month).</item>
+                <item>**Error Tracking:** Sentry (free tier).</item>
+                <item>**Local Development:** Docker & Docker Compose.</item>
+            </list>
+        </subsection>
+        <subsection id="3.3" title="Key Architectural Principles (MVP)">
+            <list type="bullet">
+                <item>Client-Heavy Logic: Maximize processing on user devices.</item>
+                <item>API-Driven AI: Leverage external LLM/OCR services efficiently.</item>
+                <item>Aggressive Caching: For AI responses, merchant categorizations, common queries.</item>
+                <item>Free Tier Maximization: Build within limits of free tiers for supporting services.</item>
+                <item>Asynchronous Processing: Use job queues for OCR and AI tasks.</item>
+                <item>Modularity (within Monolith): NestJS modules for clear domain separation.</item>
+                <item>Security by Design: Encryption, minimal PII storage, PIPEDA compliance.</item>
+                <item>Cost-Efficiency First: Every decision optimizes for minimal operational cost.</item>
+                <item>Scalability Foundation (Lean): While optimized for low cost initially, the chosen technologies (Node.js, PostgreSQL, Redis) and modular design provide a path for scaling when funding and user growth allow.</item>
+                <item>Minimal Backend State: Keep the backend as stateless as possible, relying on the database and cache for state, to simplify scaling of backend instances on PaaS.</item>
+            </list>
+        </subsection>
+    </section>
+
+    <section id="4" title="Core Design System Summary (ClariFi Style Guide Highlights)">
+        <paragraph>*(The full `ClariFi_Style_Guide_v1.0.md` is the definitive source and should be considered embedded here for reference by TaskMaster. Key highlights are provided for immediate context. This summary is based on the "Clarity Blue, Midnight Ink, Growth Green, Wisdom Purple" palette. Ensure this matches the finalized Style Guide to be used for development.)*</paragraph>
+        <subsection id="4.1" title="Core Color Palette">
+            <list type="bullet">
+                <item>**Primary Brand:** Clarity Blue - #2B5CE6 (Primary buttons, key interactive elements, headers)</item>
+                <item>**Primary Text:** Midnight Ink - #1A1F36 (High readability on light backgrounds)</item>
+                <item>**Primary Surface:** Pure White - #FFFFFF (Cards, content areas, input backgrounds)</item>
+                <item>**Secondary Action/Hover:** Sky Trust - #4B7BF5 (Lighter blue for interactions)</item>
+                <item>**Subtle Backgrounds/Inactive:** Cloud Gray - #F7F9FC (App background sections, disabled states)</item>
+                <item>**Primary Accent (Positive/Growth):** Growth Green - #00C896 (Success states, positive financial indicators, some CTAs)</item>
+                <item>**Secondary Accent (Guidance/Premium):** Wisdom Purple - #6B5DD3 (Educational content highlights, premium feature hints)</item>
+                <item>**Functional:** Success (#00A76F), Error (#E53E3E), Warning (#F6AD55), Neutral Grays (#4A5568, #718096), Border (#E2E8F0).</item>
+                <item>**App Background (Overall):** #FAFBFD (Subtle blue-tinted gray for visual comfort)</item>
+                <item>**Dark Mode:** Primary BG #0F1419, Surface BG #1A202C, Text #F7FAFC, Adjusted Blues/Greens/Purples for contrast.</item>
+            </list>
+        </subsection>
+        <subsection id="4.2" title="Core Typography">
+            <list type="bullet">
+                <item>**Font Family:** SF Pro Text (iOS) / Roboto (Android). Inter as a web fallback if ever needed.</item>
+                <item>**Weights Used:** Regular (400), Medium (500), Semibold (600), Bold (700).</item>
+                <item>**Key Styles (Size/Weight/Color defined in full Style Guide):** H1 (Screen Titles, e.g., 32dp Bold), H2 (Section Headers, e.g., 24dp Semibold), H3 (Card Headers, e.g., 18dp Semibold), Body Regular (Standard text, e.g., 16dp Regular), Body Small (Secondary info, e.g., 14dp Regular), Caption (Helper text, e.g., 12dp Regular), Button Text (e.g., 16dp Medium, Sentence case), Link Text (e.g., 16dp Regular, Clarity Blue).</item>
+            </list>
+        </subsection>
+        <subsection id="4.3" title="Key Component Principles">
+            <list type="bullet">
+                <item>**Buttons:** Clear visual hierarchy for Primary (solid Clarity Blue), Secondary (outlined Clarity Blue), and Text buttons. Defined states (default, hover/pressed, disabled) with appropriate color changes and subtle animations (e.g., scale on press). Height: 48dp. Corner Radius: 12dp.</item>
+                <item>**Cards:** Pure White background, 16dp corner radius, subtle shadow for elevation, 24dp internal padding.</item>
+                <item>**Input Fields:** 52dp height, 12dp corner radius. Default border: Border/Divider gray. Focused state: 2dp Clarity Blue border with subtle glow. Error state: Error Red border and helper text. Placeholders in Neutral Gray (Secondary).</item>
+                <item>**Icons:** Lucide React Native. Interactive icons use Clarity Blue. Non-interactive use Neutral Gray (Secondary). Sizes: 24dp general, 20dp small, 28dp Tab Bar.</item>
+            </list>
+        </subsection>
+        <subsection id="4.4" title="Spacing & Motion Philosophy">
+            <list type="bullet">
+                <item>**Spacing:** Consistent 8dp base unit grid (4dp, 8dp, 12dp, 16dp, 24dp, 32dp, 48dp scale) for all margins, padding, and layouts.</item>
+                <item>**Motion:** Purposeful, smooth (200-250ms, cubic-bezier easing), and feedback-oriented. Microinteractions (150ms) for tactile feel. Platform-native page transitions. Skeleton screens and small spinners for loading states.</item>
+            </list>
+        </subsection>
+        <subsection id="4.5" title="Accessibility Mandate">
+            <list type="bullet">
+                <item>Strict adherence to WCAG 2.1 Level AA for color contrast (e.g., Clarity Blue on white is 5.2:1).</item>
+                <item>Minimum touch targets of 44dp x 44dp (ideally 48dp).</item>
+                <item>Support for dynamic type scaling and screen reader compatibility (descriptive labels for icons and images).</item>
+                <item>Clear visual focus indicators for keyboard navigation.</item>
+            </list>
+        </subsection>
+        <paragraph>*(Full Style Guide with detailed specifications for all components, states, dark mode, etc., is defined in `ClariFi_Style_Guide_v1.0.md` and must be strictly followed.)*</paragraph>
+    </section>
+
+    <section id="5" title="MVP Features - Detailed Requirements & UI/UX Specifications">
+
+        <feature id="5.1" name="User Onboarding & Statement Import">
+            <feature_goal>Create a premium, frictionless onboarding experience that guides users through account setup and historical statement import (up to 6 months backlog, 3-5 pages per statement) while minimizing operational costs through client-side processing and intelligent resource usage.</feature_goal>
+            <core_requirements>
+                <user_story>
+                    <as_a>new user</as_a>
+                    <i_want_to>register quickly and securely using my email and password, with an optional and easy setup for biometric login (Face ID/Touch ID)</i_want_to>
+                    <so_that>I can access ClariFi efficiently and trust my data is safe.</so_that>
+                    <acceptance_criteria>
+                        <criterion>Real-time email validation is implemented using standard patterns.</criterion>
+                        <criterion>Clear password strength requirements (e.g., min 8 chars, uppercase, number, special char) are displayed and validated in real-time.</criterion>
+                        <criterion>Biometric setup is offered post-password creation and functions as expected per platform if enabled by the user.</criterion>
+                        <criterion>Successful registration or login proceeds smoothly to the next onboarding step or dashboard with appropriate feedback.</criterion>
+                    </acceptance_criteria>
+                </user_story>
+                <user_story>
+                    <as_a>new user</as_a>
+                    <i_want_to>easily select my bank(s) from a list of major Canadian institutions (Top 6 + National Bank)</i_want_to>
+                    <so_that>ClariFi can accurately process my statements.</so_that>
+                    <acceptance_criteria>
+                        <criterion>A visually clear list or grid of supported bank logos and names is presented.</criterion>
+                        <criterion>User can select one or more banks as applicable (MVP: one bank at a time during initial onboarding, multi-bank support via settings later).</criterion>
+                        <criterion>Selection is clearly indicated visually (e.g., border change, checkmark overlay).</criterion>
+                        <criterion>An option for "My bank isn't listed" provides appropriate information or a way to request support for other banks.</criterion>
+                    </acceptance_criteria>
+                </user_story>
+                <user_story>
+                    <as_a>new user</as_a>
+                    <i_want_to>upload my bank/credit card statements for up to the last 6 months (typically 3-5 pages per statement) via either camera scan or PDF upload, with client-side preprocessing to optimize the file</i_want_to>
+                    <so_that>I can populate ClariFi with my financial history efficiently and cost-effectively.</so_that>
+                    <acceptance_criteria>
+                        <criterion>Both camera capture (with guidance for multi-page documents if applicable) and PDF upload are functional and intuitive.</criterion>
+                        <criterion>Client-side image optimization (compression, resizing, basic quality checks) significantly reduces file size before upload without compromising OCR readability.</criterion>
+                        <criterion>Upload progress is clearly indicated to the user for each file.</criterion>
+                        <criterion>System correctly handles multi-page statements if the format allows (e.g., multi-page PDF, or guided multi-image capture).</criterion>
+                        <criterion>Original statement files are deleted from temporary storage (e.g., Supabase Storage) immediately after secure processing by the backend.</criterion>
+                    </acceptance_criteria>
+                </user_story>
+                <user_story>
+                    <as_a>user</as_a>
+                    <i_want_to>receive clear, real-time validation and feedback throughout the statement capture and upload process, including image quality checks and processing status updates</i_want_to>
+                    <so_that>I feel informed and in control, and can correct issues promptly.</so_that>
+                    <acceptance_criteria>
+                        <criterion>Client-side image quality checks (e.g., for blur, glare, cropping, orientation) provide instant feedback and actionable guidance to the user.</criterion>
+                        <criterion>Upload status (uploading, processing) and subsequent asynchronous processing status (e.g., "Reading document," "Extracting transactions") are clearly communicated to the user via efficient polling or minimal WebSocket use.</criterion>
+                        <criterion>Error messages are user-friendly and suggest corrective actions.</criterion>
+                    </acceptance_criteria>
+                </user_story>
+                <user_story>
+                    <as_a>new user</as_a>
+                    <i_want_to>see a welcoming "Onboarding Complete" screen after successful registration and initial statement import</i_want_to>
+                    <so_that>I feel my setup is successful, I am acknowledged for completing the process, and I am guided to the main dashboard.</so_that>
+                    <acceptance_criteria>
+                        <criterion>A positive, visually engaging confirmation screen is displayed upon completion of the initial onboarding steps.</criterion>
+                        <criterion>Key initial findings (e.g., number of transactions imported from the first statement, a teaser insight) may be briefly and engagingly summarized.</criterion>
+                        <criterion>A clear Call to Action (CTA) navigates the user to the main dashboard or offers a quick tour.</criterion>
+                    </acceptance_criteria>
+                </user_story>
+            </core_requirements>
+            <technical_summary>
+                <frontend>React Native/Expo. Onboarding navigator (Expo Router) with screens: Welcome, Email/Password Registration, Biometric Setup, Bank Selection, Statement Import Instructions, Camera Capture/File Picker, Processing Progress, Onboarding Complete. Heavy use of AsyncStorage for persisting onboarding state and user preferences. Client-side image preprocessing libraries. Efficient polling for status updates.</frontend>
+                <backend>NestJS. Auth module integrates with Supabase Auth for registration/login. Statements module provides endpoints for preparing secure upload URLs (to Supabase Storage), confirming uploads, and adding statement processing jobs to a BullMQ queue. Minimal backend logic directly involved in the onboarding UI flow itself; primarily acts as an orchestrator for subsequent asynchronous processing.</backend>
+                <ai_llm_integration>OCR (Google Vision API) will be called by the backend statement processor *after* this onboarding feature successfully queues a statement. No direct LLM for categorization is invoked *during* this specific onboarding feature's immediate user flow; categorization is a subsequent, separate asynchronous job.</ai_llm_integration>
+                <database>Supabase/PostgreSQL: `users_profile` table (linked to `auth.users` via ID, stores `preferred_language`, `onboarding_completed` status, `notification_preferences`). `statement_imports` table to track job `id`, `user_id`, `bank_name`, `statement_date`, `import_status` (`pending`, `processing`, `completed`, `failed`), `file_key` (in Supabase Storage, temporary), `processed_at`, `error_message`.</database>
+            </technical_summary>
+            <ui_ux_summary>
+                <screen name="Welcome Screen">
+                    <state name="Default/Initial View">
+                        <description>Full-screen background: `App Background (#FAFBFD)`. ClariFi logo (specific asset, e.g., 60dp height, `Midnight Ink` or a version with `Clarity Blue` elements) centered horizontally, approximately 20% from top (e.g., 120dp), 48dp height. Headline (H1 Style): "Welcome to ClariFi" or "Financial Clarity Starts Here" in `Midnight Ink (#1A1F36)`. Centered below the logo. Tagline (Body Large Style): "AI-powered budgeting and credit optimization, built for Canada." in `Neutral Gray (Primary) (#4A5568)`. Centered below the headline. Primary Button "Get Started" (Style Guide: Primary Button - `Clarity Blue` bg, `Pure White` text), full width (minus 48dp total horizontal margin), positioned approx. 80dp from the bottom. Text Button "I already have an account" (Style Guide: Text Button - `Clarity Blue` text) centered 16dp below the "Get Started" button. Layout emphasizes breathable whitespace. Subtle fade-in animation (250ms, ease-out) for logo, then text, then buttons. Accessibility: Logo alt text. High contrast text.</description>
+                    </state>
+                    <state name=""Get Started" Button Pressed">
+                        <description>Primary Button shows "pressed" state (Style Guide: `Sky Trust` background, slight scale down to 0.97). Haptic feedback. Screen transitions to Email Registration Screen (platform-native slide animation, 300ms).</description>
+                    </state>
+                    <state name=""Sign In" Text Button Pressed">
+                        <description>Text Button shows "pressed" state (Style Guide: `Sky Trust` text color, underline appears). Screen transitions to a dedicated Login Screen (platform-native slide animation, 300ms).</description>
+                    </state>
+                </screen>
+                <screen name="Email & Password Registration Screen">
+                    <state name="Default Input View">
+                        <description>`App Background (#FAFBFD)`. Header with a "Back" arrow icon (`Lucide ChevronLeft`, 24dp, `Clarity Blue`) on the left and screen title "Create Your Account" (H2 Style, `Midnight Ink`) centered or left-aligned. Email Input Field (Style Guide: Input Field - 52dp height, `Pure White` bg, `Border/Divider (#E2E8F0)` border, 12dp corner radius). Placeholder "Email address" (`Neutral Gray (Secondary)`). Leading mail icon (`Lucide Mail`, 20dp, `Neutral Gray (Secondary)`). Password Input Field (same styling). Placeholder "Create password". Leading lock icon (`Lucide Lock`, 20dp, `Neutral Gray (Secondary)`). Trailing eye icon (`Lucide Eye/EyeOff`, 20dp, `Neutral Gray (Secondary)`) to toggle password visibility. Password Strength Indicator bar (4dp height, below password field, dynamically colored `Error Red` -> `Warning Amber` -> `Success Green`). Password Requirements Checklist (Caption Style, `Neutral Gray (Secondary)`), e.g., "✓ At least 8 characters". Checkmarks `Lucide Check` in `Success Green`. Primary Button "Continue", initially Disabled state. Legal text "By continuing..." (Body Small, `Neutral Gray (Secondary)`) with links in `Clarity Blue`. Vertical stacking with 16dp spacing. Smooth focus animations. Checklist items animate checkmarks.</description>
+                    </state>
+                    <state name="Input Field Focused">
+                        <description>Focused input field: 2dp `Clarity Blue` border, subtle glow (0 0 0 4dp rgba(43, 92, 230, 0.15)). Keyboard visible. UI scrolls if needed.</description>
+                    </state>
+                    <state name="Real-time Validation Error">
+                        <description>Invalid field: 2dp `Error (#E53E3E)` border, light `Error` background tint (rgba(229, 62, 62, 0.04)). Helper text (Caption Style, `Error (#E53E3E)`) below input, e.g., "Please enter a valid email." Optional `Lucide AlertCircle` icon (`Error Red`) in helper text. Error message fades/slides in (150ms).</description>
+                    </state>
+                    <state name="All Fields Valid, "Continue" Enabled">
+                        <description>"Continue" button transitions to enabled Primary Button style (`Clarity Blue` bg, `Pure White` text).</description>
+                    </state>
+                    <state name=""Continue" Pressed - Loading">
+                        <description>"Continue" button: text replaced by centered circular spinner (20dp, `Pure White` on `Clarity Blue` bg). Button non-interactive. Subtle shimmer on button.</description>
+                    </state>
+                    <state name="Registration API Error (e.g., Email Exists)">
+                        <description>Non-modal toast/banner (slides from top/bottom, `Error` bg, `Pure White` text): "Error: Email already registered. Please log in or use a different email." "Continue" button reverts to enabled state. Focus may return to email field.</description>
+                    </state>
+                    <state name="Registration Success">
+                        <description>Brief success feedback (e.g., button shows `Lucide Check` icon in `Success Green` momentarily). Transition to Biometric Setup Screen (platform-native slide, 300ms).</description>
+                    </state>
+                </screen>
+                <screen name="Biometric Setup Screen">
+                    <state name="Default Prompt View">
+                        <description>`App Background (#FAFBFD)`. Screen Title "Quick & Secure Access" (H2, `Midnight Ink`), centered. Large, friendly illustration/icon for biometrics (`Clarity Blue` & `Sky Trust` accents, 80-100dp size). Body Regular text "Enable biometric login..." (`Neutral Gray (Primary)`), centered, 32dp horizontal padding. Primary Button "Enable Face ID/Touch ID" (`Clarity Blue` bg). Text Button "Skip for Now" (`Clarity Blue` text). Buttons grouped at bottom with 16dp spacing between them, 32dp from screen bottom.</description>
+                    </state>
+                    <state name=""Enable Biometrics" Pressed - System Prompt Active">
+                        <description>App triggers native iOS/Android biometric authentication prompt. ClariFi UI behind dims (e.g., 40% black overlay on `App Background`).</description>
+                    </state>
+                    <state name="Biometric Setup Success">
+                        <description>System prompt dismisses. On ClariFi screen: Large `Lucide CheckCircle` icon (64dp, `Success Green`) animates in (e.g., draw effect or scale-up with bounce). Text "Biometrics Enabled!" (H3, `Midnight Ink`) fades in below. Auto-transition to Bank Selection Screen after 1.5 seconds.</description>
+                    </state>
+                    <state name="Biometric Setup Failed/Cancelled / "Skip for Now" Pressed">
+                        <description>If failed/cancelled from system prompt, a brief, non-intrusive toast message: "Biometric setup skipped. You can enable it later in Settings." Screen transitions to Bank Selection Screen (platform-native slide, 300ms).</description>
+                    </state>
+                </screen>
+                <screen name="Bank Selection Screen">
+                    <state name="Default View / Single Bank Selection Mode">
+                        <description>`App Background (#FAFBFD)`. Header: "Back" arrow (`Lucide ChevronLeft`, `Clarity Blue`), Title "Connect Your Bank" (H1, `Midnight Ink`). Subtitle "Select your primary bank to import statements." (Body Regular, `Neutral Gray (Primary)`). Responsive grid (2 columns on phone, 16dp gap) of bank selection cards. Each card: `Pure White` bg, 16dp corner radius, subtle shadow (Style Guide spec), 24dp padding. Contains official bank logo (e.g., 40dp height, aspect ratio preserved) and bank name (Body Regular, `Midnight Ink`) below logo. Supported banks listed. "My bank isn't listed" Text Button (`Clarity Blue`) at bottom. Primary Button "Continue", initially disabled (Style Guide disabled state).</description>
+                    </state>
+                    <state name="Bank Card Tapped/Selected">
+                        <description>Tapped bank card: gets 2dp `Clarity Blue` border. Small `Lucide CheckCircle` icon (20dp, `Pure White` fill on `Clarity Blue` circular background, 8dp size) appears in top-right corner of card with a gentle scale/fade-in animation. Card might slightly elevate (increased shadow). If another card was selected, it reverts to default state. "Continue" button becomes enabled (Primary Button style).</description>
+                    </state>
+                    <state name=""My bank isn't listed" Tapped">
+                        <description>Informational modal or inline message appears: "We're working to support more banks! For now, please proceed if your bank provides PDF statements you can upload manually. You can also request your bank via our support channel." (Body Regular). Link to support. "Continue" button might enable if manual upload is an immediate option, or user is guided back.</description>
+                    </state>
+                </screen>
+                <screen name="Statement Import Instructions Screen">
+                    <state name="Default View">
+                        <description>`App Background (#FAFBFD)`. Header: "Back" arrow, Title "Import [Selected Bank Name] Statements" (H1). Friendly illustration (e.g., phone scanning statement, `Clarity Blue` & `Growth Green` accents). Headline "Ready to Import?" (H2). Instructional steps (Body Regular, `Midnight Ink`, with `Lucide CheckCircle` icons in `Clarity Blue`): 1. "Gather statements (up to 6 months, PDF/photos)." 2. "Ensure full, clear pages." 3. "ClariFi will securely process them." Primary Button "Scan Statement with Camera" (Icon: `Lucide Camera`). Secondary Button "Upload PDF File" (Icon: `Lucide FileText`). Buttons stacked vertically with 16dp spacing. Privacy Note (Caption, `Neutral Gray (Secondary)`) with link.</description>
+                    </state>
+                </screen>
+                <screen name="Statement Capture / File Picker Screen">
+                    <state name="Camera View (for "Scan Statement")">
+                        <description>Native camera view. Overlay: semi-transparent with rectangular cutout. `Clarity Blue` corner guides animate subtly. Text "Align statement within frame." Capture button (large circular, `Pure White` with `Clarity Blue` border). Flash toggle (`Lucide Zap`), gallery access (`Lucide Image`). Real-time edge detection highlights document borders in `Growth Green`. Blur detection shows `Warning Amber` icon/message.</description>
+                    </state>
+                    <state name="PDF File Picker View (for "Upload PDF")">
+                        <description>Native OS file picker interface is presented.</description>
+                    </state>
+                    <state name="Client-Side Preprocessing (after image/PDF selected)">
+                        <description>Small modal/overlay: circular progress spinner (`Clarity Blue`), text "Optimizing image..." or "Preparing PDF...". User cannot interact.</description>
+                    </state>
+                    <state name="Preprocessing Error">
+                        <description>Error message (e.g., "Image too blurry, please retake" or "Invalid PDF file") in `Error Red` text and `Lucide AlertTriangle` icon. Options "Try Again" (Secondary Button) or "Cancel" (Text Button).</description>
+                    </state>
+                    <state name="Ready to Upload (after preprocessing)">
+                        <description>Thumbnail of preprocessed image/PDF icon shown. Text "Ready to upload [filename]?" Primary Button "Upload & Process".</description>
+                    </state>
+                </screen>
+                <screen name="Statement Processing Progress Screen">
+                    <state name="Uploading">
+                        <description>`App Background`. Large animated `Lucide FileUp` icon (`Clarity Blue`, upward motion). Text "Uploading statement..." (H3, `Midnight Ink`). Linear progress bar (`Clarity Blue` fill on `Cloud Gray` track) showing upload percentage.</description>
+                    </state>
+                    <state name="Processing (Asynchronous - after upload confirmation)">
+                        <description>Icon changes (e.g., to `Lucide BrainCircuit` with subtle animation). Text updates sequentially: "Processing statement..." -> "Extracting transactions..." -> "Categorizing expenses..." (H3, text animates/updates). Step indicator: 1. `Lucide Eye` (Reading document) - Active (`Clarity Blue`); 2. `Lucide ListChecks` (Extracting) - Pending (`Neutral Gray (Secondary)`), etc. Helper text "This may take a minute. Feel free to navigate away, we'll notify you." (Body Small, `Neutral Gray (Primary)`). Option to "Notify me when done" or "Wait here".</description>
+                    </state>
+                    <state name="Processing Error (Backend/API Error)">
+                        <description>Error icon (`Lucide AlertTriangle`, `Error Red`). Text "Oops! Something went wrong..." (H3, `Midnight Ink`). "Please try uploading again or contact support." (Body Regular, `Neutral Gray (Primary)`). Secondary Button "Try Another Statement". Text Button "Go to Dashboard".</description>
+                    </state>
+                </screen>
+                <screen name="Onboarding Complete Screen">
+                    <state name="Celebration View">
+                        <description>`App Background` or a subtle celebratory gradient (e.g., `Cloud Gray` to light `Growth Green` tint). Large animated `Lucide PartyPopper` or `CheckCircle` icon (`Growth Green` or `Wisdom Purple`), e.g., 80dp. Subtle confetti animation (`Clarity Blue`, `Growth Green`, `Wisdom Purple` particles). Headline "You're All Set, [User Name]!" (H1, `Midnight Ink`). Body Large "ClariFi is ready to bring you financial clarity." (`Neutral Gray (Primary)`). Optional: "We've started processing your first [N] statements!" Primary Button "Explore Your Dashboard" (`Clarity Blue` bg, `Pure White` text), full width, positioned towards bottom with subtle pulse animation. Text Button "Take a Quick Tour" (`Clarity Blue` text) below.</description>
+                    </state>
+                    <state name=""Explore Dashboard" Pressed">
+                        <description>Smooth transition (e.g., fade out current, fade in new, or platform slide) to the Main Dashboard screen.</description>
+                    </state>
+                </screen>
+            </ui_ux_summary>
+            <api_relationships_backend>
+                <api_endpoint method="POST" path="/auth/register">Supabase Auth for user creation.</api_endpoint>
+                <api_endpoint method="POST" path="/auth/login">Supabase Auth for user login.</api_endpoint>
+                <api_endpoint method="POST" path="/statements/upload-url">Generates a pre-signed URL for Supabase Storage.</api_endpoint>
+                <api_endpoint method="POST" path="/statements/process-job">Confirms upload and adds job to BullMQ queue for OCR/categorization.</api_endpoint>
+                <api_endpoint method="GET" path="/statements/job-status/:jobId">Client polls this for status updates on statement processing.</api_endpoint>
+            </api_relationships_backend>
+            <nfrs_feature>
+                <nfr_item>Onboarding completion time (first statement queued): Target < 3 minutes.</nfr_item>
+                <nfr_item>Client-side image preprocessing: Target file size reduction of >70% without critical loss of OCR readability.</nfr_item>
+                <nfr_item>Statement processing (asynchronous backend job): Target P95 under 2 minutes from upload confirmation to data available in DB (after initial user backlog).</nfr_item>
+                <nfr_item>Accessibility: All onboarding screens must be WCAG 2.1 AA compliant, including support for screen readers and dynamic font scaling.</nfr_item>
+                <nfr_item>Reliability: Statement upload success rate >99% for supported formats and good quality images.</nfr_item>
+            </nfrs_feature>
+            <cost_optimizations_feature>
+                <optimization>Aggressive client-side image preprocessing (compression, resizing, quality checks) to minimize data sent to OCR and reduce OCR API calls/costs.</optimization>
+                <optimization>Immediate deletion of original statement files from Supabase Storage after successful data extraction by the backend to minimize storage costs (stay within free tier).</optimization>
+                <optimization>Efficient polling mechanism for status updates rather than persistent WebSockets for MVP to conserve free tier PaaS resources, unless a very lightweight WebSocket solution within free limits is viable.</optimization>
+                <optimization>Leverage Supabase free tiers for Auth (50K MAU) and Storage (1GB, used temporarily per upload).</optimization>
+                <optimization>Guide users to provide high-quality images/PDFs to reduce OCR failures and reprocessing costs.</optimization>
+            </cost_optimizations_feature>
+        </feature>
+
+        <feature id="5.2" name="AI-Powered Data Extraction & Categorization (Ultra Cost-Efficient)">
+            <feature_goal>Implement a hyper-optimized OCR-to-LLM pipeline targeting <$0.15 per user/month for API costs through aggressive caching, minimal token usage, and smart fallbacks to achieve 85%+ initial AI categorization accuracy, with user corrections further improving the system.</feature_goal>
+            <core_requirements>
+                <user_story>
+                    <as_a>user</as_a>
+                    <i_want_to>have my uploaded statements processed automatically in the background</i_want_to>
+                    <so_that>I can continue using other parts of the app or close it without waiting for completion.</so_that>
+                    <acceptance_criteria>
+                        <criterion>Statement processing is handled by an asynchronous queue (BullMQ/Redis).</criterion>
+                        <criterion>Users are informed that processing is happening and they will be notified (or can check status).</criterion>
+                        <criterion>App remains fully responsive during background processing.</criterion>
+                    </acceptance_criteria>
+                </user_story>
+                <user_story>
+                    <as_a>user</as_a>
+                    <i_want_to>see transactions accurately extracted (merchant, date, amount) from my statements by the OCR process</i_want_to>
+                    <so_that>the data forming the basis of my budget is correct.</so_that>
+                    <acceptance_criteria>
+                        <criterion>Google Vision API is used for OCR with configurations optimized for Canadian bank statement formats.</criterion>
+                        <criterion>Extraction accuracy for key fields (merchant, date, amount) is >95% for supported banks and good quality uploads.</criterion>
+                        <criterion>System handles common date formats and currency symbols found on Canadian statements.</criterion>
+                    </acceptance_criteria>
+                </user_story>
+                <user_story>
+                    <as_a>user</as_a>
+                    <i_want_to>have my extracted transactions intelligently categorized by AI (using cost-effective LLMs like Claude Haiku or GPT-3.5-Turbo) with minimal errors</i_want_to>
+                    <so_that>I get an immediate understanding of my spending without manual effort.</so_that>
+                    <acceptance_criteria>
+                        <criterion>A merchant-to-category cache (Redis) is checked before any LLM call.</criterion>
+                        <criterion>Client-side rule engine/pattern matching attempts categorization for very common/obvious merchants first.</criterion>
+                        <criterion>LLM API calls use token-optimized prompts and are made only for uncached/unmatched transactions.</criterion>
+                        <criterion>Initial AI categorization accuracy (before user correction) is >85%.</criterion>
+                        <criterion>Target API cost for categorization is <$0.10 per statement (assuming average number of transactions).</criterion>
+                    </acceptance_criteria>
+                </user_story>
+                <user_story>
+                    <as_a>user</as_a>
+                    <i_want_to>easily review my categorized transactions and quickly correct any miscategorizations</i_want_to>
+                    <so_that>my financial data is accurate and reflects my actual spending habits.</so_that>
+                    <acceptance_criteria>
+                        <criterion>A clear list of transactions with their AI-assigned categories is presented.</criterion>
+                        <criterion>An intuitive interface (e.g., tap to edit, category picker modal) allows for quick correction of categories.</criterion>
+                        <criterion>Bulk categorization options are available for similar uncategorized or miscategorized transactions.</criterion>
+                    </acceptance_criteria>
+                </user_story>
+                <user_story>
+                    <as_a>ClariFi system</as_a>
+                    <i_want_to>learn from user corrections to improve the merchant-to-category cache</i_want_to>
+                    <so_that>future categorizations for that user and potentially globally (anonymized) become more accurate and require fewer LLM calls.</so_that>
+                    <acceptance_criteria>
+                        <criterion>User corrections update their local/user-specific merchant cache mappings.</criterion>
+                        <criterion>Aggregated, anonymized correction data is used to refine global merchant cache suggestions or rule-based fallbacks over time.</criterion>
+                        <criterion>Target merchant cache hit rate is >90% after 2-3 months of user activity.</criterion>
+                    </acceptance_criteria>
+                </user_story>
+            </core_requirements>
+            <technical_summary>
+                <frontend>React Native/Expo. Screens/components for displaying processing status, a detailed Transaction Review List (with items showing merchant, amount, category), a Category Selection Modal for corrections, and UI for bulk actions. Client-side rule engine for pre-filtering common merchant patterns to reduce backend load.</frontend>
+                <backend>NestJS. Statement processor module (BullMQ worker). Orchestrates:
+                    1. Fetching raw text from OCR (Google Vision).
+                    2. Parsing text to identify potential transactions.
+                    3. Checking Redis merchant cache.
+                    4. (If cache miss/low confidence) Checking client-side pattern matches (if any passed from client).
+                    5. (If still needed) Calling LLM (Claude Haiku/GPT-3.5-Turbo) with token-optimized prompts for categorization.
+                    6. Storing categorized transactions in PostgreSQL (Supabase).
+                    7. Updating Redis merchant cache with new/corrected mappings.
+                    API endpoints for initiating processing (from Feature 1), getting status, and submitting corrections.
+                </backend>
+                <ai_llm_integration>Google Vision API for OCR. Claude Haiku or GPT-3.5-Turbo for categorization. Prompts designed for structured JSON output, minimal token usage. No GPT-4 for MVP categorization. Focus on prompt engineering for accuracy with cheaper models.</ai_llm_integration>
+                <database>Supabase/PostgreSQL: `transactions` table (stores `user_id`, `statement_import_id`, `date`, `description`, `amount`, `category_id`, `merchant_name_normalized`, `is_recurring`, `user_corrected_category_id`). `categories` table (system and user-defined). `merchants` table (for learned global mappings, `normalized_name`, `category_id`, `confidence_score`, `usage_count`). Redis (Upstash) for fast L1 merchant cache (key: normalized merchant name, value: category_id).</database>
+            </technical_summary>
+            <ui_ux_summary>
+                <screen name="Statement Processing Status Screen (Modal or Full Screen)">
+                    <state name="Active Processing View">
+                        <description>`App Background (#FAFBFD)` or a semi-transparent overlay if modal. Large animated icon (e.g., `Lucide Bot` with cogwheels or `Lucide BrainCircuit` with pulsing nodes, `Clarity Blue`), 64dp. Headline (H2, `Midnight Ink`): "ClariFi is Working Its Magic!" Sub-headline (Body Regular, `Neutral Gray (Primary)`): "Analyzing your statement to extract and categorize transactions." Step-by-step progress indicator:
+                            1. `Lucide ScanLine` "Reading Document" - Text `Clarity Blue`, icon `Clarity Blue` (when active).
+                            2. `Lucide ListChecks` "Extracting Transactions" - Text `Neutral Gray (Secondary)` (pending), then `Clarity Blue` (active).
+                            3. `Lucide Tags` "Categorizing Expenses" - Text `Neutral Gray (Secondary)` (pending), then `Clarity Blue` (active).
+                            4. `Lucide Sparkles` "Finding Insights" - Text `Neutral Gray (Secondary)` (pending), then `Clarity Blue` (active).
+                        Each step gets a `Success Green` checkmark (`Lucide CheckCircle`) upon completion with a brief, satisfying animation (e.g., pop and fade). A subtle linear progress bar at the bottom can show overall progress. Optional: "This usually takes 30-90 seconds per statement." (Caption, `Neutral Gray (Secondary)`). User can navigate away; processing continues in background.</description>
+                    </state>
+                    <state name="Processing Error (e.g., OCR Failure, LLM Unresponsive)">
+                        <description>Icon changes to `Lucide AlertTriangle` (64dp, `Error Red`) with a subtle shake animation. Headline (H2, `Error Red`): "Processing Issue." Sub-headline (Body Regular, `Neutral Gray (Primary)`): "We encountered a problem while processing your statement: [Brief, user-friendly error message, e.g., 'Could not read text clearly' or 'AI categorization service is temporarily unavailable']." Primary Button "Try Reprocessing" (`Clarity Blue` bg). Secondary Button "Review Manually Later" (Style Guide: Secondary Button). Text Link "Contact Support" (`Clarity Blue`).</description>
+                    </state>
+                    <state name="Processing Complete & Successful">
+                        <description>Large `Lucide PartyPopper` or `CheckCircle` icon (64dp, `Success Green`) with celebratory animation. Headline (H2, `Midnight Ink`): "All Done!" Sub-headline (Body Regular, `Neutral Gray (Primary)`): "[Number] transactions have been extracted and categorized." Primary Button "Review Transactions" (`Clarity Blue` bg). Auto-transition to Transaction Review Screen after 2-3 seconds if no interaction, or on button press.</description>
+                    </state>
+                </screen>
+                <screen name="Transaction Review Screen">
+                    <state name="Default List View (with data)">
+                        <description>`App Background (#FAFBFD)`. Header: "Review Transactions" (H1, `Midnight Ink`), statement source/date (Body Small, `Neutral Gray (Primary)`). Filter/Sort options icon (`LucideSlidersHorizontal`, `Clarity Blue`) in header right. Sticky date section headers (e.g., "October 26, 2024" - H3 Style, `Midnight Ink` on `Cloud Gray` subtle background bar). Transactions listed as cards (Style Guide: Card - `Pure White` bg, 16dp radius, subtle shadow, 16dp padding). Each transaction card:
+                            - Left: Category icon (`Lucide [CategoryIcon]`, 24dp, colored by category or `Clarity Blue`).
+                            - Center: Merchant Name (Body Large, `Midnight Ink`), Original Description (Caption, `Neutral Gray (Secondary)` below merchant).
+                            - Right: Amount (Body Large, Bold, `Midnight Ink` for expenses, `Growth Green` for income). Assigned Category (Body Small, `Neutral Gray (Primary)`) below amount.
+                        Tapping a transaction card navigates to Edit Transaction Screen/Modal. Long-press could initiate multi-select mode. Pull-to-refresh is NOT for re-categorizing all, but for syncing any new statements if applicable here (unlikely for this specific review screen).</description>
+                    </state>
+                    <state name="Empty State (No transactions or after filtering yields no results)">
+                        <description>Centered illustration (e.g., `Lucide FileSearch` with a question mark, 80dp, `Neutral Gray (Secondary)`). Headline (H2, `Midnight Ink`): "No Transactions Found." Body Regular (`Neutral Gray (Primary)`): "Either no transactions were extracted, or your filters didn't match any. Try adjusting your filters or importing another statement." Primary Button "Import New Statement" (if contextually appropriate).</description>
+                    </state>
+                    <state name="Loading State (e.g., initial load, applying filters)">
+                        <description>Skeleton screen: Placeholder cards with shimmering `Cloud Gray` blocks for text lines and icons. Or a centered circular spinner (`Clarity Blue`, 32dp) with "Loading transactions..." text (Body Regular, `Neutral Gray (Primary)`).</description>
+                    </state>
+                </screen>
+                <screen name="Edit Transaction Screen (Modal or Full Screen)">
+                    <state name="Default Edit View">
+                        <description>If modal, slides up from bottom (Style Guide: Card style with shadow, `Pure White` bg). If full screen, standard header with "Back" arrow and "Edit Transaction" title (H2). Form fields (Style Guide: Input Field style):
+                            - Merchant Name: Text input, pre-filled.
+                            - Amount: Numeric input, pre-filled.
+                            - Date: Date picker, pre-filled.
+                            - Category: Dropdown/Picker showing current category, opens Category Selection Modal on tap. Icon `Lucide ChevronDown`.
+                            - Notes: Optional multi-line text input.
+                        Primary Button "Save Changes" (`Clarity Blue` bg). Text Button "Cancel" (`Clarity Blue` text). Buttons at bottom. Real-time validation on amount/date.</description>
+                    </state>
+                    <state name="Saving State">
+                        <description>"Save Changes" button shows centered circular spinner (`Pure White` on `Clarity Blue` bg). Fields become non-interactive.</description>
+                    </state>
+                    <state name="Save Error State">
+                        <description>Toast/banner message: "Could not save changes. Please try again." (`Error` bg, `Pure White` text). "Save Changes" button reverts to enabled.</description>
+                    </state>
+                </screen>
+                <screen name="Category Selection Modal (for editing a transaction's category)">
+                    <state name="Default View">
+                        <description>Bottom sheet modal (slides up, `Pure White` bg, 16dp top corner radius, drag handle at top). Header "Select Category" (H3, `Midnight Ink`). Search input field (Style Guide: Input Field) at top of modal content. List of categories (scrollable):
+                            - Each item: Category icon (`Lucide [CategoryIcon]`, 24dp, colored by category or `Clarity Blue`), Category Name (Body Regular, `Midnight Ink`).
+                            - Current category has a `Lucide Check` icon (`Clarity Blue`) on the right.
+                            - Tapping a category selects it and closes the modal with an animation.
+                        "Create New Category" option (Text Button, `Clarity Blue`, `Lucide PlusCircle` icon) at the bottom of the list.</description>
+                    </state>
+                    <state name="Search Active State">
+                        <description>As user types in search, category list filters in real-time. Non-matching items fade/filter out. "No results found" message if applicable.</description>
+                    </state>
+                </screen>
+            </ui_ux_summary>
+            <api_relationships_backend>
+                <api_endpoint method="INTERNAL_JOB">Statement Processor (BullMQ worker) calls Google Vision API.</api_endpoint>
+                <api_endpoint method="INTERNAL_JOB">Statement Processor calls Claude Haiku/GPT-3.5-Turbo API.</api_endpoint>
+                <api_endpoint method="INTERNAL_SERVICE">Interaction with Redis (Upstash) for merchant cache get/set.</api_endpoint>
+                <api_endpoint method="POST" path="/transactions/:id/correct-category">User submits a category correction for a transaction. Updates user-specific cache and flags for global learning.</api_endpoint>
+                <api_endpoint method="GET" path="/transactions">Fetches paginated list of transactions for review (with filters for date, category, etc.).</api_endpoint>
+                <api_endpoint method="GET" path="/categories">Returns list of system and user-defined categories.</api_endpoint>
+            </api_relationships_backend>
+            <nfrs_feature>
+                <nfr_item>OCR Accuracy (Google Vision): >95% for key fields on supported bank statement formats.</nfr_item>
+                <nfr_item>AI Categorization Accuracy (LLM + Cache, pre-user correction): >85%.</nfr_item>
+                <nfr_item>Merchant Cache Hit Rate (after 2-3 months of user activity): >90%.</nfr_item>
+                <nfr_item>LLM Token Usage: Average <100 tokens per unique transaction categorization (after cache miss).</nfr_item>
+                <nfr_item>End-to-End Statement Processing Time (P95, after upload, for 3-5 page statement): <2 minutes.</nfr_item>
+                <nfr_item>Transaction Review Screen Load Time (for a month's data): <1.5 seconds.</nfr_item>
+            </nfrs_feature>
+            <cost_optimizations_feature>
+                <optimization>Aggressive Redis caching of merchant-to-category mappings; user corrections update this cache to improve hit rate.</optimization>
+                <optimization>Client-side rule engine/pattern matching for very common, unambiguous merchants to avoid any backend/API call for these.</optimization>
+                <optimization>Use cheapest viable LLM (Claude Haiku or similar) for bulk categorization; GPT-3.5-Turbo as a slightly more capable but still cost-effective option. No GPT-4 for MVP categorization.</optimization>
+                <optimization>Meticulous prompt engineering for LLMs to minimize input/output tokens per categorization request, including requesting structured JSON output.</optimization>
+                <optimization>Batch multiple uncached transactions (from a single statement) into fewer LLM API calls if the API supports it and it proves cost-effective.</optimization>
+                <optimization>Strict monitoring of API costs with alerts if approaching budget thresholds (target <$0.15/user/month for OCR+LLM combined).</optimization>
+                <optimization>Temporary storage of raw OCR text (e.g., 7 days) for reprocessing with updated prompts/logic if initial categorization is poor, avoiding repeated OCR costs.</optimization>
+            </cost_optimizations_feature>
+        </feature>
+
+        <!-- 
+        [SECTION 5.3: Instant Budget Dashboard & Insights - UI/UX to be generated here]
+        [SECTION 5.4: Credit Card Setup & Utilization Tracking - UI/UX to be generated here]
+        [SECTION 5.5: Proactive Credit Utilization Alerts - UI/UX to be generated here]
+        [SECTION 5.6: Multi-Card Optimization Advice - UI/UX to be generated here]
+        [SECTION 5.7: Basic Newcomer Financial Education - UI/UX to be generated here]
+        [SECTION 5.8: AI-Powered Q&A (Cost-Capped) - UI/UX to be generated here]
+        [SECTION 5.9: Monthly Cycle & Progress View - UI/UX to be generated here]
+        [SECTION 5.10: Lean Support System - UI/UX to be generated here]
+        -->
+
+    </section>
+
+    <section id="6" title="Data Management & Privacy (Summary)">
+        <list type="bullet">
+            <item>**PIPEDA Compliance:** Adherence to Canadian privacy laws is paramount. This includes clear user consent for data collection and processing, a transparent privacy policy, and providing users with access to and control over their data (export and deletion).</item>
+            <item>**Data Minimization:** Only necessary data is collected and stored. Original statement files are deleted immediately after processing.</item>
+            <item>**Secure Storage:** Processed financial data is stored securely in PostgreSQL (Supabase). Sensitive data like authentication tokens are handled securely.</item>
+            <item>**PII Handling with AI Services:** Efforts are made to minimize PII sent to external LLMs for categorization. Merchant names and transaction amounts are the primary data points, not direct personal identifiers from statements where possible.</item>
+            <item>**User Data Export:** Users will have the ability to export their processed financial data (transactions, categories, insights) in common formats like CSV or JSON. This will be an automated feature.</item>
+            <item>**Account Deletion:** Users can request account deletion, which will result in the removal of their personal data from active systems according to defined retention policies (e.g., after a short grace period for accidental deletion recovery, then permanent removal).</item>
+        </list>
+    </section>
+
+    <section id="7" title="Success Metrics for MVP">
+        <list type="bullet">
+            <item>**User Acquisition & Onboarding:**
+                <list type="bullet">
+                    <item>Number of waitlist sign-ups: Target 1000+ before beta.</item>
+                    <item>Number of successfully onboarded beta users: Target 500-1000 in first 3 months post-beta launch.</item>
+                    <item>Onboarding completion rate (from registration to first statement fully processed and visible): > 75%.</item>
+                </list>
+            </item>
+            <item>**Engagement & Core Feature Adoption:**
+                <list type="bullet">
+                    <item>DAU/MAU ratio: Target > 25% for engaged cohort.</item>
+                    <item>Percentage of active users importing statements at least monthly: > 70%.</item>
+                    <item>Percentage of active users setting up at least one credit card for tracking: > 80%.</item>
+                    <item>Adoption rate of "Proactive Credit Utilization Alerts" (enabled by users with cards): > 60%.</item>
+                    <item>Average number of sessions per week for active users: Target > 3.</item>
+                </list>
+            </item>
+            <item>**AI & Processing Performance:**
+                <list type="bullet">
+                    <item>Statement processing success rate (for supported banks & good quality uploads): > 98%.</item>
+                    <item>AI categorization accuracy (pre-user correction, for transactions requiring LLM): > 85%.</item>
+                    <item>Merchant cache hit rate (after 3 months of user activity): > 90%.</item>
+                    <item>Average OCR/LLM API cost per active user per month: < $0.20.</item>
+                    <item>P95 end-to-end statement processing time (3-5 page statement): < 2 minutes.</item>
+                </list>
+            </item>
+            <item>**User Satisfaction & Retention:**
+                <list type="bullet">
+                    <item>Qualitative feedback from beta users: Predominantly positive, highlighting ease of use, clarity, and value of credit insights.</item>
+                    <item>Net Promoter Score (NPS) or CSAT survey results (if implemented): Target NPS > 30; CSAT > 4.0/5.0.</item>
+                    <item>Month 1 user retention (M1): > 40%.</item>
+                    <item>Month 3 user retention (M3): > 25%.</item>
+                </list>
+            </item>
+            <item>**Operational Efficiency:**
+                <list type="bullet">
+                    <item>Total monthly operational spend: Kept within $100-$300 target for the first 1000-5000 users.</item>
+                    <item>Percentage of support queries resolved by self-serve (FAQ/AI Q&A): > 80%.</item>
+                </list>
+            </item>
+        </list>
+    </section>
+
+    <section id="8" title="Release Criteria for MVP">
+        <list type="bullet">
+            <item>All 10 defined MVP features are implemented and meet their core user stories' acceptance criteria for primary happy paths and critical error handling.</item>
+            <item>Successful completion of end-to-end testing for all critical user flows on representative iOS and Android devices.</item>
+            <item>No P0 (showstopper) or P1 (critical) bugs outstanding in any MVP feature.</item>
+            <item>Performance targets met: Onboarding <3 mins, Dashboard load <1s, Statement processing P95 <2 mins.</item>
+            <item>Key NFRs related to security (secure data handling, Supabase RLS, auth best practices) and privacy (PIPEDA compliance, data deletion, file management) are implemented and verified.</item>
+            <item>OCR and AI categorization accuracy meets defined MVP targets.</item>
+            <item>Cost control mechanisms (API limits, caching, billing alerts) are functional and tested; projected operational costs align with targets.</item>
+            <item>Core educational content (3-4 modules) is complete, professionally translated (French with Quebec terminology), and accessible offline.</item>
+            <item>Lean support system (in-app FAQ, email escalation path) is operational.</item>
+            <item>Successful completion of an internal User Acceptance Testing (UAT) phase and a small closed beta program (e.g., 50-100 users) with positive qualitative feedback on core usability, value, and stability.</item>
+            <item>Legal requirements (Terms of Service, Privacy Policy, clear disclaimers about not providing financial advice) are finalized, reviewed, and integrated into the app.</item>
+            <item>Waitlist system is functional for managing controlled rollout post-beta.</item>
+            <item>Basic analytics (PostHog) tracking key events is implemented and verified.</item>
+        </list>
+    </section>
+
+    <section id="9" title="Out-of-Scope for MVP / Future Roadmap Pointers">
+        <paragraph>The following features are considered out of scope for the initial MVP release but represent key areas for future development, enhancing ClariFi's value proposition and monetization potential. Detailed technical specifications for these can be found in `ClariFi_Post_MVP_Feature_Roadmap_v1.0.md`.</paragraph>
+        <list type="bullet">
+            <item>**Premium Subscription Tier:** Offering advanced features like unlimited AI usage, deeper analytics, family accounts, and real-time sync for a recurring fee.</item>
+            <item>**Direct Bank Connection (Open Banking):** Integrating with services like Plaid or Flinks for automatic, real-time transaction syncing.</item>
+            <item>**Business Features:** Tailored tools for freelancers and small business owners.</item>
+            <item>**Advanced AI Insights:** Leveraging more powerful LLMs (e.g., GPT-4) for predictive analytics, personalized financial planning advice, and voice interactions.</item>
+            <item>Full, persistent WebSocket implementation for all real-time data synchronization across the app (beyond minimal use for status updates in MVP).</item>
+            <item>Comprehensive in-app gamification beyond basic streaks and achievements for progress tracking.</item>
+            <item>Support for a wider range of Canadian financial institutions, including most credit unions.</item>
+            <item>Additional languages beyond English and French based on user demographics and demand.</item>
+            <item>Investment tracking or advice features (requires significant regulatory consideration and is firmly Post-MVP).</item>
+        </list>
+    </section>
+</prd_document>

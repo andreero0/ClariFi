@@ -1,0 +1,75 @@
+import React, { useEffect } from 'react';
+import { Stack, SplashScreen, useRouter, useSegments } from 'expo-router';
+import { AuthProvider, useAuth, LocalizationProvider } from '../context';
+import { ThemeProvider } from '../context/ThemeContext';
+import { OnboardingProvider } from '../context/OnboardingContext';
+import { PostHogProvider } from '../services/analytics/PostHogProvider';
+import { SentryProvider } from '../services/analytics/SentryProvider';
+
+// Prevent the splash screen from auto-hiding before asset loading is complete.
+SplashScreen.preventAutoHideAsync();
+
+function RootNavigation() {
+  const { session, isLoading, user } = useAuth();
+  const router = useRouter();
+  const segments = useSegments();
+
+  useEffect(() => {
+    if (isLoading) return; // Wait until session is loaded
+
+    const inAuthGroup = segments[0] === '(auth)';
+    const inTabsGroup = segments[0] === '(tabs)';
+
+    if (session && user) {
+      // User is authenticated
+      if (inAuthGroup) {
+        router.replace('/(tabs)/dashboard'); // Redirect from auth to dashboard
+      }
+      SplashScreen.hideAsync();
+    } else {
+      // User is not authenticated
+      if (!inAuthGroup) {
+        router.replace('/(auth)/welcome'); // Redirect to welcome/login if not in auth flow
+      }
+      SplashScreen.hideAsync();
+    }
+  }, [session, user, isLoading, segments, router]);
+
+  if (isLoading) {
+    // You can return a global loading indicator here if needed,
+    // or rely on SplashScreen.preventAutoHideAsync()
+    return null; // Or <SplashScreenComponent /> if you have one
+  }
+
+  // This Slot will render the active child route (either (auth) or (tabs) or modals)
+  // The redirection logic above ensures the correct group is shown.
+  return (
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="(tabs)" />
+      <Stack.Screen name="(auth)" />
+      <Stack.Screen name="modals/add-statement" options={{ presentation: 'modal' }} />
+      <Stack.Screen name="modals/add-card" options={{ presentation: 'modal' }} />
+      <Stack.Screen name="modals/ai-chat" options={{ presentation: 'modal' }} />
+      <Stack.Screen name="modals/education-module" options={{ presentation: 'modal' }} />
+      {/* Add other root level screens or stacks here */}
+    </Stack>
+  );
+}
+
+export default function RootLayout() {
+  return (
+    <LocalizationProvider>
+      <AuthProvider>
+        <SentryProvider>
+          <PostHogProvider>
+            <ThemeProvider>
+              <OnboardingProvider>
+                <RootNavigation />
+              </OnboardingProvider>
+            </ThemeProvider>
+          </PostHogProvider>
+        </SentryProvider>
+      </AuthProvider>
+    </LocalizationProvider>
+  );
+} 

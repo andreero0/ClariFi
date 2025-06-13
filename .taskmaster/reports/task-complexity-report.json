@@ -1,0 +1,173 @@
+{
+  "meta": {
+    "generatedAt": "2025-06-04T21:35:44.971Z",
+    "tasksAnalyzed": 1,
+    "totalTasks": 20,
+    "analysisCount": 20,
+    "thresholdScore": 5,
+    "projectName": "Taskmaster",
+    "usedResearch": true
+  },
+  "complexityAnalysis": [
+    {
+      "taskId": 1,
+      "taskTitle": "Setup Project Repository and Development Environment",
+      "complexityScore": 7,
+      "recommendedSubtasks": 8,
+      "expansionPrompt": "Break down the setup of the project repository and development environment into subtasks for each major configuration step (e.g., repository creation, frontend/backend initialization, linting/formatting setup, Docker configuration, Git hooks, documentation, etc.).",
+      "reasoning": "This task involves multiple technologies (React Native, NestJS, Docker, TypeScript, ESLint, Prettier) and cross-platform considerations, requiring careful orchestration and validation. Each configuration step is distinct and can be error-prone, especially when ensuring compatibility across macOS and Windows."
+    },
+    {
+      "taskId": 2,
+      "taskTitle": "Implement Core Design System Components",
+      "complexityScore": 8,
+      "recommendedSubtasks": 10,
+      "expansionPrompt": "Expand the implementation of the design system by creating subtasks for each core component (typography, colors, buttons, cards, inputs, icons, progress indicators, modals, spacing utilities, animation utilities, dark mode, accessibility).",
+      "reasoning": "Building a comprehensive design system is complex due to the breadth of components, accessibility requirements, theming, and the need for robust documentation and testing across devices and modes."
+    },
+    {
+      "taskId": 3,
+      "taskTitle": "Setup Authentication with Supabase",
+      "complexityScore": 8,
+      "recommendedSubtasks": 10,
+      "expansionPrompt": "Decompose authentication setup into subtasks for Supabase project configuration, backend auth module, frontend integration, registration/login screens, biometric setup, JWT/token handling, state management, protected routes, and RLS policies.",
+      "reasoning": "Authentication spans frontend, backend, and third-party services, with security, error handling, and multi-platform biometric support, making it a high-complexity, multi-faceted task."
+    },
+    {
+      "taskId": 4,
+      "taskTitle": "Implement Database Schema and Supabase Integration",
+      "complexityScore": 7,
+      "recommendedSubtasks": 8,
+      "expansionPrompt": "Break down the database schema implementation into subtasks for schema design, table creation, indexing, relationships, RLS policies, migrations, TypeORM entity setup, and Supabase client configuration.",
+      "reasoning": "Designing a normalized schema with security policies, migrations, and ORM integration is moderately complex, especially with free tier constraints and privacy requirements."
+    },
+    {
+      "taskId": 7,
+      "taskTitle": "Implement Statement Upload and Preprocessing",
+      "complexityScore": 9,
+      "recommendedSubtasks": 9,
+      "expansionPrompt": "Break down into subtasks for camera integration, file picker, image preprocessing (compression, resizing, quality checks), secure upload, backend endpoints, progress tracking, validation, multi-page handling, and temp file management.",
+      "reasoning": "This task is highly complex due to device integration, real-time preprocessing, secure uploads, multi-page handling, and the need to balance quality and cost for downstream OCR."
+    },
+    {
+      "taskId": 8,
+      "taskTitle": "Implement OCR Integration with Google Vision API",
+      "complexityScore": 8,
+      "recommendedSubtasks": 10,
+      "expansionPrompt": "Expand into subtasks for Google Cloud setup, backend OCR service, job integration, format optimization, text parsing, error/retry logic, temporary storage, API usage monitoring, and cost optimization.",
+      "reasoning": "OCR integration involves cloud setup, backend orchestration, error handling, cost monitoring, and parsing logic, all of which are non-trivial and require careful coordination."
+    },
+    {
+      "taskId": 10,
+      "taskTitle": "Implement Transaction Review and Correction UI",
+      "complexityScore": 7,
+      "recommendedSubtasks": 10,
+      "expansionPrompt": "Decompose into subtasks for each UI screen/modal, category management, bulk actions, filtering/sorting, real-time updates, visual indicators, loading/empty states, search, and accessibility.",
+      "reasoning": "The UI requires multiple interactive screens, bulk operations, real-time updates, and accessibility, making it moderately complex."
+    },
+    {
+      "taskId": 11,
+      "taskTitle": "Implement Budget Dashboard with Client-Side Rendering",
+      "complexityScore": 8,
+      "recommendedSubtasks": 10,
+      "expansionPrompt": "Expand into subtasks for dashboard screen, charts, category breakdown, insights, month selector, data export, offline mode, local storage, animations, and loading/empty states.",
+      "reasoning": "Building a performant, offline-capable dashboard with rich visualizations and exports is complex, especially with client-side data management and animation requirements."
+    },
+    {
+      "taskId": 12,
+      "taskTitle": "Implement Credit Card Management",
+      "complexityScore": 6,
+      "recommendedSubtasks": 10,
+      "expansionPrompt": "List subtasks for card list, add/edit forms, detail screen, payment logging, utilization logic, date calculations, visual indicators, empty state, local storage, and input validation.",
+      "reasoning": "While client-side only, this task covers several screens, calculations, and persistent storage, but is less complex than tasks involving backend or third-party integrations."
+    },
+    {
+      "taskId": 13,
+      "taskTitle": "Implement Credit Utilization Alerts",
+      "complexityScore": 7,
+      "recommendedSubtasks": 10,
+      "expansionPrompt": "Break down into subtasks for notification settings, scheduling logic, local notifications, content generation, deep linking, server-side backup, interaction tracking, quiet hours, per-card settings, and test notifications.",
+      "reasoning": "Combining local and server-side notifications, scheduling, user preferences, and reliability targets adds moderate complexity."
+    },
+    {
+      "taskId": 14,
+      "taskTitle": "Implement Multi-Card Payment Optimizer",
+      "complexityScore": 7,
+      "recommendedSubtasks": 10,
+      "expansionPrompt": "Expand into subtasks for optimizer screen, input handling, optimization algorithm, interactive adjustments, visualizations, score impact calculation, strategy explanation, reset, validation, and real-time updates.",
+      "reasoning": "Client-side optimization and visualization with interactive UI and real-time calculations require careful design and testing."
+    },
+    {
+      "taskId": 15,
+      "taskTitle": "Implement Financial Education Content",
+      "complexityScore": 6,
+      "recommendedSubtasks": 10,
+      "expansionPrompt": "List subtasks for education hub, module viewer, quiz components, progress tracking, language selection, manifest system, content preparation, translation, completion tracking, and progress indicators.",
+      "reasoning": "This task is content-heavy with moderate technical complexity, focusing on UI, offline access, and localization."
+    },
+    {
+      "taskId": 16,
+      "taskTitle": "Implement AI-Powered Q&A System",
+      "complexityScore": 8,
+      "recommendedSubtasks": 10,
+      "expansionPrompt": "Break down into subtasks for chat screen, FAQ browser, fuzzy search, Redis caching, backend LLM endpoint, query limit tracking, prompt optimization, FAQ content, suggested questions, and error handling.",
+      "reasoning": "Integrating LLMs with caching, query limits, and fallback logic for a cost-optimized Q&A system is technically challenging."
+    },
+    {
+      "taskId": 17,
+      "taskTitle": "Implement Progress Tracking and Achievements",
+      "complexityScore": 6,
+      "recommendedSubtasks": 10,
+      "expansionPrompt": "Expand into subtasks for progress/achievements screen, streak logic, achievement system, all achievements view, detail modal, monthly reports, motivational notifications, sharing, and local storage.",
+      "reasoning": "Client-side progress and achievement tracking is moderately complex, with multiple UI elements and persistent state."
+    },
+    {
+      "taskId": 18,
+      "taskTitle": "Implement Support System",
+      "complexityScore": 6,
+      "recommendedSubtasks": 10,
+      "expansionPrompt": "List subtasks for help center, FAQ/article viewer, contact support, tooltips, Discord integration, content preparation, search, backend email endpoint, feedback collection, and analytics.",
+      "reasoning": "A lean support system is mostly UI and content, with some backend/email integration, making it less complex than core product features."
+    },
+    {
+      "taskId": 19,
+      "taskTitle": "Implement Analytics and Error Tracking",
+      "complexityScore": 7,
+      "recommendedSubtasks": 10,
+      "expansionPrompt": "Break down into subtasks for PostHog setup, frontend tracking, event definition, custom properties, Sentry setup, error tracking, error boundaries, alerts, opt-out mechanism, and privacy policy.",
+      "reasoning": "Integrating analytics and error tracking across frontend and backend, with privacy compliance, is moderately complex and cross-cutting."
+    },
+    {
+      "taskId": 20,
+      "taskTitle": "Implement Data Export and Privacy Controls",
+      "complexityScore": 7,
+      "recommendedSubtasks": 10,
+      "expansionPrompt": "Expand into subtasks for export options screen, CSV/JSON/PDF export, account deletion, privacy settings, data retention, consent management, secure handling, and policy screens.",
+      "reasoning": "Data export and privacy controls require careful handling of user data, compliance, and multiple export formats, making it moderately complex."
+    },
+    {
+      "taskId": 5,
+      "taskTitle": "Setup Redis and BullMQ for Asynchronous Processing",
+      "complexityScore": 7,
+      "recommendedSubtasks": 4,
+      "expansionPrompt": "Break down the Redis and BullMQ implementation into logical phases: 1) Initial Redis setup and connection, 2) BullMQ configuration and job queue implementation, 3) Job processors and error handling, and 4) Monitoring and optimization. For each phase, specify the technical requirements, implementation steps, and testing criteria.",
+      "reasoning": "This task involves setting up distributed systems for asynchronous processing with multiple integration points. It requires Redis configuration, queue management, error handling, and optimization considerations. The complexity comes from ensuring reliability in an asynchronous environment while managing resource constraints. The task already has detailed steps but would benefit from being organized into logical implementation phases."
+    },
+    {
+      "taskId": 6,
+      "taskTitle": "Implement User Onboarding Flow",
+      "complexityScore": 8,
+      "recommendedSubtasks": 11,
+      "expansionPrompt": "Break down the 'Implement User Onboarding Flow' task into subtasks, with each screen as a separate implementation task, plus additional tasks for navigation setup, state management, and testing. For each screen subtask, include UI implementation, validation logic, and integration with the overall flow.",
+      "reasoning": "This task involves implementing multiple screens with complex interactions, biometric integration, camera functionality, and state management. The task requires both frontend UI work and backend logic for validation, data persistence, and navigation flow. The dependencies on other tasks and high priority indicate it's a critical path item. The detailed requirements already outline 11 distinct components that would make logical subtasks."
+    },
+    {
+      "taskId": 9,
+      "taskTitle": "Implement AI-Powered Transaction Categorization",
+      "complexityScore": 8,
+      "recommendedSubtasks": 12,
+      "expansionPrompt": "Break down the AI-powered transaction categorization implementation into detailed subtasks covering: API integration setup, caching mechanisms, prompt engineering, categorization service development, performance optimization, user feedback handling, monitoring systems, and testing procedures. Include specific technical requirements for each subtask with clear acceptance criteria focusing on accuracy targets (>85%) and cost optimization (<$0.10 per statement).",
+      "reasoning": "This task involves complex AI integration with multiple optimization requirements. The implementation combines machine learning API integration, caching strategies, prompt engineering, and performance monitoring. Recent advancements in AI transaction categorization (2025) show high accuracy potential (96% reported by COCO), but require sophisticated data handling and security considerations. The task requires balancing accuracy with cost optimization while implementing user correction mechanisms. The technical complexity spans multiple domains including AI, caching, rule engines, and monitoring systems."
+    }
+  ]
+}

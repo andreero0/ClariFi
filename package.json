@@ -1,0 +1,33 @@
+{
+  "name": "clarifi",
+  "version": "1.0.0",
+  "description": "ClariFi is a personal finance management application designed to help users, particularly newcomers to Canada, gain clarity and control over their finances.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.0"
+  },
+  "lint-staged": {
+    "clarifi-api/**/*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "clarifi-mobile/**/*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "**/*.{json,md}": [
+      "prettier --write"
+    ]
+  },
+  "dependencies": {
+    "@prisma/client": "^6.9.0"
+  }
+}
