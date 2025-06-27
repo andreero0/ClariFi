@@ -1,0 +1,339 @@
+{
+  "id": "understanding-credit-final-quiz",
+  "title": {
+    "en": "Understanding Credit in Canada - Final Quiz",
+    "fr": "Comprendre le crédit au Canada - Quiz final"
+  },
+  "description": {
+    "en": "Test your comprehensive understanding of credit fundamentals, credit scores, and credit building strategies in Canada",
+    "fr": "Testez votre compréhension globale des principes de base du crédit, des cotes de crédit et des stratégies de construction de crédit au Canada"
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "question": {
+        "en": "What is the credit score range in Canada and what's considered an excellent score?",
+        "fr": "Quelle est la gamme de cotes de crédit au Canada et qu'est-ce qui est considéré comme une excellente cote?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "en": "300-850, with 750+ being excellent",
+            "fr": "300-850, avec 750+ étant excellent"
+          },
+          "isCorrect": false
+        },
+        {
+          "id": "b",
+          "text": {
+            "en": "300-900, with 800+ being excellent",
+            "fr": "300-900, avec 800+ étant excellent"
+          },
+          "isCorrect": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "en": "200-800, with 700+ being excellent",
+            "fr": "200-800, avec 700+ étant excellent"
+          },
+          "isCorrect": false
+        },
+        {
+          "id": "d",
+          "text": {
+            "en": "0-1000, with 850+ being excellent",
+            "fr": "0-1000, avec 850+ étant excellent"
+          },
+          "isCorrect": false
+        }
+      ],
+      "explanation": {
+        "en": "In Canada, credit scores range from 300-900, with scores of 800+ considered excellent and giving access to the best rates and terms.",
+        "fr": "Au Canada, les cotes de crédit vont de 300 à 900, avec des cotes de 800+ considérées comme excellentes et donnant accès aux meilleurs taux et conditions."
+      },
+      "points": 15
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "question": {
+        "en": "Which factor has the biggest impact on your credit score?",
+        "fr": "Quel facteur a le plus grand impact sur votre cote de crédit?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "en": "Payment history (35%)",
+            "fr": "Historique de paiement (35%)"
+          },
+          "isCorrect": true
+        },
+        {
+          "id": "b",
+          "text": {
+            "en": "Credit utilization (30%)",
+            "fr": "Utilisation du crédit (30%)"
+          },
+          "isCorrect": false
+        },
+        {
+          "id": "c",
+          "text": {
+            "en": "Length of credit history (15%)",
+            "fr": "Durée de l'historique de crédit (15%)"
+          },
+          "isCorrect": false
+        },
+        {
+          "id": "d",
+          "text": {
+            "en": "Types of credit (10%)",
+            "fr": "Types de crédit (10%)"
+          },
+          "isCorrect": false
+        }
+      ],
+      "explanation": {
+        "en": "Payment history accounts for 35% of your credit score calculation and is the most important factor. Even one late payment can significantly impact your score.",
+        "fr": "L'historique de paiement représente 35% du calcul de votre cote de crédit et est le facteur le plus important. Même un paiement en retard peut considérablement affecter votre cote."
+      },
+      "points": 15
+    },
+    {
+      "id": "q3",
+      "type": "true-false",
+      "question": {
+        "en": "It's recommended to keep your credit utilization below 30% of your available credit limit.",
+        "fr": "Il est recommandé de maintenir votre utilisation de crédit en dessous de 30% de votre limite de crédit disponible."
+      },
+      "correctAnswer": "true",
+      "explanation": {
+        "en": "Yes, keeping credit utilization below 30% is recommended, with below 10% being optimal for excellent credit scores.",
+        "fr": "Oui, maintenir l'utilisation du crédit en dessous de 30% est recommandé, avec en dessous de 10% étant optimal pour d'excellentes cotes de crédit."
+      },
+      "points": 10
+    },
+    {
+      "id": "q4",
+      "type": "multiple-choice",
+      "question": {
+        "en": "What's the best first credit product for someone with no credit history in Canada?",
+        "fr": "Quel est le meilleur premier produit de crédit pour quelqu'un sans historique de crédit au Canada?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "en": "Premium rewards credit card",
+            "fr": "Carte de crédit prime avec récompenses"
+          },
+          "isCorrect": false
+        },
+        {
+          "id": "b",
+          "text": {
+            "en": "Secured credit card",
+            "fr": "Carte de crédit garantie"
+          },
+          "isCorrect": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "en": "Personal loan",
+            "fr": "Prêt personnel"
+          },
+          "isCorrect": false
+        },
+        {
+          "id": "d",
+          "text": {
+            "en": "Line of credit",
+            "fr": "Marge de crédit"
+          },
+          "isCorrect": false
+        }
+      ],
+      "explanation": {
+        "en": "A secured credit card is typically the best option for building credit from zero. It requires a deposit but reports to credit bureaus like a regular card with lower risk for lenders.",
+        "fr": "Une carte de crédit garantie est généralement la meilleure option pour construire un crédit à partir de zéro. Elle nécessite un dépôt mais rapporte aux bureaux de crédit comme une carte régulière avec moins de risque pour les prêteurs."
+      },
+      "points": 15
+    },
+    {
+      "id": "q5",
+      "type": "true-false",
+      "question": {
+        "en": "Closing old credit cards will improve your credit score because it reduces your available credit.",
+        "fr": "Fermer de vieilles cartes de crédit améliorera votre cote de crédit car cela réduit votre crédit disponible."
+      },
+      "correctAnswer": "false",
+      "explanation": {
+        "en": "False. Closing old credit cards typically hurts your credit score by reducing available credit (increasing utilization) and shortening your average account age.",
+        "fr": "Faux. Fermer de vieilles cartes de crédit nuit généralement à votre cote de crédit en réduisant le crédit disponible (augmentant l'utilisation) et en raccourcissant l'âge moyen de vos comptes."
+      },
+      "points": 10
+    },
+    {
+      "id": "q6",
+      "type": "multiple-choice",
+      "question": {
+        "en": "What are the two major credit bureaus in Canada?",
+        "fr": "Quels sont les deux principaux bureaux de crédit au Canada?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "en": "Experian and TransUnion",
+            "fr": "Experian et TransUnion"
+          },
+          "isCorrect": false
+        },
+        {
+          "id": "b",
+          "text": {
+            "en": "Equifax and TransUnion",
+            "fr": "Equifax et TransUnion"
+          },
+          "isCorrect": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "en": "Equifax and Experian",
+            "fr": "Equifax et Experian"
+          },
+          "isCorrect": false
+        },
+        {
+          "id": "d",
+          "text": {
+            "en": "FICO and VantageScore",
+            "fr": "FICO et VantageScore"
+          },
+          "isCorrect": false
+        }
+      ],
+      "explanation": {
+        "en": "The two major credit bureaus in Canada are Equifax and TransUnion. Both provide credit reports and scores, though their scoring models may differ slightly.",
+        "fr": "Les deux principaux bureaux de crédit au Canada sont Equifax et TransUnion. Les deux fournissent des rapports et des cotes de crédit, bien que leurs modèles de notation puissent différer légèrement."
+      },
+      "points": 10
+    },
+    {
+      "id": "q7",
+      "type": "multiple-choice",
+      "question": {
+        "en": "How long does it typically take for a newcomer to Canada to see their first credit score?",
+        "fr": "Combien de temps faut-il généralement à un nouvel arrivant au Canada pour voir sa première cote de crédit?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "en": "1 month",
+            "fr": "1 mois"
+          },
+          "isCorrect": false
+        },
+        {
+          "id": "b",
+          "text": {
+            "en": "3-6 months",
+            "fr": "3-6 mois"
+          },
+          "isCorrect": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "en": "1 year",
+            "fr": "1 an"
+          },
+          "isCorrect": false
+        },
+        {
+          "id": "d",
+          "text": {
+            "en": "2 years",
+            "fr": "2 ans"
+          },
+          "isCorrect": false
+        }
+      ],
+      "explanation": {
+        "en": "It typically takes 3-6 months of credit activity for a credit score to appear, with the score stabilizing over 6-12 months of consistent use.",
+        "fr": "Il faut généralement 3 à 6 mois d'activité de crédit pour qu'une cote de crédit apparaisse, la cote se stabilisant sur 6 à 12 mois d'utilisation constante."
+      },
+      "points": 10
+    },
+    {
+      "id": "q8",
+      "type": "true-false",
+      "question": {
+        "en": "Making multiple credit applications within a short time frame will always hurt your credit score significantly.",
+        "fr": "Faire plusieurs demandes de crédit dans un court laps de temps nuira toujours considérablement à votre cote de crédit."
+      },
+      "correctAnswer": "false",
+      "explanation": {
+        "en": "False. Multiple inquiries for the same type of loan (like auto or mortgage) within 14-45 days typically count as a single inquiry to allow for rate shopping.",
+        "fr": "Faux. Plusieurs demandes pour le même type de prêt (comme auto ou hypothèque) dans les 14-45 jours comptent généralement comme une seule demande pour permettre la comparaison de taux."
+      },
+      "points": 10
+    },
+    {
+      "id": "q9",
+      "type": "multiple-choice",
+      "question": {
+        "en": "What's the 15/3 rule for credit card payments?",
+        "fr": "Quelle est la règle 15/3 pour les paiements de carte de crédit?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "en": "Pay 15% of balance 3 days before due date",
+            "fr": "Payer 15% du solde 3 jours avant la date d'échéance"
+          },
+          "isCorrect": false
+        },
+        {
+          "id": "b",
+          "text": {
+            "en": "Pay balance 15 days before due date, then remaining 3 days before",
+            "fr": "Payer le solde 15 jours avant l'échéance, puis le reste 3 jours avant"
+          },
+          "isCorrect": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "en": "Keep utilization below 15% and pay 3 times per month",
+            "fr": "Maintenir l'utilisation en dessous de 15% et payer 3 fois par mois"
+          },
+          "isCorrect": false
+        },
+        {
+          "id": "d",
+          "text": {
+            "en": "Apply for credit every 15 months with 3 month gaps",
+            "fr": "Demander du crédit tous les 15 mois avec des écarts de 3 mois"
+          },
+          "isCorrect": false
+        }
+      ],
+      "explanation": {
+        "en": "The 15/3 rule suggests paying your credit card balance 15 days before the due date, then paying any remaining balance 3 days before due date to keep reported balances very low.",
+        "fr": "La règle 15/3 suggère de payer le solde de votre carte de crédit 15 jours avant la date d'échéance, puis de payer tout solde restant 3 jours avant l'échéance pour maintenir les soldes rapportés très bas."
+      },
+      "points": 15
+    }
+  ],
+  "passingScore": 80,
+  "timeLimit": 15
+} 

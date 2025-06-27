@@ -1,0 +1,11 @@
+export { CategoryBreakdown } from './CategoryBreakdown';
+export { DailySpendingChart } from './DailySpendingChart';
+export { InsightsSection } from './InsightsSection';
+export { MonthSelector } from './MonthSelector';
+export { ProgressChart } from './ProgressChart';
+export { QuickActions } from './QuickActions';
+export { SpendingChart } from './SpendingChart';
+export { SummaryCards } from './SummaryCards';
+export { TrendChart } from './TrendChart';
+export { default as FreshDashboard } from './FreshDashboard';
+export { default as RecentTransactions } from './RecentTransactions';

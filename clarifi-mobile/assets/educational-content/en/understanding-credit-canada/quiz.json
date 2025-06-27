@@ -1,0 +1,184 @@
+{
+  "id": "credit-basics-quiz",
+  "title": {
+    "en": "Credit Basics Quiz",
+    "fr": "Quiz sur les bases du crédit"
+  },
+  "description": {
+    "en": "Test your understanding of credit fundamentals in Canada",
+    "fr": "Testez votre compréhension des principes de base du crédit au Canada"
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "question": {
+        "en": "What is the typical credit score range in Canada?",
+        "fr": "Quelle est la gamme typique de cotes de crédit au Canada?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "en": "300-850",
+            "fr": "300-850"
+          },
+          "isCorrect": false
+        },
+        {
+          "id": "b",
+          "text": {
+            "en": "300-900",
+            "fr": "300-900"
+          },
+          "isCorrect": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "en": "200-800",
+            "fr": "200-800"
+          },
+          "isCorrect": false
+        },
+        {
+          "id": "d",
+          "text": {
+            "en": "0-1000",
+            "fr": "0-1000"
+          },
+          "isCorrect": false
+        }
+      ],
+      "explanation": {
+        "en": "In Canada, credit scores typically range from 300 to 900, with 900 being the highest possible score.",
+        "fr": "Au Canada, les cotes de crédit vont généralement de 300 à 900, 900 étant la note la plus élevée possible."
+      },
+      "points": 10
+    },
+    {
+      "id": "q2",
+      "type": "true-false",
+      "question": {
+        "en": "Paying only the minimum amount on your credit card each month is a good strategy for building credit.",
+        "fr": "Payer seulement le montant minimum sur votre carte de crédit chaque mois est une bonne stratégie pour bâtir votre crédit."
+      },
+      "correctAnswer": "false",
+      "explanation": {
+        "en": "While paying the minimum keeps your account in good standing, paying the full balance helps you avoid interest charges and demonstrates better financial management.",
+        "fr": "Bien que payer le minimum maintienne votre compte en règle, payer le solde complet vous aide à éviter les frais d'intérêt et démontre une meilleure gestion financière."
+      },
+      "points": 10
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "question": {
+        "en": "Which type of credit allows you to borrow repeatedly up to a certain limit?",
+        "fr": "Quel type de crédit vous permet d'emprunter de façon répétée jusqu'à une certaine limite?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "en": "Installment Credit",
+            "fr": "Crédit à tempérament"
+          },
+          "isCorrect": false
+        },
+        {
+          "id": "b",
+          "text": {
+            "en": "Revolving Credit",
+            "fr": "Crédit renouvelable"
+          },
+          "isCorrect": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "en": "Secured Credit",
+            "fr": "Crédit garanti"
+          },
+          "isCorrect": false
+        },
+        {
+          "id": "d",
+          "text": {
+            "en": "Term Credit",
+            "fr": "Crédit à terme"
+          },
+          "isCorrect": false
+        }
+      ],
+      "explanation": {
+        "en": "Revolving credit, such as credit cards and lines of credit, allows you to borrow up to a limit, pay it back, and borrow again.",
+        "fr": "Le crédit renouvelable, comme les cartes de crédit et les marges de crédit, vous permet d'emprunter jusqu'à une limite, de rembourser, puis d'emprunter à nouveau."
+      },
+      "points": 10
+    },
+    {
+      "id": "q4",
+      "type": "true-false",
+      "question": {
+        "en": "Checking your own credit report will lower your credit score.",
+        "fr": "Vérifier votre propre rapport de crédit diminuera votre cote de crédit."
+      },
+      "correctAnswer": "false",
+      "explanation": {
+        "en": "Checking your own credit report is called a 'soft inquiry' and does not affect your credit score. Only 'hard inquiries' from lenders can temporarily lower your score.",
+        "fr": "Vérifier votre propre rapport de crédit s'appelle une 'demande douce' et n'affecte pas votre cote de crédit. Seules les 'demandes fermes' des prêteurs peuvent temporairement diminuer votre cote."
+      },
+      "points": 10
+    },
+    {
+      "id": "q5",
+      "type": "multiple-choice",
+      "question": {
+        "en": "What is the best strategy for newcomers to Canada to start building credit?",
+        "fr": "Quelle est la meilleure stratégie pour les nouveaux arrivants au Canada pour commencer à bâtir leur crédit?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "en": "Apply for multiple credit cards at once",
+            "fr": "Demander plusieurs cartes de crédit à la fois"
+          },
+          "isCorrect": false
+        },
+        {
+          "id": "b",
+          "text": {
+            "en": "Start with a secured credit card",
+            "fr": "Commencer avec une carte de crédit garantie"
+          },
+          "isCorrect": true
+        },
+        {
+          "id": "c",
+          "text": {
+            "en": "Wait one year before applying for any credit",
+            "fr": "Attendre un an avant de demander du crédit"
+          },
+          "isCorrect": false
+        },
+        {
+          "id": "d",
+          "text": {
+            "en": "Only use cash for all purchases",
+            "fr": "Utiliser seulement de l'argent comptant pour tous les achats"
+          },
+          "isCorrect": false
+        }
+      ],
+      "explanation": {
+        "en": "A secured credit card requires a deposit that serves as your credit limit. It's an excellent way for newcomers to establish credit history with lower risk to lenders.",
+        "fr": "Une carte de crédit garantie exige un dépôt qui sert de limite de crédit. C'est un excellent moyen pour les nouveaux arrivants d'établir un historique de crédit avec moins de risque pour les prêteurs."
+      },
+      "points": 10
+    }
+  ],
+  "passingScore": 70,
+  "timeLimit": 10
+} 

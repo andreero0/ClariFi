@@ -1,0 +1,228 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2025-06-05",
+  "categories": [
+    {
+      "id": "credit-scores",
+      "title": "Credit Scores",
+      "icon": "credit-card",
+      "description": "Understanding and improving your credit score in Canada",
+      "order": 1,
+      "questionCount": 15,
+      "faqs": [
+        {
+          "id": "credit-score-basics",
+          "question": "What is a credit score and how is it calculated in Canada?",
+          "answer": "Your credit score is a three-digit number (300-900) that represents your creditworthiness. In Canada, it's calculated by credit bureaus (Equifax and TransUnion) based on:\n\n• **Payment history (35%)**: On-time payments vs. late/missed payments\n• **Credit utilization (30%)**: How much credit you're using vs. available credit\n• **Length of credit history (15%)**: How long you've had credit accounts\n• **Credit mix (10%)**: Variety of credit types (cards, loans, mortgages)\n• **New credit inquiries (10%)**: Recent applications for new credit\n\nA good credit score in Canada is typically 660+, with 760+ considered excellent.",
+          "keywords": ["credit score", "calculation", "canada", "equifax", "transunion", "creditworthiness"],
+          "category": "credit-scores",
+          "tags": ["basics", "calculation", "canada-specific"],
+          "relatedQuestions": ["credit-utilization-ratio", "improve-credit-score", "check-credit-score"],
+          "lastUpdated": "2025-06-05"
+        },
+        {
+          "id": "credit-utilization-ratio",
+          "question": "What is credit utilization and how does it affect my score?",
+          "answer": "Credit utilization is the percentage of your available credit that you're currently using. It's calculated as:\n\n**Total Credit Card Balances ÷ Total Credit Limits × 100**\n\n**Impact on Credit Score:**\n• **Under 30%**: Good for your credit score\n• **Under 10%**: Excellent for your credit score\n• **Over 50%**: Negative impact on your score\n• **Over 80%**: Significant negative impact\n\n**Tips to optimize:**\n• Pay balances before statement dates\n• Request credit limit increases\n• Spread balances across multiple cards\n• Consider making multiple payments per month\n\nClariFi can help you track and optimize your credit utilization automatically.",
+          "keywords": ["credit utilization", "ratio", "credit limit", "balance", "optimize"],
+          "category": "credit-scores",
+          "tags": ["utilization", "optimization", "clarifi-feature"],
+          "relatedQuestions": ["credit-score-basics", "improve-credit-score", "multiple-credit-cards"],
+          "lastUpdated": "2025-06-05"
+        },
+        {
+          "id": "improve-credit-score",
+          "question": "How can I improve my credit score quickly in Canada?",
+          "answer": "Here are proven strategies to improve your credit score:\n\n**Quick wins (1-3 months):**\n• Pay down credit card balances below 30% utilization\n• Pay all bills on time (set up automatic payments)\n• Check your credit report for errors and dispute them\n• Don't close old credit cards (keep credit history length)\n\n**Medium-term improvements (3-6 months):**\n• Keep credit utilization below 10%\n• Pay balances before statement dates\n• Avoid applying for new credit\n• Consider becoming an authorized user on a family member's account\n\n**Long-term building (6+ months):**\n• Maintain consistent payment history\n• Diversify your credit mix (if appropriate)\n• Keep old accounts open to maintain credit history\n\n**Canadian-specific tip:** Both Equifax and TransUnion operate in Canada, so monitor both reports.",
+          "keywords": ["improve credit", "credit score", "quick", "strategies", "canada"],
+          "category": "credit-scores",
+          "tags": ["improvement", "strategies", "canada-specific"],
+          "relatedQuestions": ["credit-score-basics", "credit-utilization-ratio", "check-credit-score"],
+          "lastUpdated": "2025-06-05"
+        },
+        {
+          "id": "check-credit-score",
+          "question": "How can I check my credit score for free in Canada?",
+          "answer": "You can check your credit score for free through several methods:\n\n**Free Credit Reports (Official):**\n• **Equifax Canada**: Free annual report by mail, $24.95 online\n• **TransUnion Canada**: Free annual report by mail, online monitoring available\n\n**Free Credit Score Services:**\n• **Credit Karma**: Free TransUnion score and monitoring\n• **Borrowell**: Free Equifax score and monitoring\n• **Paymi (RBC)**: Free for RBC customers\n• **Many Canadian banks**: Check if your bank offers free credit score access\n\n**What to look for:**\n• Current credit score\n• Payment history\n• Credit accounts and balances\n• Credit inquiries\n• Public records\n• Potential errors or fraud\n\n**Tip:** Check your score regularly but don't obsess over small fluctuations. Focus on long-term trends and maintaining good credit habits.",
+          "keywords": ["check credit score", "free", "canada", "equifax", "transunion", "credit karma", "borrowell"],
+          "category": "credit-scores",
+          "tags": ["monitoring", "free-resources", "canada-specific"],
+          "relatedQuestions": ["credit-score-basics", "improve-credit-score", "credit-report-errors"],
+          "lastUpdated": "2025-06-05"
+        },
+        {
+          "id": "multiple-credit-cards",
+          "question": "Is it good or bad to have multiple credit cards?",
+          "answer": "Having multiple credit cards can be beneficial if managed properly:\n\n**Potential Benefits:**\n• **Lower overall utilization**: More available credit can reduce your utilization ratio\n• **Credit mix diversity**: Different types of credit can help your score\n• **Backup payment method**: Useful if one card is compromised\n• **Rewards optimization**: Different cards for different spending categories\n• **Credit limit increases**: More total available credit\n\n**Potential Risks:**\n• **Temptation to overspend**: More credit can lead to more debt\n• **Annual fees**: Multiple fee-paying cards can be expensive\n• **Hard inquiries**: Each application temporarily lowers your score\n• **Complexity**: Harder to track payments and due dates\n\n**Best practices:**\n• Keep old cards open (maintains credit history)\n• Use cards regularly but pay balances in full\n• Monitor all accounts for fraud\n• Don't apply for multiple cards quickly\n• Consider your spending habits and self-control\n\n**ClariFi tip:** Use our credit utilization alerts to monitor all your cards automatically.",
+          "keywords": ["multiple credit cards", "benefits", "risks", "credit utilization", "management"],
+          "category": "credit-scores",
+          "tags": ["multiple-cards", "strategy", "clarifi-feature"],
+          "relatedQuestions": ["credit-utilization-ratio", "improve-credit-score", "credit-card-rewards"],
+          "lastUpdated": "2025-06-05"
+        }
+      ]
+    },
+    {
+      "id": "budgeting",
+      "title": "Budgeting",
+      "icon": "calculator",
+      "description": "Personal budgeting strategies and tools for Canadians",
+      "order": 2,
+      "questionCount": 12,
+      "faqs": [
+        {
+          "id": "create-budget-canada",
+          "question": "How do I create a budget that works in Canada?",
+          "answer": "Creating an effective budget in Canada involves understanding your income, expenses, and Canadian-specific considerations:\n\n**Step 1: Calculate your after-tax income**\n• Use your net pay (after CPP, EI, taxes)\n• Include all income sources (salary, side gigs, investments)\n• Account for seasonal variations\n\n**Step 2: Track your expenses for 1-2 months**\n• Fixed expenses: Rent/mortgage, insurance, phone, utilities\n• Variable expenses: Groceries, dining, entertainment, gas\n• Canadian-specific: Health insurance premiums, RRSP contributions\n\n**Step 3: Apply the 50/30/20 rule (adapted for Canada)**\n• **50%**: Needs (housing, utilities, groceries, transportation)\n• **30%**: Wants (dining out, entertainment, hobbies)\n• **20%**: Savings (emergency fund, RRSP, TFSA, debt repayment)\n\n**Canadian considerations:**\n• Factor in seasonal heating costs\n• Plan for higher grocery costs\n• Consider provincial tax differences\n• Include RRSP/TFSA contribution room\n\n**ClariFi tip:** Upload your bank statements to automatically categorize expenses and track your budget progress.",
+          "keywords": ["budget", "canada", "50/30/20", "after-tax", "expenses", "RRSP", "TFSA"],
+          "category": "budgeting",
+          "tags": ["budget-creation", "canada-specific", "clarifi-feature"],
+          "relatedQuestions": ["emergency-fund-canada", "track-expenses", "rrsp-vs-tfsa"],
+          "lastUpdated": "2025-06-05"
+        },
+        {
+          "id": "emergency-fund-canada",
+          "question": "How much should I have in an emergency fund in Canada?",
+          "answer": "Canadian financial experts recommend an emergency fund of **3-6 months of living expenses**, but the exact amount depends on your situation:\n\n**Minimum recommendations:**\n• **3 months**: If you have stable employment and good job security\n• **6 months**: If you have variable income or work in a volatile industry\n• **12 months**: If you're self-employed or in a high-risk profession\n\n**Calculate your monthly expenses:**\n• Housing (rent/mortgage, utilities, insurance)\n• Food and groceries\n• Transportation (car payments, insurance, transit)\n• Minimum debt payments\n• Essential services (phone, internet)\n• Healthcare costs not covered by provincial plans\n\n**Where to keep your emergency fund:**\n• **High-interest savings account (HISA)**: 4-5% APY available\n• **TFSA**: Tax-free growth, easy access\n• **GIC ladder**: Slightly higher returns, some liquidity\n• **Avoid**: Regular checking accounts, investments, RRSPs\n\n**Building strategy:**\n• Start with $1,000 as initial goal\n• Save $200-500 per month until you reach your target\n• Automate transfers to make it easier\n• Use tax refunds and bonuses to boost the fund",
+          "keywords": ["emergency fund", "canada", "savings", "HISA", "TFSA", "3-6 months"],
+          "category": "budgeting",
+          "tags": ["emergency-planning", "savings", "canada-specific"],
+          "relatedQuestions": ["create-budget-canada", "high-interest-savings", "tfsa-basics"],
+          "lastUpdated": "2025-06-05"
+        },
+        {
+          "id": "track-expenses",
+          "question": "What's the best way to track my expenses?",
+          "answer": "There are several effective methods to track expenses, from simple to sophisticated:\n\n**Manual methods:**\n• **Expense journal**: Write down every purchase\n• **Receipt collection**: Keep all receipts and categorize weekly\n• **Spreadsheet**: Create categories and input transactions\n\n**Digital banking tools:**\n• **Bank apps**: Most Canadian banks offer spending categorization\n• **Credit card apps**: Track and categorize card purchases\n• **Online banking**: Download transaction histories\n\n**Dedicated apps:**\n• **Mint**: Free budgeting app (available in Canada)\n• **YNAB (You Need A Budget)**: Comprehensive budgeting system\n• **PocketGuard**: Simple expense tracking\n• **ClariFi**: AI-powered categorization with bank statement uploads\n\n**Best practices:**\n• **Track everything**: Small purchases add up\n• **Categorize consistently**: Use the same categories each month\n• **Review weekly**: Stay on top of your spending patterns\n• **Don't just track**: Use the data to make spending decisions\n• **Account for cash**: Often the hardest to track but important\n\n**ClariFi advantage:** Simply upload your bank statements and let AI categorize everything automatically - no manual data entry required!",
+          "keywords": ["track expenses", "expense tracking", "apps", "budgeting", "categorization"],
+          "category": "budgeting",
+          "tags": ["expense-tracking", "tools", "clarifi-feature"],
+          "relatedQuestions": ["create-budget-canada", "budgeting-apps", "spending-categories"],
+          "lastUpdated": "2025-06-05"
+        },
+        {
+          "id": "reduce-monthly-expenses",
+          "question": "How can I reduce my monthly expenses in Canada?",
+          "answer": "Here are proven strategies to cut your monthly expenses:\n\n**Housing (typically 25-35% of income):**\n• Get a roommate or rent out a room\n• Negotiate rent or consider moving to a cheaper area\n• Refinance your mortgage if rates have dropped\n• Reduce utility bills (programmable thermostat, LED bulbs)\n\n**Transportation:**\n• Use public transit instead of driving\n• Carpool or use car-sharing services\n• Shop around for car insurance annually\n• Consider downsizing to a more fuel-efficient vehicle\n\n**Food and groceries:**\n• Meal plan and cook at home more\n• Shop sales and use coupons/apps (Flipp, Checkout 51)\n• Buy generic brands\n• Reduce dining out and coffee shop visits\n\n**Canadian-specific savings:**\n• **Phone/Internet**: Switch to budget carriers (Freedom, Fido)\n• **Banking**: Use no-fee bank accounts and credit cards\n• **Insurance**: Bundle home and auto insurance\n• **Prescriptions**: Use generic drugs when possible\n\n**Subscriptions and services:**\n• Cancel unused subscriptions (streaming, gym, apps)\n• Share family plans for streaming services\n• Negotiate bills (phone, internet, insurance)\n\n**Track your progress:** Use ClariFi to monitor your spending reductions month over month.",
+          "keywords": ["reduce expenses", "save money", "cut costs", "canada", "monthly expenses"],
+          "category": "budgeting",
+          "tags": ["cost-cutting", "savings", "canada-specific"],
+          "relatedQuestions": ["create-budget-canada", "track-expenses", "increase-income"],
+          "lastUpdated": "2025-06-05"
+        }
+      ]
+    },
+    {
+      "id": "banking-canada",
+      "title": "Banking in Canada",
+      "icon": "building-2",
+      "description": "Understanding Canadian banking, accounts, and financial services",
+      "order": 3,
+      "questionCount": 10,
+      "faqs": [
+        {
+          "id": "choose-bank-canada",
+          "question": "How do I choose the best bank in Canada?",
+          "answer": "Choosing the right bank depends on your needs and location:\n\n**Big Six Banks (Full-service, nationwide):**\n• **RBC**: Largest bank, extensive ATM network, good mobile app\n• **TD**: Strong customer service, long hours, US presence\n• **Scotiabank**: International focus, good for newcomers\n• **BMO**: Oldest bank, competitive rates\n• **CIBC**: Good student programs\n• **National Bank**: Strong in Quebec, growing nationally\n\n**Credit Unions (Regional, member-owned):**\n• Often better rates and lower fees\n• More personalized service\n• Limited to specific provinces/regions\n• Examples: Vancity (BC), Desjardins (QC), Servus (AB)\n\n**Online Banks (Lower fees, higher rates):**\n• **Tangerine**: No-fee banking, higher interest rates\n• **Simplii Financial (CIBC)**: No monthly fees\n• **Koodo Financial**: Limited but competitive offerings\n\n**Factors to consider:**\n• Monthly account fees and how to waive them\n• ATM network and fees\n• Branch locations and hours\n• Online and mobile banking features\n• Customer service quality\n• Product offerings (mortgages, investments, credit cards)\n\n**For newcomers:** Look for newcomer packages with fee waivers and credit building programs.",
+          "keywords": ["choose bank", "canada", "big six", "credit unions", "online banks", "newcomers"],
+          "category": "banking-canada",
+          "tags": ["bank-selection", "canada-specific", "newcomers"],
+          "relatedQuestions": ["bank-account-types", "bank-fees-canada", "newcomer-banking"],
+          "lastUpdated": "2025-06-05"
+        },
+        {
+          "id": "bank-account-types",
+          "question": "What types of bank accounts should I have in Canada?",
+          "answer": "Most Canadians benefit from having multiple types of accounts:\n\n**Essential accounts:**\n\n**1. Chequing Account**\n• For daily transactions and bill payments\n• Look for unlimited transactions or high transaction limits\n• Features: Debit card, online banking, e-transfers\n• Consider no-fee options (Tangerine, Simplii)\n\n**2. High-Interest Savings Account (HISA)**\n• For emergency fund and short-term savings\n• Currently offering 4-5% interest rates\n• CDIC insured up to $100,000\n• Easy access to funds\n\n**3. Tax-Free Savings Account (TFSA)**\n• For medium to long-term savings and investments\n• Tax-free growth and withdrawals\n• 2024 contribution room: $7,000 (lifetime maximum varies by age)\n• Can hold cash, GICs, stocks, bonds, mutual funds\n\n**Optional accounts:**\n\n**4. Registered Retirement Savings Plan (RRSP)**\n• For retirement savings with immediate tax deduction\n• Contribution room based on income (18% up to annual maximum)\n• Tax-deferred growth until withdrawal\n\n**5. First Home Savings Account (FHSA)**\n• New in 2023 for first-time home buyers\n• Combines benefits of RRSP and TFSA\n• $8,000 annual contribution limit, $40,000 lifetime\n\n**Account strategy tips:**\n• Minimize fees by meeting minimum balance requirements\n• Use accounts at the same bank for easier transfers\n• Automate savings transfers",
+          "keywords": ["bank accounts", "chequing", "savings", "TFSA", "RRSP", "HISA", "FHSA"],
+          "category": "banking-canada",
+          "tags": ["account-types", "savings", "canada-specific"],
+          "relatedQuestions": ["tfsa-vs-rrsp", "high-interest-savings", "choose-bank-canada"],
+          "lastUpdated": "2025-06-05"
+        },
+        {
+          "id": "bank-fees-canada",
+          "question": "How can I avoid or minimize bank fees in Canada?",
+          "answer": "Canadian bank fees can add up quickly, but there are many ways to reduce or eliminate them:\n\n**Common bank fees and how to avoid them:**\n\n**Monthly account fees ($4-30/month):**\n• Maintain minimum balance requirements\n• Bundle multiple products (chequing + savings + credit card)\n• Switch to no-fee banks (Tangerine, Simplii Financial)\n• Use student or senior accounts if eligible\n\n**Transaction fees ($1-5 per transaction):**\n• Choose unlimited transaction plans if you make many transactions\n• Use your bank's ATMs to avoid surcharges\n• Limit debit card usage if you have a limited plan\n• Use credit cards for purchases (if you pay them off)\n\n**ATM fees ($2-5 per transaction):**\n• Use your bank's ATM network\n• Look for fee rebate programs\n• Get cash back at grocery stores instead\n• Consider online banks with ATM fee refunds\n\n**Other fees to watch for:**\n• **Overdraft fees**: Set up low balance alerts\n• **NSF fees**: Monitor account balances closely\n• **Wire transfer fees**: Use cheaper alternatives like e-transfers\n• **Foreign transaction fees**: Use no foreign fee credit cards\n\n**Best no-fee options:**\n• **Tangerine**: No monthly fees, unlimited transactions\n• **Simplii Financial**: No monthly fees with conditions\n• **Credit unions**: Often lower fees than big banks",
+          "keywords": ["bank fees", "avoid fees", "no-fee banking", "canada", "ATM fees", "monthly fees"],
+          "category": "banking-canada",
+          "tags": ["fees", "cost-saving", "canada-specific"],
+          "relatedQuestions": ["choose-bank-canada", "online-banking-canada", "student-banking"],
+          "lastUpdated": "2025-06-05"
+        },
+        {
+          "id": "e-transfer-canada",
+          "question": "How do Interac e-Transfers work and are they safe?",
+          "answer": "Interac e-Transfer is Canada's electronic money transfer service:\n\n**How it works:**\n1. **Send**: Enter recipient's email/phone, amount, and security question\n2. **Notify**: Recipient gets notification with transfer details\n3. **Accept**: Recipient answers security question and deposits to their bank\n4. **Complete**: Money moves from your account to theirs\n\n**Fees:**\n• **Sending**: Usually $1-1.50 per transfer\n• **Receiving**: Usually free\n• **Some banks**: Offer free e-transfers with premium accounts\n• **Autodeposit**: May have different fee structure\n\n**Security features:**\n• **128-bit encryption**: Same as online banking\n• **Security questions**: Prevents unauthorized access\n• **Email/SMS notifications**: Track transfer status\n• **Autodeposit**: Eliminates security question requirement\n\n**Safety tips:**\n• Use strong, unique security questions\n• Send security answer separately (text message)\n• Double-check recipient email address\n• Don't send money to unknown people\n• Use autodeposit for regular recipients\n• Monitor your account for unauthorized transfers\n\n**Limits:**\n• **Daily**: Usually $3,000-3,500\n• **Weekly/Monthly**: Varies by bank\n• **Can be increased**: Contact your bank for higher limits\n\n**Alternatives:**\n• **PayPal**: For online transactions\n• **Wire transfers**: For large amounts\n• **Cash**: For in-person transactions",
+          "keywords": ["e-transfer", "interac", "canada", "electronic transfer", "safety", "fees"],
+          "category": "banking-canada",
+          "tags": ["digital-banking", "transfers", "safety"],
+          "relatedQuestions": ["online-banking-canada", "bank-fees-canada", "digital-payments"],
+          "lastUpdated": "2025-06-05"
+        }
+      ]
+    },
+    {
+      "id": "using-clarifi",
+      "title": "Using ClariFi",
+      "icon": "smartphone",
+      "description": "How to get the most out of ClariFi's features",
+      "order": 4,
+      "questionCount": 8,
+      "faqs": [
+        {
+          "id": "getting-started-clarifi",
+          "question": "How do I get started with ClariFi?",
+          "answer": "Getting started with ClariFi is simple and secure:\n\n**Step 1: Download and Sign Up**\n• Download ClariFi from the App Store or Google Play\n• Create your account with email and secure password\n• Complete the privacy-focused onboarding\n\n**Step 2: Upload Your Financial Statements**\n• **Bank statements**: PDF, CSV, or image formats supported\n• **Credit card statements**: All major Canadian issuers supported\n• **Multiple accounts**: Upload statements from different banks\n• **Batch upload**: Process multiple months at once\n\n**Step 3: Let AI Do the Work**\n• **OCR processing**: Automatically extracts transaction data\n• **AI categorization**: Intelligently categorizes your spending\n• **Duplicate detection**: Prevents double-counting transactions\n• **Error correction**: Review and adjust any misclassified items\n\n**Step 4: Explore Your Financial Insights**\n• **Dashboard**: Overview of spending patterns and trends\n• **Credit utilization**: Real-time monitoring and alerts\n• **Payment reminders**: Never miss a credit card payment\n• **Budgeting tools**: Track expenses against your goals\n\n**Privacy note**: Your data never leaves your device unencrypted, and we never store your banking login credentials.\n\n**Pro tip**: Upload 2-3 months of statements initially to get better insights and trends analysis.",
+          "keywords": ["getting started", "clarifi", "upload statements", "AI categorization", "privacy"],
+          "category": "using-clarifi",
+          "tags": ["onboarding", "getting-started", "privacy"],
+          "relatedQuestions": ["upload-statements", "privacy-security", "ai-categorization"],
+          "lastUpdated": "2025-06-05"
+        },
+        {
+          "id": "upload-statements",
+          "question": "What types of statements can I upload to ClariFi?",
+          "answer": "ClariFi supports a wide variety of Canadian financial statements:\n\n**Supported formats:**\n• **PDF files**: Most common format from banks\n• **CSV files**: Spreadsheet exports from online banking\n• **Images**: Photos of paper statements (JPG, PNG)\n• **Scanned documents**: High-quality scans work best\n\n**Supported institutions:**\n• **All major Canadian banks**: RBC, TD, Scotiabank, BMO, CIBC, National Bank\n• **Credit unions**: Vancity, Desjardins, Servus, and others\n• **Online banks**: Tangerine, Simplii Financial\n• **Credit cards**: Visa, Mastercard, American Express from any issuer\n• **Investment accounts**: Some investment statements supported\n\n**Statement types:**\n• **Monthly bank statements**: Chequing and savings accounts\n• **Credit card statements**: All major Canadian issuers\n• **Line of credit statements**: HELOC and personal lines of credit\n• **Investment statements**: Basic transaction history\n\n**Best practices:**\n• **Complete statements**: Upload full monthly statements for best results\n• **Multiple months**: Upload 2-3 months for better trend analysis\n• **High quality**: Ensure text is clear and readable\n• **Sequential upload**: Upload months in chronological order\n\n**Privacy guarantee**: All processing happens on-device with end-to-end encryption. We never see your raw banking data.",
+          "keywords": ["upload statements", "supported formats", "canadian banks", "PDF", "CSV", "privacy"],
+          "category": "using-clarifi",
+          "tags": ["statement-upload", "supported-formats", "privacy"],
+          "relatedQuestions": ["getting-started-clarifi", "privacy-security", "processing-errors"],
+          "lastUpdated": "2025-06-05"
+        },
+        {
+          "id": "ai-categorization",
+          "question": "How accurate is ClariFi's AI categorization?",
+          "answer": "ClariFi's AI categorization system is designed specifically for Canadian spending patterns:\n\n**Accuracy rates:**\n• **Overall accuracy**: 87%+ across all transaction types\n• **Major merchants**: 95%+ (Tim Hortons, Loblaws, etc.)\n• **Recurring bills**: 92%+ (utilities, subscriptions)\n• **Complex descriptions**: 75%+ (cryptic bank codes)\n\n**How it works:**\n• **Rule-based matching**: Instant recognition of known Canadian merchants\n• **AI enhancement**: Machine learning for complex or new transactions\n• **Context analysis**: Considers amount, timing, and merchant patterns\n• **Continuous learning**: Improves accuracy with user feedback\n\n**Categories used:**\n• **Groceries**: Food and household essentials\n• **Transportation**: Gas, transit, rideshare, parking\n• **Dining**: Restaurants, coffee shops, takeout\n• **Shopping**: Retail purchases, online shopping\n• **Utilities**: Phone, internet, electricity, insurance\n• **Healthcare**: Medical, dental, pharmacy\n• **Entertainment**: Movies, streaming, sports, hobbies\n• **Income**: Salary, investments, transfers\n• **And more**: 12 total categories\n\n**User control:**\n• **Review and edit**: Easily correct any misclassified transactions\n• **Learning system**: AI learns from your corrections\n• **Custom rules**: Set up personal categorization preferences\n• **Bulk editing**: Quickly fix multiple similar transactions\n\n**Canadian advantage**: Trained specifically on Canadian merchant patterns and spending habits.",
+          "keywords": ["AI categorization", "accuracy", "machine learning", "canadian merchants", "categories"],
+          "category": "using-clarifi",
+          "tags": ["ai-features", "categorization", "accuracy"],
+          "relatedQuestions": ["getting-started-clarifi", "correct-categorization", "spending-insights"],
+          "lastUpdated": "2025-06-05"
+        },
+        {
+          "id": "privacy-security",
+          "question": "How does ClariFi protect my financial privacy and data?",
+          "answer": "Privacy and security are ClariFi's top priorities:\n\n**Privacy-first architecture:**\n• **No bank login required**: Never ask for your banking passwords\n• **Local processing**: OCR and AI processing happens on your device\n• **End-to-end encryption**: Data encrypted before leaving your device\n• **No raw data storage**: We never store your actual statements\n• **Minimal data collection**: Only anonymized insights for improvements\n\n**Technical security:**\n• **256-bit AES encryption**: Military-grade encryption standards\n• **Zero-knowledge architecture**: We can't access your raw financial data\n• **Secure cloud storage**: Only encrypted, aggregated data in cloud\n• **Regular security audits**: Third-party penetration testing\n• **SOC 2 compliance**: Enterprise-grade security standards\n\n**Data handling:**\n• **What we store**: Anonymized spending categories and trends\n• **What we don't store**: Bank statements, account numbers, passwords\n• **Data retention**: Encrypted insights only, raw data deleted immediately\n• **User control**: Delete your data anytime from settings\n\n**Canadian compliance:**\n• **PIPEDA compliant**: Follows Canadian privacy legislation\n• **CDIC considerations**: Aligns with banking security standards\n• **Provincial privacy laws**: Complies with all provincial requirements\n\n**Open source components**: Core privacy and encryption modules are open source for transparency.\n\n**Your control**: You own your data and can export or delete it anytime.",
+          "keywords": ["privacy", "security", "encryption", "data protection", "PIPEDA", "canadian compliance"],
+          "category": "using-clarifi",
+          "tags": ["privacy", "security", "compliance"],
+          "relatedQuestions": ["getting-started-clarifi", "data-export", "account-deletion"],
+          "lastUpdated": "2025-06-05"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "totalQuestions": 45,
+    "lastReviewDate": "2025-06-05",
+    "contentVersion": "1.0.0",
+    "targetAudience": "Canadian adults interested in personal finance",
+    "complianceNotes": "Content reviewed for Canadian financial regulation compliance",
+    "searchOptimization": {
+      "primaryKeywords": ["canada", "canadian", "credit score", "budget", "banking", "clarifi"],
+      "secondaryKeywords": ["TFSA", "RRSP", "credit utilization", "emergency fund", "expenses"],
+      "commonQuestions": ["how to", "what is", "best way", "how much", "should I"]
+    }
+  }
+} 

@@ -1,0 +1,552 @@
+import React, { useState, useEffect } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+  Dimensions,
+} from 'react-native';
+import { colors } from '../../constants';
+import { textStyles } from '../../constants/typography';
+import { spacing } from '../../constants/spacing';
+import {
+  ChevronLeft,
+  ChevronRight,
+  Calendar,
+  Clock,
+  Bell,
+} from 'lucide-react-native';
+
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
+// cellSize calculation moved inside component to avoid early spacing access
+
+export interface ScheduledAlert {
+  id: string;
+  date: Date;
+  time: string;
+  cardName: string;
+  cardColor: string;
+  type: 'utilization' | 'payment' | 'reminder';
+  projectedUtilization?: number;
+  priority: 'low' | 'medium' | 'high' | 'critical';
+  isRecurring: boolean;
+}
+
+interface NotificationCalendarProps {
+  scheduledAlerts: ScheduledAlert[];
+  onDateSelect: (date: Date, alerts: ScheduledAlert[]) => void;
+  onAlertSnooze: (alertId: string) => void;
+  onAlertEdit: (alertId: string) => void;
+}
+
+export const NotificationCalendar: React.FC<NotificationCalendarProps> = ({
+  scheduledAlerts,
+  onDateSelect,
+  onAlertSnooze,
+  onAlertEdit,
+}) => {
+  // Calculate cellSize inside component to avoid early spacing access
+  const cellSize = (SCREEN_WIDTH - spacing.lg * 2) / 7;
+  const styles = createStyles(cellSize);
+
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+
+  const today = new Date();
+  const currentMonth = currentDate.getMonth();
+  const currentYear = currentDate.getFullYear();
+
+  // Get first day of month and number of days
+  const firstDayOfMonth = new Date(currentYear, currentMonth, 1);
+  const lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0);
+  const daysInMonth = lastDayOfMonth.getDate();
+  const startingDayOfWeek = firstDayOfMonth.getDay();
+
+  // Generate calendar days
+  const calendarDays = [];
+
+  // Add empty cells for days before month starts
+  for (let i = 0; i < startingDayOfWeek; i++) {
+    calendarDays.push(null);
+  }
+
+  // Add days of the month
+  for (let day = 1; day <= daysInMonth; day++) {
+    calendarDays.push(new Date(currentYear, currentMonth, day));
+  }
+
+  const navigateMonth = (direction: 'prev' | 'next') => {
+    const newDate = new Date(currentDate);
+    if (direction === 'prev') {
+      newDate.setMonth(currentMonth - 1);
+    } else {
+      newDate.setMonth(currentMonth + 1);
+    }
+    setCurrentDate(newDate);
+    setSelectedDate(null);
+  };
+
+  const getAlertsForDate = (date: Date): ScheduledAlert[] => {
+    return scheduledAlerts.filter(
+      alert => alert.date.toDateString() === date.toDateString()
+    );
+  };
+
+  const getHighestPriorityForDate = (
+    date: Date
+  ): 'low' | 'medium' | 'high' | 'critical' | null => {
+    const alerts = getAlertsForDate(date);
+    if (alerts.length === 0) return null;
+
+    const priorities = ['critical', 'high', 'medium', 'low'];
+    for (const priority of priorities) {
+      if (alerts.some(alert => alert.priority === priority)) {
+        return priority as any;
+      }
+    }
+    return 'low';
+  };
+
+  const getPriorityColor = (priority: string) => {
+    switch (priority) {
+      case 'critical':
+        return colors.errorRed;
+      case 'high':
+        return colors.warning;
+      case 'medium':
+        return colors.clarityBlue;
+      case 'low':
+        return colors.growthGreen;
+      default:
+        return colors.neutralGray;
+    }
+  };
+
+  const getDotSize = (priority: string) => {
+    switch (priority) {
+      case 'critical':
+        return 12;
+      case 'high':
+        return 10;
+      case 'medium':
+        return 8;
+      case 'low':
+        return 6;
+      default:
+        return 6;
+    }
+  };
+
+  const handleDatePress = (date: Date) => {
+    setSelectedDate(date);
+    const alerts = getAlertsForDate(date);
+    onDateSelect(date, alerts);
+  };
+
+  const isToday = (date: Date) => {
+    return date.toDateString() === today.toDateString();
+  };
+
+  const isSelected = (date: Date) => {
+    return selectedDate?.toDateString() === date.toDateString();
+  };
+
+  const getUpcomingAlerts = () => {
+    const nextWeek = new Date();
+    nextWeek.setDate(today.getDate() + 7);
+
+    return scheduledAlerts
+      .filter(alert => alert.date >= today && alert.date <= nextWeek)
+      .sort((a, b) => a.date.getTime() - b.date.getTime())
+      .slice(0, 5);
+  };
+
+  const formatAlertTime = (alert: ScheduledAlert) => {
+    return new Intl.DateTimeFormat('en-CA', {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+    }).format(alert.date);
+  };
+
+  const renderCalendarHeader = () => (
+    <View style={styles.calendarHeader}>
+      <TouchableOpacity
+        style={styles.navigationButton}
+        onPress={() => navigateMonth('prev')}
+      >
+        <ChevronLeft size={24} color={colors.clarityBlue} />
+      </TouchableOpacity>
+
+      <Text style={styles.monthYear}>
+        {currentDate.toLocaleDateString('en-CA', {
+          month: 'long',
+          year: 'numeric',
+        })}
+      </Text>
+
+      <TouchableOpacity
+        style={styles.navigationButton}
+        onPress={() => navigateMonth('next')}
+      >
+        <ChevronRight size={24} color={colors.clarityBlue} />
+      </TouchableOpacity>
+    </View>
+  );
+
+  const renderWeekdayHeaders = () => {
+    const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+    return (
+      <View style={styles.weekdayHeaders}>
+        {weekdays.map(day => (
+          <Text key={day} style={styles.weekdayText}>
+            {day}
+          </Text>
+        ))}
+      </View>
+    );
+  };
+
+  const renderCalendarGrid = () => {
+    const weeks = [];
+    for (let i = 0; i < calendarDays.length; i += 7) {
+      weeks.push(calendarDays.slice(i, i + 7));
+    }
+
+    return (
+      <View style={styles.calendarGrid}>
+        {weeks.map((week, weekIndex) => (
+          <View key={weekIndex} style={styles.weekRow}>
+            {week.map((date, dayIndex) => {
+              if (!date) {
+                return <View key={dayIndex} style={styles.emptyDay} />;
+              }
+
+              const alerts = getAlertsForDate(date);
+              const priority = getHighestPriorityForDate(date);
+              const hasAlerts = alerts.length > 0;
+
+              return (
+                <TouchableOpacity
+                  key={dayIndex}
+                  style={[
+                    styles.dayCell,
+                    isToday(date) && styles.todayCell,
+                    isSelected(date) && styles.selectedCell,
+                  ]}
+                  onPress={() => handleDatePress(date)}
+                >
+                  <Text
+                    style={[
+                      styles.dayText,
+                      isToday(date) && styles.todayText,
+                      isSelected(date) && styles.selectedText,
+                    ]}
+                  >
+                    {date.getDate()}
+                  </Text>
+
+                  {hasAlerts && priority && (
+                    <View
+                      style={[
+                        styles.alertDot,
+                        {
+                          backgroundColor: getPriorityColor(priority),
+                          width: getDotSize(priority),
+                          height: getDotSize(priority),
+                          borderRadius: getDotSize(priority) / 2,
+                        },
+                      ]}
+                    />
+                  )}
+
+                  {alerts.length > 1 && (
+                    <Text style={styles.alertCount}>{alerts.length}</Text>
+                  )}
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+        ))}
+      </View>
+    );
+  };
+
+  const renderUpcomingAlerts = () => {
+    const upcoming = getUpcomingAlerts();
+
+    if (upcoming.length === 0) {
+      return (
+        <View style={styles.emptyUpcoming}>
+          <Calendar size={48} color={colors.neutralGray} />
+          <Text style={styles.emptyUpcomingText}>
+            No upcoming alerts in the next 7 days
+          </Text>
+        </View>
+      );
+    }
+
+    return (
+      <View style={styles.upcomingSection}>
+        <Text style={styles.upcomingSectionTitle}>Upcoming Alerts</Text>
+
+        <ScrollView
+          style={styles.upcomingList}
+          showsVerticalScrollIndicator={false}
+        >
+          {upcoming.map(alert => (
+            <View key={alert.id} style={styles.upcomingAlert}>
+              <View style={styles.upcomingAlertHeader}>
+                <View style={styles.upcomingAlertTime}>
+                  <Clock size={16} color={colors.neutralGray} />
+                  <Text style={styles.upcomingTimeText}>
+                    {formatAlertTime(alert)}
+                  </Text>
+                </View>
+
+                <View
+                  style={[
+                    styles.priorityIndicator,
+                    { backgroundColor: getPriorityColor(alert.priority) },
+                  ]}
+                />
+              </View>
+
+              <View style={styles.upcomingAlertContent}>
+                <Text style={styles.upcomingCardName} numberOfLines={1}>
+                  {alert.cardName}
+                </Text>
+
+                {alert.projectedUtilization && (
+                  <Text style={styles.upcomingUtilization}>
+                    Projected: {alert.projectedUtilization}% utilization
+                  </Text>
+                )}
+
+                <Text style={styles.upcomingAlertType}>
+                  {alert.type.charAt(0).toUpperCase() + alert.type.slice(1)}{' '}
+                  Alert
+                </Text>
+              </View>
+
+              <View style={styles.upcomingAlertActions}>
+                <TouchableOpacity
+                  style={styles.snoozeButton}
+                  onPress={() => onAlertSnooze(alert.id)}
+                >
+                  <Text style={styles.snoozeButtonText}>Snooze</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={styles.editButton}
+                  onPress={() => onAlertEdit(alert.id)}
+                >
+                  <Text style={styles.editButtonText}>Edit</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          ))}
+        </ScrollView>
+      </View>
+    );
+  };
+
+  return (
+    <View style={styles.container}>
+      {renderCalendarHeader()}
+      {renderWeekdayHeaders()}
+      {renderCalendarGrid()}
+      {renderUpcomingAlerts()}
+    </View>
+  );
+};
+
+const createStyles = (cellSize: number) =>
+  StyleSheet.create({
+    container: {
+      backgroundColor: colors.pureWhite,
+      borderRadius: 16,
+      padding: spacing.lg,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 4,
+      elevation: 3,
+    },
+    calendarHeader: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: spacing.lg,
+    },
+    navigationButton: {
+      width: 40,
+      height: 40,
+      borderRadius: 20,
+      backgroundColor: colors.cloudGray,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    monthYear: {
+      ...textStyles.h3,
+      color: colors.midnightInk,
+    },
+    weekdayHeaders: {
+      flexDirection: 'row',
+      marginBottom: spacing.sm,
+    },
+    weekdayText: {
+      ...textStyles.caption,
+      color: colors.neutralGray,
+      width: cellSize,
+      textAlign: 'center',
+      fontWeight: '600',
+    },
+    calendarGrid: {
+      marginBottom: spacing.xl,
+    },
+    weekRow: {
+      flexDirection: 'row',
+    },
+    emptyDay: {
+      width: cellSize,
+      height: cellSize,
+    },
+    dayCell: {
+      width: cellSize,
+      height: cellSize,
+      justifyContent: 'center',
+      alignItems: 'center',
+      position: 'relative',
+    },
+    todayCell: {
+      backgroundColor: colors.clarityBlue,
+      borderRadius: cellSize / 2,
+    },
+    selectedCell: {
+      backgroundColor: colors.cloudGray,
+      borderRadius: cellSize / 2,
+    },
+    dayText: {
+      ...textStyles.body,
+      color: colors.midnightInk,
+    },
+    todayText: {
+      color: colors.pureWhite,
+      fontWeight: '600',
+    },
+    selectedText: {
+      color: colors.clarityBlue,
+      fontWeight: '600',
+    },
+    alertDot: {
+      position: 'absolute',
+      bottom: 8,
+    },
+    alertCount: {
+      position: 'absolute',
+      top: 4,
+      right: 4,
+      ...textStyles.small,
+      color: colors.errorRed,
+      fontWeight: '700',
+    },
+    upcomingSection: {
+      borderTopWidth: 1,
+      borderTopColor: colors.cloudGray,
+      paddingTop: spacing.lg,
+    },
+    upcomingSectionTitle: {
+      ...textStyles.h3,
+      color: colors.midnightInk,
+      marginBottom: spacing.md,
+    },
+    upcomingList: {
+      maxHeight: 300,
+    },
+    emptyUpcoming: {
+      alignItems: 'center',
+      paddingVertical: spacing.xl,
+    },
+    emptyUpcomingText: {
+      ...textStyles.body,
+      color: colors.neutralGray,
+      textAlign: 'center',
+      marginTop: spacing.md,
+    },
+    upcomingAlert: {
+      backgroundColor: colors.cloudGray,
+      borderRadius: 12,
+      padding: spacing.md,
+      marginBottom: spacing.sm,
+    },
+    upcomingAlertHeader: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: spacing.xs,
+    },
+    upcomingAlertTime: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.xs,
+    },
+    upcomingTimeText: {
+      ...textStyles.caption,
+      color: colors.neutralGray,
+    },
+    priorityIndicator: {
+      width: 12,
+      height: 12,
+      borderRadius: 6,
+    },
+    upcomingAlertContent: {
+      marginBottom: spacing.sm,
+    },
+    upcomingCardName: {
+      ...textStyles.body,
+      color: colors.midnightInk,
+      fontWeight: '600',
+      marginBottom: spacing.xs,
+    },
+    upcomingUtilization: {
+      ...textStyles.caption,
+      color: colors.clarityBlue,
+    },
+    upcomingAlertType: {
+      ...textStyles.caption,
+      color: colors.neutralGray,
+    },
+    upcomingAlertActions: {
+      flexDirection: 'row',
+      gap: spacing.sm,
+    },
+    snoozeButton: {
+      paddingHorizontal: spacing.md,
+      paddingVertical: spacing.xs,
+      backgroundColor: colors.pureWhite,
+      borderRadius: 6,
+      borderWidth: 1,
+      borderColor: colors.neutralGray,
+    },
+    snoozeButtonText: {
+      ...textStyles.caption,
+      color: colors.neutralGray,
+      fontWeight: '600',
+    },
+    editButton: {
+      paddingHorizontal: spacing.md,
+      paddingVertical: spacing.xs,
+      backgroundColor: colors.clarityBlue,
+      borderRadius: 6,
+    },
+    editButtonText: {
+      ...textStyles.caption,
+      color: colors.pureWhite,
+      fontWeight: '600',
+    },
+  });

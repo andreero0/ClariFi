@@ -1,0 +1,175 @@
+# ClariFi Mobile App - Dashboard Feature PRD
+
+## Product Overview
+The AI-Powered Privacy-First Personal Finance App (Canada) dashboard provides users with intelligent financial insights while prioritizing data privacy. The dashboard leverages AI to automatically categorize spending, track credit card utilization, and provide timely insights without requiring direct bank account linking.
+
+## Project Specifications
+
+### Technology Stack
+- **Framework**: React Native with Expo
+- **Icons**: React-Lucide for all iconography
+- **Styling**: React Native StyleSheet (Tailwind concepts applied)
+- **State Management**: React Context API
+- **Animation**: React Native Animated API
+- **Data Visualization**: Custom SVG implementations (no external chart libraries)
+- **Device Target**: iPhone 16 Pro optimized with device frame mock
+
+### Design System Requirements
+- **Color Palette**: "Secure & Insightful Teal" with Clarity Blue (#2B5CE6) primary
+- **Typography**: SF Pro Text (iOS) with specific weight and size hierarchy
+- **Component System**: Bold simplicity with intuitive navigation
+- **Motion**: Physics-based transitions with 200-250ms duration
+- **Accessibility**: WCAG AA compliance with proper contrast ratios
+
+## Core Features
+
+### Feature 1: Main Dashboard View
+**Dashboard - Default State**
+- Header with personalized greeting using time-based variation ("Good morning, Sarah")
+- Month selector with smooth page transition animation
+- Three summary cards in horizontal scroll layout:
+  - Income card (Growth Green #00C896 accent)
+  - Expenses card (Clarity Blue #2B5CE6 accent)  
+  - Savings card (Wisdom Purple #6B5DD3 accent)
+- Each card features subtle gradient background
+- Numbers animate with rolling digit effect when changing
+- Pull-to-refresh gesture with custom animation
+
+**Dashboard - Interaction State**
+- Cards expand on tap with spring animation
+- Detailed breakdown slides in from bottom
+- Haptic feedback on card interaction
+- Swipe between months with page indicator dots
+- Pinch gesture on charts for zoom functionality
+- Long-press on any value for quick actions menu
+
+### Feature 2: Spending Visualization
+**Spending Chart - Pie View State**
+- Interactive SVG pie chart (no external libraries)
+- Segments animate in sequentially (staggered by 50ms)
+- Tap segment for explosion effect and details
+- Colors match category system for consistency
+- Center shows total with animated number change
+- Legend below with horizontal scroll if needed
+- Smooth transitions between time periods
+
+**Spending Chart - Trend View State**
+- Line graph showing 30-day rolling average
+- Touch and drag for scrubbing through dates
+- Value tooltip follows finger position
+- Gradient fill under line for visual appeal
+- Anomaly points highlighted with pulse animation
+- Y-axis scales dynamically with spring physics
+- Pinch to zoom on specific date ranges
+
+### Feature 3: Category Breakdown
+**Category List - Expanded State**
+- Vertical list with progress bars per category
+- Each row displays:
+  - Category icon and name
+  - Spent amount vs budgeted (if set)
+  - Visual progress bar with color coding
+  - Percentage of total spending
+- Tap for detailed transaction list
+- Swipe left for quick budget adjustment
+- Categories sorted by spending (highest first)
+
+**Category List - Compressed State**
+- Top 5 categories only with "View All" button
+- Horizontal bar chart visualization
+- Quick stats: biggest increase/decrease
+- Smart insights appear for unusual patterns
+- Animation between expanded/compressed states
+- Empty state if no transactions in category
+
+### Feature 4: Insights Feed
+**Insights - Card State**
+- Cards with different priority levels (border colors)
+- High priority: pulsing border animation
+- Each insight includes:
+  - Icon indicating type (warning, opportunity, achievement)
+  - Clear headline in Body Large text
+  - Actionable message with specific numbers
+  - "Take Action" or "Dismiss" buttons
+- Swipe to dismiss with fade-out animation
+- New insights slide in from top
+
+**Insights - Detail State**
+- Full-screen detail view on tap
+- Animated transition from card to detail
+- Rich visualization supporting the insight
+- Historical context with trend lines
+- Specific recommendations listed
+- "How we calculated this" expandable section
+- Share button for insights (generates image)
+
+### Feature 5: Quick Actions Menu
+**Quick Actions - Overlay State**
+- Semi-transparent backdrop with blur effect
+- Action buttons appear with staggered animation
+- Common actions:
+  - Add manual transaction
+  - Set budget for category
+  - Export current view
+  - Share monthly summary
+- Icons use consistent icon system
+- Dismiss on backdrop tap or swipe down
+
+**Quick Actions - Export State**
+- Format selection (PDF, CSV, Image)
+- Date range picker with calendar view
+- Preview generation with progress indicator
+- Share sheet integration for sending
+- "Export successful" toast with file location
+- Recent exports list for quick access
+
+## Technical Requirements
+
+### Component Architecture
+- All new components in `/src/components/` directory
+- Modular component structure for reusability
+- TypeScript for type safety
+- Proper error boundaries and loading states
+- Responsive design for various screen sizes
+
+### Performance Requirements
+- Smooth 60fps animations
+- Lazy loading for large data sets
+- Efficient re-rendering with React.memo
+- Optimized image and asset loading
+- Memory management for chart animations
+
+### Data Integration
+- Mock data for design implementation
+- Future API integration ready structure
+- Local storage for user preferences
+- Offline functionality considerations
+
+### Accessibility Requirements
+- Screen reader compatibility
+- Proper focus management
+- High contrast mode support
+- Voice control compatibility
+- Haptic feedback for interactions
+
+## User Experience Goals
+- Frictionless navigation with intuitive gestures
+- Clear visual hierarchy for financial data
+- Quick access to most important information
+- Confidence-building through clear data presentation
+- Privacy-first messaging throughout interface
+
+## Success Metrics
+- User engagement with dashboard features
+- Time spent analyzing financial insights
+- Successful completion of financial actions
+- User satisfaction with visual design
+- Accessibility compliance scores
+
+## Constraints and Considerations
+- Canadian financial institution compliance
+- Privacy-first design principles
+- No direct bank account linking
+- English-language support (MVP)
+- Freemium model considerations
+- iOS-first implementation with device frame mock 

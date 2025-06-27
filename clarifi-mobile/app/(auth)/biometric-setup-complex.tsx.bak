@@ -1,0 +1,623 @@
+import React, { useState, useEffect, useRef } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+  Platform,
+  Animated,
+  Dimensions,
+  Modal,
+  ScrollView,
+  Vibration,
+  AccessibilityInfo,
+} from 'react-native';
+import { useRouter, useLocalSearchParams } from 'expo-router';
+import { translate } from '../../i18n';
+import { useAuth } from '../../context/AuthContext';
+import { useOnboarding } from '../../context/OnboardingContext';
+import * as LocalAuthentication from 'expo-local-authentication';
+import * as Haptics from 'expo-haptics';
+import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { colors } from '../../constants/colors';
+
+const { width, height } = Dimensions.get('window');
+
+export default function BiometricSetupScreen() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [showPrivacyInfo, setShowPrivacyInfo] = useState(false);
+  const [biometricType, setBiometricType] = useState<
+    'FaceID' | 'TouchID' | 'Biometric'
+  >('Biometric');
+
+  const router = useRouter();
+  const { setBiometricConsent } = useOnboarding();
+  const params = useLocalSearchParams();
+
+  // Animation values
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const scaleAnim = useRef(new Animated.Value(0.8)).current;
+  const iconRotateAnim = useRef(new Animated.Value(0)).current;
+  const successScaleAnim = useRef(new Animated.Value(0)).current;
+  const successOpacityAnim = useRef(new Animated.Value(0)).current;
+  const shakeAnim = useRef(new Animated.Value(0)).current;
+  const buttonScaleAnim = useRef(new Animated.Value(1)).current;
+
+  useEffect(() => {
+    // Determine biometric type based on platform
+    checkBiometricType();
+
+    // Entry animations
+    Animated.parallel([
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 600,
+        useNativeDriver: true,
+      }),
+      Animated.spring(scaleAnim, {
+        toValue: 1,
+        friction: 8,
+        tension: 40,
+        useNativeDriver: true,
+      }),
+    ]).start();
+
+    // Continuous icon rotation
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(iconRotateAnim, {
+          toValue: 1,
+          duration: 3000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(iconRotateAnim, {
+          toValue: 0,
+          duration: 3000,
+          useNativeDriver: true,
+        }),
+      ])
+    ).start();
+  }, []);
+
+  const checkBiometricType = async () => {
+    const supportedTypes =
+      await LocalAuthentication.supportedAuthenticationTypesAsync();
+    if (Platform.OS === 'ios') {
+      if (
+        supportedTypes.includes(
+          LocalAuthentication.AuthenticationType.FACIAL_RECOGNITION
+        )
+      ) {
+        setBiometricType('FaceID');
+      } else if (
+        supportedTypes.includes(
+          LocalAuthentication.AuthenticationType.FINGERPRINT
+        )
+      ) {
+        setBiometricType('TouchID');
+      }
+    } else {
+      setBiometricType('Biometric');
+    }
+  };
+
+  const navigateToNextStep = () => {
+    router.push('/(auth)/bank-selection');
+  };
+
+  const handleButtonPressIn = () => {
+    Animated.spring(buttonScaleAnim, {
+      toValue: 0.97,
+      useNativeDriver: true,
+    }).start();
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+  };
+
+  const handleButtonPressOut = () => {
+    Animated.spring(buttonScaleAnim, {
+      toValue: 1,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const showSuccessAnimation = () => {
+    setShowSuccess(true);
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+
+    Animated.sequence([
+      Animated.parallel([
+        Animated.spring(successScaleAnim, {
+          toValue: 1,
+          friction: 5,
+          tension: 80,
+          useNativeDriver: true,
+        }),
+        Animated.timing(successOpacityAnim, {
+          toValue: 1,
+          duration: 300,
+          useNativeDriver: true,
+        }),
+      ]),
+    ]).start(() => {
+      // Auto-navigate after 1.5 seconds
+      setTimeout(() => {
+        navigateToNextStep();
+      }, 1500);
+    });
+  };
+
+  const shakeAnimation = () => {
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+    Animated.sequence([
+      Animated.timing(shakeAnim, {
+        toValue: 10,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+      Animated.timing(shakeAnim, {
+        toValue: -10,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+      Animated.timing(shakeAnim, {
+        toValue: 10,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+      Animated.timing(shakeAnim, {
+        toValue: 0,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  };
+
+  const handleEnableBiometrics = async () => {
+    setIsLoading(true);
+    handleButtonPressIn();
+
+    try {
+      const hasHardware = await LocalAuthentication.hasHardwareAsync();
+
+      if (!hasHardware) {
+        handleButtonPressOut();
+        shakeAnimation();
+        Alert.alert(
+          translate('common.error'),
+          translate('auth.biometrics.noHardware'),
+          [
+            {
+              text: translate('common.ok'),
+              onPress: () => navigateToNextStep(),
+            },
+          ]
+        );
+        setBiometricConsent(false);
+        setIsLoading(false);
+        return;
+      }
+
+      const isEnrolled = await LocalAuthentication.isEnrolledAsync();
+
+      if (!isEnrolled) {
+        handleButtonPressOut();
+        shakeAnimation();
+        Alert.alert(
+          translate('auth.biometrics.notEnrolledTitle'),
+          translate('auth.biometrics.notEnrolledMessage'),
+          [
+            {
+              text: translate('common.ok'),
+              onPress: () => navigateToNextStep(),
+            },
+          ]
+        );
+        setBiometricConsent(false);
+        setIsLoading(false);
+        return;
+      }
+
+      const result = await LocalAuthentication.authenticateAsync({
+        promptMessage: translate('auth.biometrics.promptMessage'),
+        cancelLabel: translate('common.cancel'),
+        disableDeviceFallback: false,
+        fallbackLabel: Platform.OS === 'ios' ? 'Use Passcode' : 'Use PIN',
+      });
+
+      handleButtonPressOut();
+
+      if (result.success) {
+        setBiometricConsent(true);
+        showSuccessAnimation();
+
+        // Announce success for accessibility
+        AccessibilityInfo.announceForAccessibility(
+          'Biometric authentication enabled successfully'
+        );
+      } else {
+        setBiometricConsent(false);
+        shakeAnimation();
+
+        if (result.error !== 'UserCancel') {
+          Alert.alert(
+            translate('common.error'),
+            translate('auth.biometrics.failedAuthentication'),
+            [{ text: translate('common.tryAgain') }]
+          );
+        }
+      }
+    } catch (error: any) {
+      handleButtonPressOut();
+      shakeAnimation();
+      setBiometricConsent(false);
+      console.error('Biometric setup error:', error);
+
+      Alert.alert(
+        translate('common.error'),
+        translate('auth.biometrics.errorSetup'),
+        [{ text: translate('common.ok') }]
+      );
+    }
+    setIsLoading(false);
+  };
+
+  const handleSkipBiometrics = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    setBiometricConsent(false);
+    navigateToNextStep();
+  };
+
+  const renderBiometricIcon = () => {
+    const iconName = biometricType === 'FaceID' ? 'scan' : 'finger-print';
+
+    return (
+      <Animated.View
+        style={[
+          styles.iconContainer,
+          {
+            transform: [
+              {
+                rotate: iconRotateAnim.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: ['0deg', '360deg'],
+                }),
+              },
+            ],
+          },
+        ]}
+      >
+        <LinearGradient
+          colors={[colors.primary, '#4B7BF5']}
+          style={styles.iconGradient}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+        >
+          <Ionicons name={iconName} size={48} color="white" />
+        </LinearGradient>
+      </Animated.View>
+    );
+  };
+
+  const renderPrivacyModal = () => (
+    <Modal
+      visible={showPrivacyInfo}
+      transparent
+      animationType="slide"
+      onRequestClose={() => setShowPrivacyInfo(false)}
+    >
+      <View style={styles.modalOverlay}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalHeader}>
+            <Text style={styles.modalTitle}>How We Protect Your Data</Text>
+            <TouchableOpacity
+              onPress={() => setShowPrivacyInfo(false)}
+              style={styles.modalCloseButton}
+              accessible={true}
+              accessibilityLabel="Close privacy information"
+              accessibilityRole="button"
+            >
+              <Ionicons name="close" size={24} color={colors.textPrimary} />
+            </TouchableOpacity>
+          </View>
+
+          <ScrollView style={styles.modalContent}>
+            <Text style={styles.privacySection}>
+              <Text style={styles.privacySectionTitle}>
+                🔒 End-to-End Security{'\n'}
+              </Text>
+              Your biometric data never leaves your device. We use
+              industry-standard encryption for all communications.
+            </Text>
+
+            <Text style={styles.privacySection}>
+              <Text style={styles.privacySectionTitle}>
+                🇨🇦 PIPEDA Compliant{'\n'}
+              </Text>
+              We follow Canadian privacy laws. Your biometric authentication is
+              stored securely on your device only.
+            </Text>
+
+            <Text style={styles.privacySection}>
+              <Text style={styles.privacySectionTitle}>
+                🚫 No Data Collection{'\n'}
+              </Text>
+              ClariFi never collects, stores, or has access to your biometric
+              information. Authentication happens entirely on your device.
+            </Text>
+
+            <Text style={styles.privacySection}>
+              <Text style={styles.privacySectionTitle}>
+                ✅ Your Rights{'\n'}
+              </Text>
+              You can disable biometric authentication at any time in your
+              settings. This won't affect your account security.
+            </Text>
+          </ScrollView>
+        </View>
+      </View>
+    </Modal>
+  );
+
+  const renderSuccessOverlay = () => {
+    if (!showSuccess) return null;
+
+    return (
+      <View style={StyleSheet.absoluteFillObject}>
+        <View style={styles.successOverlay}>
+          <Animated.View
+            style={[
+              styles.successIconContainer,
+              {
+                transform: [{ scale: successScaleAnim }],
+                opacity: successOpacityAnim,
+              },
+            ]}
+          >
+            <Ionicons
+              name="checkmark-circle"
+              size={64}
+              color={colors.success}
+            />
+          </Animated.View>
+          <Animated.Text
+            style={[styles.successText, { opacity: successOpacityAnim }]}
+          >
+            Biometrics Enabled!
+          </Animated.Text>
+        </View>
+      </View>
+    );
+  };
+
+  return (
+    <LinearGradient colors={['#F7F9FC', '#FFFFFF']} style={styles.container}>
+      <SafeAreaView style={styles.safeArea}>
+        <Animated.View
+          style={[
+            styles.content,
+            {
+              opacity: fadeAnim,
+              transform: [{ scale: scaleAnim }, { translateX: shakeAnim }],
+            },
+          ]}
+        >
+          {renderBiometricIcon()}
+
+          <Text style={styles.title}>Quick & Secure Access</Text>
+
+          <Text style={styles.description}>
+            Enable {biometricType} to quickly and securely access your ClariFi
+            account. Your biometric data stays on your device.
+          </Text>
+
+          <TouchableOpacity
+            style={styles.privacyButton}
+            onPress={() => setShowPrivacyInfo(true)}
+            accessible={true}
+            accessibilityLabel="Learn more about privacy"
+            accessibilityRole="button"
+          >
+            <Ionicons
+              name="information-circle-outline"
+              size={20}
+              color={colors.primary}
+            />
+            <Text style={styles.privacyButtonText}>
+              How we protect your data
+            </Text>
+          </TouchableOpacity>
+
+          <Animated.View style={{ transform: [{ scale: buttonScaleAnim }] }}>
+            <TouchableOpacity
+              style={[styles.primaryButton, isLoading && styles.buttonDisabled]}
+              onPress={handleEnableBiometrics}
+              onPressIn={handleButtonPressIn}
+              onPressOut={handleButtonPressOut}
+              disabled={isLoading}
+              accessible={true}
+              accessibilityLabel={`Enable ${biometricType}`}
+              accessibilityRole="button"
+              accessibilityState={{ disabled: isLoading }}
+            >
+              <Text style={styles.primaryButtonText}>
+                {isLoading ? 'Setting up...' : `Enable ${biometricType}`}
+              </Text>
+            </TouchableOpacity>
+          </Animated.View>
+
+          <TouchableOpacity
+            style={styles.skipButton}
+            onPress={handleSkipBiometrics}
+            disabled={isLoading}
+            accessible={true}
+            accessibilityLabel="Skip biometric setup"
+            accessibilityRole="button"
+            accessibilityState={{ disabled: isLoading }}
+          >
+            <Text style={styles.skipButtonText}>Skip for now</Text>
+          </TouchableOpacity>
+        </Animated.View>
+
+        {renderPrivacyModal()}
+        {renderSuccessOverlay()}
+      </SafeAreaView>
+    </LinearGradient>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  safeArea: {
+    flex: 1,
+  },
+  content: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 32, // 4 * 8dp base unit
+  },
+  iconContainer: {
+    marginBottom: 32, // 4 * 8dp
+  },
+  iconGradient: {
+    width: 96, // Between 80-100dp as specified
+    height: 96,
+    borderRadius: 48,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: colors.primary,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.2,
+    shadowRadius: 16,
+    elevation: 8,
+  },
+  title: {
+    fontSize: 24, // H2 as per PRD
+    fontWeight: '600', // Semibold
+    color: colors.textPrimary,
+    marginBottom: 16, // 2 * 8dp
+    textAlign: 'center',
+    letterSpacing: -0.5,
+  },
+  description: {
+    fontSize: 16, // Body Regular
+    color: colors.textSecondary,
+    textAlign: 'center',
+    marginBottom: 24, // 3 * 8dp
+    lineHeight: 24,
+    paddingHorizontal: 16,
+  },
+  privacyButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 32, // 4 * 8dp
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+  },
+  privacyButtonText: {
+    fontSize: 14,
+    color: colors.primary,
+    marginLeft: 8,
+    fontWeight: '500',
+  },
+  primaryButton: {
+    backgroundColor: colors.primary,
+    height: 48, // PRD: 48dp button height
+    paddingHorizontal: 32, // 4 * 8dp
+    borderRadius: 12, // As per PRD
+    width: width - 64, // Full width minus padding
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.12,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  buttonDisabled: {
+    opacity: 0.7,
+  },
+  primaryButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '600',
+    letterSpacing: -0.2,
+  },
+  skipButton: {
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    minHeight: 48, // Accessibility
+  },
+  skipButtonText: {
+    color: colors.primary,
+    fontSize: 16,
+    fontWeight: '500',
+  },
+  // Privacy Modal Styles
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'flex-end',
+  },
+  modalContainer: {
+    backgroundColor: 'white',
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    maxHeight: height * 0.8,
+    paddingBottom: 40,
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 24,
+    borderBottomWidth: 1,
+    borderBottomColor: '#E5E5EA',
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: colors.textPrimary,
+    flex: 1,
+  },
+  modalCloseButton: {
+    padding: 8,
+  },
+  modalContent: {
+    padding: 24,
+  },
+  privacySection: {
+    fontSize: 14,
+    color: colors.textSecondary,
+    lineHeight: 22,
+    marginBottom: 24,
+  },
+  privacySectionTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: colors.textPrimary,
+    marginBottom: 8,
+  },
+  // Success Overlay
+  successOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  successIconContainer: {
+    marginBottom: 16,
+  },
+  successText: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: colors.success,
+  },
+});

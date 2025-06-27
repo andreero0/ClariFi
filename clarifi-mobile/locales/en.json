@@ -1,0 +1,363 @@
+{
+  "common": {
+    "appName": "ClariFi",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "add": "Add",
+    "next": "Next",
+    "back": "Back",
+    "done": "Done",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "success": "Success",
+    "yes": "Yes",
+    "no": "No",
+    "search": "Search...",
+    "processingImage": "Processing image...",
+    "close": "Close"
+  },
+  "general": {
+    "appTitle": "ClariFi"
+  },
+  "auth": {
+    "welcome": "Welcome to ClariFi",
+    "welcomeSubtitle": "Your smart personal finance assistant for a clearer financial future.",
+    "getStarted": "Get Started",
+    "login": "Login",
+    "signup": "Sign Up",
+    "logout": "Logout",
+    "email": "Email",
+    "password": "Password",
+    "forgotPassword": "Forgot Password?",
+    "biometricLogin": "Login with Biometrics",
+    "createAccount": "Create Account",
+    "confirmPassword": "Confirm Password",
+    "alreadyHaveAccount": "Already have an account?",
+    "error": {
+      "emptyFields": "Please fill in all fields.",
+      "passwordsDoNotMatch": "Passwords do not match.",
+      "genericRegistration": "Registration failed. Please try again."
+    },
+    "success": {
+      "registration": "Registration successful! Please proceed with onboarding."
+    },
+    "biometrics": {
+      "title": "Quick & Secure Login",
+      "description": "Use your fingerprint or face recognition to log in quickly and securely. This keeps your financial data safe and easily accessible.",
+      "enableButton": "Enable Biometric Login",
+      "skipButton": "Skip for Now",
+      "noHardware": "Biometric hardware not available on this device.",
+      "notEnrolledTitle": "Biometrics Not Set Up",
+      "notEnrolledMessage": "You haven't set up biometrics on your device. Please enable it in your device settings first.",
+      "promptMessage": "Log in to ClariFi",
+      "successSetup": "Biometric login enabled!",
+      "failedAuthentication": "Biometric authentication failed.",
+      "errorSetup": "Could not set up biometric login. Please try again later."
+    },
+    "statementCaptureUploadButton": "Upload Statements",
+    "statementCaptureNoFiles": "No files selected.",
+    "statementCaptureRemoveFile": "Remove",
+    "statementProcessingTitle": "Processing Your Statements",
+    "statementProcessingSubtitle": "This may take a few moments. Please wait...",
+    "statementProcessingStatusDefault": "Initializing processing...",
+    "statementProcessingStatusUploading": "Uploading statement {current} of {total}...",
+    "statementProcessingStatusExtracting": "Extracting text from statement {current} of {total}...",
+    "statementProcessingStatusCategorizing": "Categorizing transactions for statement {current} of {total}...",
+    "statementProcessingStatusCompleted": "All statements processed successfully!",
+    "statementProcessingStatusFailed": "An error occurred while processing statement {fileName}. Please try again or contact support.",
+    "statementProcessingOverallProgress": "Overall Progress",
+    "button": {
+      "continue": "Continue",
+      "tryAgain": "Try Again"
+    },
+    "onboardingCompleteTitle": "Setup Complete!",
+    "onboardingCompleteSubtitle": "Congratulations! You're all set to take control of your finances with ClariFi.",
+    "onboardingCompleteAction": "Go to Dashboard",
+    "bankSelectionSearchPlaceholder": "Search banks...",
+    "bankSelectionNoResults": "No banks found matching your search.",
+    "statementInstructionsTitle": "How to Import Your Statements",
+    "statementInstructionsIntro": "Follow these steps to prepare your bank statements for import:",
+    "statementInstructionsStep1Title": "Find Your Statements",
+    "statementInstructionsStep1Description": "Log in to your online banking portal and locate the section for e-statements or documents. They are usually available in PDF format.",
+    "statementInstructionsStep2Title": "Download Recent Statements",
+    "statementInstructionsStep2Description": "Download up to 6 months of your most recent bank statements. Ensure they are official documents, not summaries.",
+    "statementInstructionsStep3Title": "Check File Format",
+    "statementInstructionsStep3Description": "We currently support PDF and CSV files. Make sure your downloaded files are in one of these formats.",
+    "statementInstructionsTip": "Tip: Having statements from all your accounts for the same period provides the best financial overview.",
+    "statementInstructionsNextButton": "Got It, Next!",
+    "statementCaptureTitle": "Upload Your Bank Statements",
+    "statementCaptureSubtitle": "Select PDF or CSV files from your device.",
+    "statementCapturePickButton": "Select Files",
+    "statementCaptureUploadButton": "Process Statements",
+    "statementCaptureNoFiles": "No files selected.",
+    "statementCaptureRemoveFile": "Remove",
+    "statementProcessingTitle": "Processing Your Statements"
+  },
+  "onboarding": {
+    "title": "Onboarding",
+    "bankSelection": {
+      "title": "Select Your Bank(s)",
+      "description": "Choose the financial institutions you bank with. This helps us prepare for your statement imports.",
+      "searchPlaceholder": "Search for your bank...",
+      "noResults": "No banks found. Try a different search."
+    },
+    "statementInstructions": {
+      "title": "Importing Your Statements",
+      "intro": "To get started, you'll need to download your bank statements. Here's how:",
+      "step1Title": "Log In to Your Bank",
+      "step1Description": "Visit your bank's official website or open their mobile app and log in to your online banking portal.",
+      "step2Title": "Find & Download Statements",
+      "step2Description": "Look for a section like 'e-Statements', 'Documents', or 'Account Activity'. Download your statements, preferably as PDF files. Monthly statements for the last 6-12 months are ideal.",
+      "step3Title": "Keep Them Handy",
+      "step3Description": "Save the downloaded files to a place on your device where you can easily find them for the next step.",
+      "tip": "Tip: Ensure your statements are clear and legible. We currently best support PDF formats.",
+      "nextButton": "Got It, Continue"
+    },
+    "statementCapture": {
+      "title": "Upload Your Statements",
+      "description": "Select the statement files (PDF or CSV) you downloaded from your bank. You can select multiple files.",
+      "pickButton": "Select Files",
+      "selectedFiles": "Selected Files:",
+      "noFilesYet": "No files selected yet. Tap above to choose your statements.",
+      "uploadButton": "Upload & Continue",
+      "uploading": "Uploading...",
+      "errorPicking": "Could not select files. Please try again.",
+      "noFilesError": "Please select at least one statement file to continue.",
+      "uploadSuccessPlaceholder": "Files uploaded successfully! We'll start processing them."
+    },
+    "statementImport": "Import Statements",
+    "setupComplete": "Setup Complete!"
+  },
+  "tabs": {
+    "dashboard": "Dashboard",
+    "cards": "Cards",
+    "insights": "Insights",
+    "profile": "Profile"
+  },
+  "dashboard": {
+    "greeting": "Hello, {{name}}",
+    "totalBalance": "Total Balance",
+    "monthlySpending": "Monthly Spending",
+    "budgetOverview": "Budget Overview"
+  },
+  "cards": {
+    "manageCards": "Manage Your Cards",
+    "addCard": "Add New Card",
+    "creditLimit": "Credit Limit",
+    "statementDay": "Statement Day",
+    "paymentDue": "Payment Due",
+    "utilization": "Utilization"
+  },
+  "insights": {
+    "financialInsights": "Financial Insights",
+    "spendingTrends": "Spending Trends",
+    "optimizationTips": "Optimization Tips"
+  },
+  "profile": {
+    "accountSettings": "Account Settings",
+    "notifications": "Notifications",
+    "security": "Security",
+    "language": "Language",
+    "helpSupport": "Help & Support"
+  },
+  "modals": {
+    "addStatementTitle": "Add Statement",
+    "addCardTitle": "Add Credit Card",
+    "aiChatTitle": "ClariFi Assistant",
+    "educationTitle": "Financial Education"
+  },
+  "education": {
+    "module1Title": "Understanding Credit in Canada",
+    "module2Title": "Budgeting for Newcomers",
+    "hub": {
+      "title": "Financial Education",
+      "subtitle": "Build your financial knowledge with courses designed for life in Canada",
+      "searchPlaceholder": "Search courses...",
+      "noResults": "No courses found matching your search.",
+      "continueLearning": "Continue Learning",
+      "lastAccessed": "Last accessed: {{date}}",
+      "minutes": "{{count}} min",
+      "lessons": "{{count}} lessons",
+      "completed": "Completed",
+      "inProgress": "In Progress",
+      "notStarted": "Not Started",
+      "start": "Start",
+      "continue": "Continue",
+      "review": "Review"
+    },
+    "module": {
+      "overview": "Overview",
+      "lessons": "Lessons",
+      "quiz": "Quiz",
+      "progress": "Progress",
+      "timeToComplete": "~{{time}} to complete",
+      "difficulty": "Difficulty: {{level}}",
+      "prerequisite": "Prerequisite: {{title}}",
+      "completionCertificate": "Completion Certificate",
+      "bookmarked": "Bookmarked",
+      "bookmark": "Bookmark",
+      "removeBookmark": "Remove Bookmark",
+      "share": "Share"
+    },
+    "lesson": {
+      "lessonOf": "Lesson {{current}} of {{total}}",
+      "readingTime": "{{time}} min read",
+      "nextLesson": "Next Lesson",
+      "previousLesson": "Previous Lesson",
+      "completedLesson": "✓ Completed",
+      "markComplete": "Mark as Complete",
+      "takeNotes": "Take Notes",
+      "yourNotes": "Your Notes",
+      "saveNotes": "Save Notes"
+    },
+    "quiz": {
+      "title": "Knowledge Check",
+      "startQuiz": "Start Quiz",
+      "retakeQuiz": "Retake Quiz",
+      "question": "Question {{current}} of {{total}}",
+      "nextQuestion": "Next Question",
+      "previousQuestion": "Previous Question",
+      "submitAnswer": "Submit Answer",
+      "showResults": "Show Results",
+      "correct": "Correct!",
+      "incorrect": "Incorrect",
+      "explanation": "Explanation",
+      "score": "Your Score",
+      "passed": "Congratulations! You passed!",
+      "failed": "You need {{passingScore}}% to pass. Keep studying!",
+      "retake": "Retake Quiz",
+      "continue": "Continue",
+      "timeRemaining": "Time remaining: {{time}}",
+      "timesUp": "Time's up!",
+      "answersReview": "Review Your Answers",
+      "correctAnswers": "{{correct}} out of {{total}} correct",
+      "percentage": "{{percentage}}%"
+    },
+    "progress": {
+      "title": "Learning Progress",
+      "overallProgress": "Overall Progress",
+      "currentModule": "Current Module",
+      "timeSpent": "Time spent: {{time}}",
+      "modulesCompleted": "Modules Completed",
+      "lessonsCompleted": "Lessons Completed",
+      "totalTime": "Total Time",
+      "averageQuizScore": "Avg Quiz Score",
+      "bookmarkedLessons": "{{count}} lessons bookmarked",
+      "quizzesCompleted": "{{count}} quizzes completed",
+      "lastActivity": "Last activity: {{date}}",
+      "loadingProgress": "Loading progress...",
+      "noProgressData": "Unable to load progress data",
+      "streak": "{{days}} day learning streak",
+      "achievements": "Achievements",
+      "certificates": "Certificates"
+    },
+    "settings": {
+      "language": "Language",
+      "english": "English",
+      "french": "Français",
+      "changeLanguage": "Change Language",
+      "languageChanged": "Language changed to {{language}}",
+      "selectLanguage": "Select your preferred language for education content",
+      "resetProgress": "Reset Progress",
+      "resetConfirm": "Are you sure you want to reset all your learning progress? This action cannot be undone.",
+      "resetSuccess": "Learning progress has been reset",
+      "exportProgress": "Export Progress",
+      "notifications": "Notifications",
+      "dailyReminder": "Daily Learning Reminder",
+      "reminderTime": "Reminder Time",
+      "weeklyGoal": "Weekly Learning Goal",
+      "goalMinutes": "{{minutes}} minutes per week"
+    },
+    "categories": {
+      "credit": "Credit & Debt",
+      "budgeting": "Budgeting",
+      "saving": "Saving & Investment",
+      "taxes": "Taxes",
+      "insurance": "Insurance",
+      "banking": "Banking",
+      "all": "All Categories",
+      "newcomers": "For Newcomers",
+      "advanced": "Advanced"
+    },
+    "errors": {
+      "loadModules": "Failed to load education modules",
+      "loadContent": "Failed to load lesson content",
+      "saveProgress": "Failed to save progress",
+      "loadQuiz": "Failed to load quiz",
+      "submitQuiz": "Failed to submit quiz answers",
+      "bookmarkError": "Failed to update bookmark",
+      "languageChange": "Failed to change language",
+      "resetProgress": "Failed to reset progress"
+    },
+    "stats": {
+      "modulesCompleted": "Modules",
+      "timeSpent": "Time Spent",
+      "dayStreak": "Day Streak",
+      "points": "Points"
+    },
+    "quickActions": {
+      "title": "Quick Actions",
+      "calculators": "Calculators",
+      "achievements": "Achievements",
+      "progress": "Progress"
+    },
+    "modules": {
+      "title": "Learning Modules"
+    },
+    "progressReport": {
+      "title": "Learning Progress",
+      "overallProgress": "Overall Progress",
+      "moduleProgress": "Module Progress",
+      "learningStreak": "Learning Streak",
+      "exportReport": "Export Progress Report"
+    }
+  },
+  "calculators": {
+    "title": "Financial Calculators",
+    "description": "Use these interactive tools to make informed financial decisions",
+    "tip": {
+      "title": "Pro Tip",
+      "text": "Save your calculations to track your progress over time. Each calculator includes helpful tips and Canadian-specific information."
+    },
+    "debtRepayment": {
+      "title": "Debt Repayment",
+      "description": "Calculate optimal payment strategies to pay off debt faster",
+      "yourDebts": "Your Debts",
+      "extraPayment": "Extra Monthly Payment",
+      "strategy": "Payoff Strategy",
+      "results": "Payoff Results"
+    },
+    "budget": {
+      "title": "Budget Calculator",
+      "description": "Create a personalized budget based on your income and expenses"
+    },
+    "savingsGoal": {
+      "title": "Savings Goal",
+      "description": "Plan how much to save monthly to reach your financial goals"
+    },
+    "creditUtilization": {
+      "title": "Credit Utilization",
+      "description": "Calculate and optimize your credit card utilization ratio"
+    },
+    "mortgage": {
+      "title": "Mortgage Calculator",
+      "description": "Estimate monthly payments and total interest for home loans"
+    },
+    "compoundInterest": {
+      "title": "Compound Interest",
+      "description": "See how your investments can grow over time with compound interest"
+    }
+  },
+  "errors": {
+    "title": "Error",
+    "cameraCaptureError": "Could not capture photo. Please try again.",
+    "filePickingError": "Could not pick files. Please try again.",
+    "cameraPermissionRequired": "Camera permission is required to take photos. Please enable it in your device settings.",
+    "imageProcessingFailed": "Could not process image. Please try again with a different image.",
+    "imageProcessingFailedSpecific": "Could not process image: {{fileName}}. Please try a different image.",
+    "uploadFailedSpecific": "Upload failed for {{fileName}}: {{message}}"
+  }
+} 

@@ -1,0 +1,153 @@
+{
+  "title": "Budgeting for Newcomers - Final Assessment",
+  "description": "Test your knowledge of Canadian budgeting and cost of living fundamentals",
+  "totalQuestions": 10,
+  "passingScore": 7,
+  "timeLimit": 600,
+  "questions": [
+    {
+      "id": "1",
+      "type": "multiple-choice",
+      "question": "What is the recommended percentage of after-tax income to allocate to essential needs using the 50/30/20 rule?",
+      "options": [
+        "30%",
+        "50%",
+        "20%",
+        "40%"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The 50/30/20 rule recommends allocating 50% of after-tax income to needs (essential expenses like housing, groceries, transportation).",
+      "points": 1
+    },
+    {
+      "id": "2",
+      "type": "multiple-choice",
+      "question": "Which of the following is NOT considered an essential 'need' expense in budgeting?",
+      "options": [
+        "Rent payment",
+        "Groceries",
+        "Streaming services",
+        "Minimum debt payments"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Streaming services are considered 'wants' or lifestyle expenses, not essential needs. They fall into the 30% category of the 50/30/20 rule.",
+      "points": 1
+    },
+    {
+      "id": "3",
+      "type": "multiple-choice",
+      "question": "What should you base your budget on in Canada?",
+      "options": [
+        "Your gross income before taxes",
+        "Your net income after taxes",
+        "Your expected annual bonus",
+        "Your income from your home country"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Always budget based on your net (after-tax) income in Canada, as income tax is deducted from your paycheque.",
+      "points": 1
+    },
+    {
+      "id": "4",
+      "type": "multiple-choice",
+      "question": "Which Canadian city typically has the highest housing costs?",
+      "options": [
+        "Montreal, QC",
+        "Calgary, AB",
+        "Vancouver, BC",
+        "Halifax, NS"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Vancouver, BC typically has the highest housing costs in Canada, with Toronto close behind.",
+      "points": 1
+    },
+    {
+      "id": "5",
+      "type": "multiple-choice",
+      "question": "How much should a single person typically budget for groceries per month in Canada?",
+      "options": [
+        "$150-200",
+        "$250-400",
+        "$500-600",
+        "$100-150"
+      ],
+      "correctAnswer": 1,
+      "explanation": "A single person should typically budget $250-400 per month for groceries in Canada, depending on location and dietary preferences.",
+      "points": 1
+    },
+    {
+      "id": "6",
+      "type": "multiple-choice",
+      "question": "Which province has no provincial sales tax?",
+      "options": [
+        "Ontario",
+        "Quebec",
+        "Alberta",
+        "British Columbia"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Alberta has no provincial sales tax, only the 5% federal GST, making it attractive for consumer purchases.",
+      "points": 1
+    },
+    {
+      "id": "7",
+      "type": "multiple-choice",
+      "question": "What is a recommended emergency fund target for newcomers?",
+      "options": [
+        "1 month of expenses",
+        "3-6 months of expenses",
+        "1 year of expenses",
+        "Only what's required by law"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Financial experts recommend saving 3-6 months of expenses as an emergency fund to handle unexpected financial challenges.",
+      "points": 1
+    },
+    {
+      "id": "8",
+      "type": "multiple-choice",
+      "question": "Which expense typically increases significantly during Canadian winters?",
+      "options": [
+        "Groceries",
+        "Transportation",
+        "Heating/utilities",
+        "Internet"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Heating costs can double during Canadian winters, making utility bills much higher in cold months.",
+      "points": 1
+    },
+    {
+      "id": "9",
+      "type": "multiple-choice",
+      "question": "What's a common budgeting mistake made by newcomers to Canada?",
+      "options": [
+        "Tracking all expenses",
+        "Using after-tax income",
+        "Comparing costs to their home country",
+        "Building an emergency fund"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Comparing Canadian costs to home country costs can lead to unrealistic expectations. Focus on Canadian prices and wages instead.",
+      "points": 1
+    },
+    {
+      "id": "10",
+      "type": "multiple-choice",
+      "question": "Which approach is best for creating your first budget as a newcomer?",
+      "options": [
+        "Create a perfect detailed budget immediately",
+        "Don't budget until you've lived in Canada for a year",
+        "Start simple and adjust as you learn your spending patterns",
+        "Copy someone else's budget exactly"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The best approach is to start simple with basic tracking and gradually refine your budget as you learn your spending patterns in Canada.",
+      "points": 1
+    }
+  ],
+  "completionMessage": "Congratulations! You've completed the Budgeting for Newcomers module. You now have the foundation to create and manage a budget that works for your life in Canada.",
+  "failureMessage": "You may want to review the lessons again. Focus on the 50/30/20 rule, Canadian-specific costs, and regional differences.",
+  "certificateEligible": true,
+  "nextRecommendedModule": "understanding-credit-canada"
+}

@@ -1,0 +1,3 @@
+export const SUPABASE_URL = 'https://lepownhkvbsllzzcdtll.supabase.co';
+export const SUPABASE_ANON_KEY =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxlcG93bmhrdmJzbGx6emNkdGxsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDkwMDk2MTIsImV4cCI6MjA2NDU4NTYxMn0.EB-BD486WFS4-LK6y-L5S7AraX7xi_GIbasQYoI0QjY';

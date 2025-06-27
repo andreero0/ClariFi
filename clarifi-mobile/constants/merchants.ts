@@ -1,0 +1,318 @@
+/**
+ * Contains known merchant details and potentially categorization hints.
+ * This can help improve accuracy of Feature 2: AI-Powered Transaction Categorization.
+ */
+
+// This file was created empty due to content size limits.
+// Its intended content should be added later.
+
+export interface Merchant {
+  id: string; // UUID
+  normalized_name: string; // For internal matching
+  display_name: string; // For UI
+  category_id: number; // Foreign key to categories.ts
+  patterns: string[]; // Simple keywords or regex patterns for matching transaction descriptions
+  logo?: string; // Optional: path or URL to a logo
+  confidence_score?: number; // Optional: initial confidence for this mapping
+}
+
+// Use static IDs instead of UUID generation at module level to prevent crypto errors
+export const COMMON_MERCHANTS: Merchant[] = [
+  // Groceries
+  {
+    id: 'merchant-loblaws',
+    normalized_name: 'loblaws',
+    display_name: 'Loblaws',
+    category_id: 30,
+    patterns: ['loblaw', 'loblaws market'],
+  },
+  {
+    id: 'merchant-sobeys',
+    normalized_name: 'sobeys',
+    display_name: 'Sobeys',
+    category_id: 30,
+    patterns: ['sobeys', 'sobeys inc'],
+  },
+  {
+    id: 'merchant-metro',
+    normalized_name: 'metro',
+    display_name: 'Metro',
+    category_id: 30,
+    patterns: ['metro grocer', 'metro plus'],
+  },
+  {
+    id: 'merchant-walmart-supercentre',
+    normalized_name: 'walmart supercentre',
+    display_name: 'Walmart Supercentre',
+    category_id: 30,
+    patterns: ['wal-mart', 'walmart super'],
+  },
+  {
+    id: 'merchant-costco-wholesale',
+    normalized_name: 'costco wholesale',
+    display_name: 'Costco Wholesale',
+    category_id: 30,
+    patterns: ['costco whse', 'costco'],
+  },
+  {
+    id: 'merchant-no-frills',
+    normalized_name: 'no frills',
+    display_name: 'No Frills',
+    category_id: 30,
+    patterns: ['no frills'],
+  },
+  {
+    id: 'merchant-freshco',
+    normalized_name: 'freshco',
+    display_name: 'FreshCo',
+    category_id: 30,
+    patterns: ['freshco'],
+  },
+
+  // Coffee Shops
+  {
+    id: 'merchant-tim-hortons',
+    normalized_name: 'tim hortons',
+    display_name: 'Tim Hortons',
+    category_id: 32,
+    patterns: ['tim hortons', 'tims coffee'],
+  },
+  {
+    id: 'merchant-starbucks',
+    normalized_name: 'starbucks',
+    display_name: 'Starbucks',
+    category_id: 32,
+    patterns: ['starbucks coffee', 'sbux'],
+  },
+  {
+    id: 'merchant-second-cup',
+    normalized_name: 'second cup',
+    display_name: 'Second Cup',
+    category_id: 32,
+    patterns: ['second cup'],
+  },
+
+  // Restaurants & Fast Food
+  {
+    id: 'merchant-mcdonalds',
+    normalized_name: 'mcdonalds',
+    display_name: "McDonald's",
+    category_id: 31,
+    patterns: ['mcdonalds', 'mc Donalds'],
+  },
+  {
+    id: 'merchant-kfc',
+    normalized_name: 'kfc',
+    display_name: 'KFC',
+    category_id: 31,
+    patterns: ['kfc', 'kentucky fried chicken'],
+  },
+  {
+    id: 'merchant-pizza-hut',
+    normalized_name: 'pizza hut',
+    display_name: 'Pizza Hut',
+    category_id: 31,
+    patterns: ['pizza hut'],
+  },
+  {
+    id: 'merchant-dominos-pizza',
+    normalized_name: 'dominos pizza',
+    display_name: "Domino's Pizza",
+    category_id: 31,
+    patterns: ['dominos pizza'],
+  },
+  {
+    id: 'merchant-subway',
+    normalized_name: 'subway',
+    display_name: 'Subway',
+    category_id: 31,
+    patterns: ['subway restaurant'],
+  },
+  {
+    id: 'merchant-boston-pizza',
+    normalized_name: 'boston pizza',
+    display_name: 'Boston Pizza',
+    category_id: 31,
+    patterns: ['boston pizza'],
+  },
+  {
+    id: 'merchant-the-keg-steakhouse',
+    normalized_name: 'the keg steakhouse',
+    display_name: 'The Keg Steakhouse',
+    category_id: 31,
+    patterns: ['the keg'],
+  },
+
+  // Gas Stations
+  {
+    id: 'merchant-petro-canada',
+    normalized_name: 'petro-canada',
+    display_name: 'Petro-Canada',
+    category_id: 21,
+    patterns: ['petro-canada', 'petrocanada'],
+  },
+  {
+    id: 'merchant-esso',
+    normalized_name: 'esso',
+    display_name: 'Esso',
+    category_id: 21,
+    patterns: ['esso'],
+  },
+  {
+    id: 'merchant-shell',
+    normalized_name: 'shell',
+    display_name: 'Shell',
+    category_id: 21,
+    patterns: ['shell gas'],
+  },
+  {
+    id: 'merchant-canadian-tire-gas',
+    normalized_name: 'canadian tire gas',
+    display_name: 'Canadian Tire Gas+',
+    category_id: 21,
+    patterns: ['cdn tire gas', 'canadian tire petro'],
+  },
+
+  // Pharmacies
+  {
+    id: 'merchant-shoppers-drug-mart',
+    normalized_name: 'shoppers drug mart',
+    display_name: 'Shoppers Drug Mart',
+    category_id: 41,
+    patterns: ['shoppers drug', 'sdm'],
+  },
+  {
+    id: 'merchant-rexall',
+    normalized_name: 'rexall',
+    display_name: 'Rexall',
+    category_id: 41,
+    patterns: ['rexall pharma'],
+  },
+
+  // Retail & Department Stores
+  {
+    id: 'merchant-canadian-tire',
+    normalized_name: 'canadian tire',
+    display_name: 'Canadian Tire',
+    category_id: 19,
+    patterns: ['canadian tire', 'cdn tire'],
+  }, // Could be home maintenance or other
+  {
+    id: 'merchant-the-home-depot',
+    normalized_name: 'the home depot',
+    display_name: 'The Home Depot',
+    category_id: 19,
+    patterns: ['home depot'],
+  },
+  {
+    id: 'merchant-indigo-books-music',
+    normalized_name: 'indigo books music',
+    display_name: 'Indigo Books & Music',
+    category_id: 52,
+    patterns: ['indigo', 'chapters indigo'],
+  },
+  {
+    id: 'merchant-best-buy',
+    normalized_name: 'best buy',
+    display_name: 'Best Buy',
+    category_id: 100,
+    patterns: ['best buy'],
+  }, // Electronics, could be misc or a specific category
+  {
+    id: 'merchant-amazon',
+    normalized_name: 'amazon',
+    display_name: 'Amazon.ca',
+    category_id: 100,
+    patterns: ['amazon.ca', 'amzn mktp ca', 'amazon services'],
+  }, // Highly variable category
+
+  // Internet & Phone
+  {
+    id: 'merchant-bell-canada',
+    normalized_name: 'bell canada',
+    display_name: 'Bell Canada',
+    category_id: 17,
+    patterns: ['bell canada', 'bell mobility'],
+  }, // Could be 17 or 18
+  {
+    id: 'merchant-rogers-communications',
+    normalized_name: 'rogers communications',
+    display_name: 'Rogers Communications',
+    category_id: 17,
+    patterns: ['rogers', 'rogers cable'],
+  }, // Could be 17 or 18
+  {
+    id: 'merchant-telus',
+    normalized_name: 'telus',
+    display_name: 'TELUS',
+    category_id: 17,
+    patterns: ['telus mobility', 'telus comm'],
+  }, // Could be 17 or 18
+
+  // Ride Sharing
+  {
+    id: 'merchant-uber',
+    normalized_name: 'uber',
+    display_name: 'Uber',
+    category_id: 25,
+    patterns: ['uber trip', 'uber eats'],
+  }, // Uber Eats would be food
+  {
+    id: 'merchant-lyft',
+    normalized_name: 'lyft',
+    display_name: 'Lyft',
+    category_id: 25,
+    patterns: ['lyft ride'],
+  },
+
+  // Streaming Services
+  {
+    id: 'merchant-netflix',
+    normalized_name: 'netflix',
+    display_name: 'Netflix',
+    category_id: 50,
+    patterns: ['netflix.com'],
+  },
+  {
+    id: 'merchant-spotify',
+    normalized_name: 'spotify',
+    display_name: 'Spotify',
+    category_id: 50,
+    patterns: ['spotify ab'],
+  },
+  {
+    id: 'merchant-disney-plus',
+    normalized_name: 'disney plus',
+    display_name: 'Disney Plus',
+    category_id: 50,
+    patterns: ['disney plus'],
+  },
+  {
+    id: 'merchant-crave',
+    normalized_name: 'crave',
+    display_name: 'Crave',
+    category_id: 50,
+    patterns: ['cravetv'],
+  },
+];
+
+// Function to find a merchant by a transaction description (very basic example)
+export const findMerchantByDescription = (
+  description: string
+): Merchant | undefined => {
+  const lowerDesc = description.toLowerCase();
+  for (const merchant of COMMON_MERCHANTS) {
+    for (const pattern of merchant.patterns) {
+      if (lowerDesc.includes(pattern.toLowerCase())) {
+        return merchant;
+      }
+    }
+  }
+  return undefined;
+};
+
+export {}; // Ensures this is treated as a module
+
+console.log(
+  'constants/merchants.ts loaded - (placeholder due to size limit during generation)'
+);

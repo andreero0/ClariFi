@@ -1,0 +1,247 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2025-06-04T23:20:00.000Z",
+  "supportedLanguages": ["en", "fr"],
+  "modules": [
+    {
+      "id": "understanding-credit-canada",
+      "title": {
+        "en": "Understanding Credit in Canada",
+        "fr": "Comprendre le crédit au Canada"
+      },
+      "description": {
+        "en": "Learn the fundamentals of credit scores, credit reports, and how to build good credit in Canada.",
+        "fr": "Apprenez les bases des cotes de crédit, des rapports de crédit et comment construire un bon crédit au Canada."
+      },
+      "category": "credit",
+      "difficulty": "beginner",
+      "estimatedDuration": 15,
+      "icon": "credit-card",
+      "lessons": [
+        {
+          "id": "what-is-credit",
+          "title": {
+            "en": "What is Credit?",
+            "fr": "Qu'est-ce que le crédit ?"
+          },
+          "contentFile": {
+            "en": "en/understanding-credit-canada/01-what-is-credit.md",
+            "fr": "fr/understanding-credit-canada/01-what-is-credit.md"
+          },
+          "duration": 5,
+          "hasQuiz": true
+        },
+        {
+          "id": "credit-scores-explained",
+          "title": {
+            "en": "Credit Scores Explained",
+            "fr": "Explication des cotes de crédit"
+          },
+          "contentFile": {
+            "en": "en/understanding-credit-canada/02-credit-scores.md",
+            "fr": "fr/understanding-credit-canada/02-credit-scores.md"
+          },
+          "duration": 7,
+          "hasQuiz": true
+        },
+        {
+          "id": "building-credit",
+          "title": {
+            "en": "Building Your Credit",
+            "fr": "Construire votre crédit"
+          },
+          "contentFile": {
+            "en": "en/understanding-credit-canada/03-building-credit.md",
+            "fr": "fr/understanding-credit-canada/03-building-credit.md"
+          },
+          "duration": 3,
+          "hasQuiz": false
+        }
+      ],
+      "finalQuiz": {
+        "en": "en/understanding-credit-canada/final-quiz.json",
+        "fr": "fr/understanding-credit-canada/final-quiz.json"
+      }
+    },
+    {
+      "id": "budgeting-newcomers",
+      "title": {
+        "en": "Budgeting for Newcomers",
+        "fr": "Établir un budget pour les nouveaux arrivants"
+      },
+      "description": {
+        "en": "Essential budgeting skills for newcomers to Canada, including understanding Canadian banking and financial services.",
+        "fr": "Compétences budgétaires essentielles pour les nouveaux arrivants au Canada, y compris la compréhension des services bancaires et financiers canadiens."
+      },
+      "category": "budgeting",
+      "difficulty": "beginner",
+      "estimatedDuration": 20,
+      "icon": "calculator",
+      "lessons": [
+        {
+          "id": "canadian-banking-basics",
+          "title": {
+            "en": "Canadian Banking Basics",
+            "fr": "Les bases du système bancaire canadien"
+          },
+          "contentFile": {
+            "en": "en/budgeting-newcomers/01-banking-basics.md",
+            "fr": "fr/budgeting-newcomers/01-banking-basics.md"
+          },
+          "duration": 8,
+          "hasQuiz": true
+        },
+        {
+          "id": "creating-your-first-budget",
+          "title": {
+            "en": "Creating Your First Budget",
+            "fr": "Créer votre premier budget"
+          },
+          "contentFile": {
+            "en": "en/budgeting-newcomers/02-first-budget.md",
+            "fr": "fr/budgeting-newcomers/02-first-budget.md"
+          },
+          "duration": 8,
+          "hasQuiz": true
+        },
+        {
+          "id": "canadian-cost-of-living",
+          "title": {
+            "en": "Understanding Canadian Cost of Living",
+            "fr": "Comprendre le coût de la vie au Canada"
+          },
+          "contentFile": {
+            "en": "en/budgeting-newcomers/03-cost-of-living.md",
+            "fr": "fr/budgeting-newcomers/03-cost-of-living.md"
+          },
+          "duration": 4,
+          "hasQuiz": false
+        }
+      ],
+      "finalQuiz": {
+        "en": "en/budgeting-newcomers/final-quiz.json",
+        "fr": "fr/budgeting-newcomers/final-quiz.json"
+      }
+    },
+    {
+      "id": "saving-investment-basics",
+      "title": {
+        "en": "Saving and Investment Basics",
+        "fr": "Les bases de l'épargne et de l'investissement"
+      },
+      "description": {
+        "en": "Learn about different savings accounts, investment options, and retirement planning in Canada.",
+        "fr": "Apprenez les différents comptes d'épargne, options d'investissement et planification de la retraite au Canada."
+      },
+      "category": "investment",
+      "difficulty": "intermediate",
+      "estimatedDuration": 25,
+      "icon": "trending-up",
+      "lessons": [
+        {
+          "id": "savings-accounts-canada",
+          "title": {
+            "en": "Savings Accounts in Canada",
+            "fr": "Comptes d'épargne au Canada"
+          },
+          "contentFile": {
+            "en": "en/saving-investment-basics/01-savings-accounts.md",
+            "fr": "fr/saving-investment-basics/01-savings-accounts.md"
+          },
+          "duration": 6,
+          "hasQuiz": true
+        },
+        {
+          "id": "rrsp-tfsa-explained",
+          "title": {
+            "en": "RRSP and TFSA Explained",
+            "fr": "REER et CELI expliqués"
+          },
+          "contentFile": {
+            "en": "en/saving-investment-basics/02-rrsp-tfsa.md",
+            "fr": "fr/saving-investment-basics/02-rrsp-tfsa.md"
+          },
+          "duration": 10,
+          "hasQuiz": true
+        },
+        {
+          "id": "investment-fundamentals",
+          "title": {
+            "en": "Investment Fundamentals",
+            "fr": "Principes fondamentaux d'investissement"
+          },
+          "contentFile": {
+            "en": "en/saving-investment-basics/03-investment-fundamentals.md",
+            "fr": "fr/saving-investment-basics/03-investment-fundamentals.md"
+          },
+          "duration": 9,
+          "hasQuiz": true
+        }
+      ],
+      "finalQuiz": {
+        "en": "en/saving-investment-basics/final-quiz.json",
+        "fr": "fr/saving-investment-basics/final-quiz.json"
+      }
+    },
+    {
+      "id": "managing-debt",
+      "title": {
+        "en": "Managing Debt Effectively",
+        "fr": "Gérer efficacement les dettes"
+      },
+      "description": {
+        "en": "Strategies for managing credit card debt, student loans, and other debts while building financial stability.",
+        "fr": "Stratégies pour gérer les dettes de carte de crédit, les prêts étudiants et autres dettes tout en construisant une stabilité financière."
+      },
+      "category": "debt",
+      "difficulty": "intermediate",
+      "estimatedDuration": 18,
+      "icon": "alert-circle",
+      "lessons": [
+        {
+          "id": "understanding-debt-types",
+          "title": {
+            "en": "Understanding Different Types of Debt",
+            "fr": "Comprendre les différents types de dettes"
+          },
+          "contentFile": {
+            "en": "en/managing-debt/01-debt-types.md",
+            "fr": "fr/managing-debt/01-debt-types.md"
+          },
+          "duration": 6,
+          "hasQuiz": true
+        },
+        {
+          "id": "debt-repayment-strategies",
+          "title": {
+            "en": "Debt Repayment Strategies",
+            "fr": "Stratégies de remboursement de dettes"
+          },
+          "contentFile": {
+            "en": "en/managing-debt/02-repayment-strategies.md",
+            "fr": "fr/managing-debt/02-repayment-strategies.md"
+          },
+          "duration": 8,
+          "hasQuiz": true
+        },
+        {
+          "id": "avoiding-debt-traps",
+          "title": {
+            "en": "Avoiding Common Debt Traps",
+            "fr": "Éviter les pièges de dettes courants"
+          },
+          "contentFile": {
+            "en": "en/managing-debt/03-avoiding-traps.md",
+            "fr": "fr/managing-debt/03-avoiding-traps.md"
+          },
+          "duration": 4,
+          "hasQuiz": false
+        }
+      ],
+      "finalQuiz": {
+        "en": "en/managing-debt/final-quiz.json",
+        "fr": "fr/managing-debt/final-quiz.json"
+      }
+    }
+  ]
+} 
